@@ -1,0 +1,1820 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AP Lang 영단어 학습 · 영어 정의 + 예문 빈칸으로 학습하기">
+  <title>AP Lang Vocabulary · 전체 유닛</title>
+  <style>
+:root {
+  --ink: #1b2436;
+  --muted: #6b7488;
+  --paper: #f5f1e6;
+  --panel: #fffdf7;
+  --line: #ddd6c4;
+  --primary: #7a1f2b;
+  --primary-light: #9c3240;
+  --accent: #e8b64a;
+  --accent-deep: #d1a13a;
+  --secondary: #2f6690;
+  --shadow: 0 18px 60px rgba(27, 36, 54, .10);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 86% 4%, rgba(232,182,74,.38), transparent 25rem),
+    linear-gradient(180deg, #f7f4ea 0%, var(--paper) 100%);
+  font-family: Inter, Pretendard, "Noto Sans KR", system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+button, input, select { font: inherit; }
+button { color: inherit; }
+.shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 64px; }
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 24px; }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 850; letter-spacing: -.02em; }
+.mark { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; background: var(--primary); color: #fff; box-shadow: var(--shadow); }
+.source { color: var(--muted); font-size: 13px; }
+.hero { padding: 34px; border-radius: 28px; background: var(--primary); color: #fff; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+.hero::after { content: ""; position: absolute; width: 260px; height: 260px; border-radius: 50%; right: -70px; top: -125px; background: var(--accent); opacity: .92; }
+.eyebrow { color: var(--accent); font-size: 12px; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+h1 { margin: 10px 0 8px; max-width: 720px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(34px, 6vw, 64px); line-height: .98; letter-spacing: -.045em; font-weight: 700; }
+.hero p { max-width: 640px; margin: 0; color: rgba(255,255,255,.75); line-height: 1.65; }
+.stat-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.stat { padding: 8px 12px; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; background: rgba(255,255,255,.08); font-size: 13px; }
+.workspace { display: grid; grid-template-columns: 280px minmax(0,1fr); gap: 22px; margin-top: 22px; align-items: start; }
+.sidebar, .content { background: rgba(255,253,247,.88); border: 1px solid rgba(221,214,196,.9); box-shadow: var(--shadow); backdrop-filter: blur(12px); }
+.sidebar { position: sticky; top: 18px; border-radius: 22px; padding: 18px; }
+.label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
+.select, .search { width: 100%; border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink); padding: 12px 13px; outline: none; }
+.select:focus, .search:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(122,31,43,.12); }
+.set-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 7px; margin-top: 16px; max-height: 310px; overflow: auto; padding-right: 3px; }
+.set-button { border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 10px 8px; font-size: 12px; cursor: pointer; transition: .16s ease; text-align: left; }
+.set-button strong { display: block; font-size: 13px; }
+.set-button small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+.set-button.active small { color: rgba(255,255,255,.75); }
+.set-button:hover { transform: translateY(-1px); border-color: var(--primary); }
+.set-button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.wrong-summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; padding: 12px 13px; border: 1px solid #f0d3d8; border-radius: 12px; background: #fbeef0; }
+.wrong-summary span { color: var(--muted); font-size: 11px; }
+.wrong-summary strong { display: block; margin-top: 2px; color: #a6323f; font-size: 20px; }
+.wrong-reset { border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 11px; text-decoration: underline; text-underline-offset: 3px; }
+.data-transfer { margin-top: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.data-transfer-title { margin-bottom: 8px; color: var(--muted); font-size: 11px; font-weight: 800; }
+.data-transfer-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.data-transfer .button { padding: 9px 6px; font-size: 10px; }
+.shortcuts { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.7; }
+kbd { padding: 2px 6px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; background: #fff; color: var(--ink); }
+.content { border-radius: 22px; padding: 26px; min-width: 0; }
+.content-head { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 14px 16px; }
+.content-head > div:first-child { flex: 1 1 240px; min-width: 0; }
+.set-title { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 4vw, 46px); letter-spacing: -.04em; }
+.set-note { color: var(--muted); font-size: 13px; margin-top: 5px; line-height: 1.5; }
+.tabs { display: flex; flex: 0 0 auto; gap: 6px; padding: 5px; border-radius: 12px; background: #ede4d4; }
+.tab { border: 0; border-radius: 9px; padding: 9px 13px; background: transparent; cursor: pointer; font-weight: 750; font-size: 13px; white-space: nowrap; }
+.tab.active { background: #fff; box-shadow: 0 4px 18px rgba(27,36,54,.08); }
+.panel { display: none; }
+.panel.active { display: block; }
+.progress-wrap { display: flex; align-items: center; gap: 12px; margin: 24px 0 12px; }
+.progress { flex: 1; height: 8px; overflow: hidden; background: #e6ddc8; border-radius: 999px; }
+.progress > span { display: block; height: 100%; border-radius: inherit; background: var(--secondary); transition: width .25s ease; }
+.counter { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.pos-tag { display: inline-block; margin-left: 10px; padding: 3px 9px; border-radius: 999px; background: #fbeed0; color: var(--accent-deep); font-size: 11px; font-weight: 850; text-transform: uppercase; letter-spacing: .04em; vertical-align: middle; }
+.pattern-tag { display: inline-block; margin-top: 12px; padding: 7px 11px; border-radius: 10px; background: #eef3f8; color: var(--secondary); font-size: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.flashcard { width: 100%; min-height: 350px; border: 1px solid var(--line); border-radius: 22px; background: #fff; padding: 30px; cursor: pointer; perspective: 1000px; box-shadow: 0 12px 36px rgba(27,36,54,.08); display: grid; place-items: center; text-align: center; position: relative; }
+.flashcard:focus-visible { outline: 3px solid rgba(47,102,144,.35); outline-offset: 3px; }
+.face { max-width: 680px; }
+.face-label { color: var(--muted); font-size: 11px; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; }
+.term { margin-top: 18px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(38px,6.4vw,66px); line-height: 1; letter-spacing: -.04em; overflow-wrap: anywhere; }
+.definition { margin-top: 16px; font-size: clamp(19px,2.8vw,27px); line-height: 1.45; }
+.example-list { display: grid; gap: 10px; margin-top: 18px; text-align: left; }
+.example-item { padding: 12px 14px; border-radius: 13px; background: #f8f4e9; border: 1px solid var(--line); }
+.example-en { font-size: 14px; line-height: 1.5; }
+.example-ko { margin-top: 5px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.flip-hint { position: absolute; bottom: 18px; color: var(--muted); font-size: 12px; }
+.controls { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; margin-top: 14px; }
+.button { border: 1px solid var(--line); background: #fff; border-radius: 12px; padding: 12px 16px; cursor: pointer; font-weight: 750; transition: .16s ease; }
+.button:hover { transform: translateY(-1px); border-color: var(--primary); }
+.button.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+.button.known { background: var(--accent); border-color: var(--accent-deep); }
+.utility { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 10px; }
+.utility .button { padding: 9px 12px; color: var(--muted); font-size: 12px; }
+.list-tools { display: flex; gap: 10px; margin: 24px 0 14px; }
+.list-sort { width: 190px; flex: 0 0 auto; }
+.rows { display: grid; gap: 8px; }
+.word-row { display: grid; grid-template-columns: minmax(150px,.7fr) 1.8fr auto; gap: 18px; align-items: start; padding: 17px 18px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+.word { font-family: Georgia, "Times New Roman", serif; font-weight: 700; font-size: 20px; overflow-wrap: anywhere; }
+.word-wrong { display: inline-block; margin-top: 7px; padding: 4px 7px; border-radius: 999px; background: #fbeef0; color: #a6323f; font-family: Inter, Pretendard, system-ui, sans-serif; font-size: 10px; font-weight: 850; }
+.meaning { color: #2a2f3d; line-height: 1.55; }
+.meaning .example-list { margin-top: 10px; }
+.speak { border: 0; background: transparent; color: var(--muted); cursor: pointer; padding: 2px 5px; }
+.empty { padding: 50px 10px; text-align: center; color: var(--muted); }
+.set-footer { display: flex; justify-content: space-between; gap: 12px; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.footer-note { text-align: center; margin-top: 22px; color: var(--muted); font-size: 12px; }
+.learn-mode-switch { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px,1fr)); gap: 7px; margin-top: 24px; padding: 6px; border-radius: 15px; background: #ede4d4; }
+.learn-mode { border: 0; border-radius: 11px; padding: 12px 10px; background: transparent; color: var(--muted); cursor: pointer; font-weight: 800; line-height: 1.35; }
+.learn-mode.active { background: #fff; color: var(--primary); box-shadow: 0 5px 18px rgba(27,36,54,.09); }
+.learn-status { display: grid; grid-template-columns: 1fr repeat(3,auto); gap: 10px; align-items: center; margin: 14px 0; }
+.mastery-toggle-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; padding: 10px 13px; border: 1px solid var(--line); border-radius: 12px; background: #f8f4e9; }
+.star-toggle { border: 1px solid var(--line); background: #fff; border-radius: 10px; padding: 8px 13px; cursor: pointer; font-size: 15px; color: var(--muted); }
+.star-toggle.starred { border-color: var(--accent-deep); background: #fbeed0; color: var(--accent-deep); }
+.mastery-toggle-row span { color: var(--muted); font-size: 12px; line-height: 1.5; }
+.mastery-toggle-row .button { flex: 0 0 auto; padding: 8px 12px; font-size: 12px; }
+.mastery { height: 10px; overflow: hidden; border-radius: 999px; background: #e6ddc8; }
+.mastery > span { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg,var(--secondary),var(--accent)); transition: width .3s ease; }
+.mastery-chip { min-width: 78px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 11px; background: #fff; text-align: center; color: var(--muted); font-size: 11px; }
+.mastery-chip strong { display: block; margin-bottom: 2px; color: var(--ink); font-size: 17px; }
+.learn-card { min-height: 380px; display: flex; flex-direction: column; justify-content: space-between; padding: 30px; border: 1px solid var(--line); border-radius: 22px; background: #fff; box-shadow: 0 12px 36px rgba(27,36,54,.08); }
+.question-kicker { color: var(--secondary); font-size: 11px; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+.question-prompt { max-width: 720px; margin: 20px auto 0; text-align: center; font-family: Georgia, "Times New Roman", serif; font-size: clamp(22px,3.6vw,34px); line-height: 1.4; letter-spacing: -.02em; }
+.question-ko { max-width: 640px; margin: 12px auto 28px; text-align: center; color: var(--muted); font-size: clamp(13px,1.8vw,16px); line-height: 1.5; }
+.question-prompt-ko { max-width: 720px; margin: 20px auto 0; text-align: center; font-family: Inter, Pretendard, "Noto Sans KR", system-ui, sans-serif; font-weight: 800; font-size: clamp(21px,3.2vw,30px); line-height: 1.5; letter-spacing: -.01em; }
+.definition-ko { margin-top: 8px; color: var(--muted); font-size: clamp(14px,2vw,17px); line-height: 1.5; }
+.flip-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+.scramble-built { min-height: 64px; padding: 14px; border: 1px dashed var(--line); border-radius: 13px; background: #f8f4e9; display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; }
+.scramble-placeholder { color: var(--muted); font-size: 13px; align-self: center; }
+.scramble-pool { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; min-height: 44px; }
+.scramble-chip { padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px; background: #fff; cursor: pointer; font-weight: 700; font-size: 15px; transition: .16s ease; }
+.scramble-chip:hover { border-color: var(--primary); transform: translateY(-1px); }
+.scramble-chip.placed { background: var(--primary); color: #fff; border-color: var(--primary); }
+.scramble-actions { display: flex; justify-content: space-between; gap: 10px; margin-top: 16px; }
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.choice { min-height: 58px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 13px; background: #fff; text-align: left; cursor: pointer; font-weight: 750; transition: .16s ease; }
+.choice-number { display: inline-grid; width: 26px; height: 26px; margin-right: 10px; place-items: center; border-radius: 8px; background: #ede4d4; color: var(--muted); font-size: 12px; }
+.choice:hover:not(:disabled) { transform: translateY(-1px); border-color: var(--primary); background: #f8f4ec; }
+.choice.correct { border-color: #2f7d5c; background: #e2f3ea; }
+.choice.wrong { border-color: #c0392b; background: #fbe9e7; }
+.answer-form { display: flex; gap: 9px; max-width: 660px; margin: 0 auto; }
+.answer-input { flex: 1; min-width: 0; padding: 15px 16px; border: 1px solid var(--line); border-radius: 13px; outline: none; font-size: 18px; }
+.answer-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(122,31,43,.12); }
+.learn-feedback { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 18px; padding: 15px 17px; border-radius: 13px; line-height: 1.45; }
+.learn-feedback.good { background: #e2f3ea; }
+.learn-feedback.bad { background: #fbe9e7; }
+.learn-feedback strong { display: block; }
+.feedback-extra { display: block; margin-top: 5px; color: rgba(27,36,54,.65); font-size: 13px; line-height: 1.5; }
+.learn-utility { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 12px; }
+.learn-utility .button { color: var(--muted); font-size: 12px; }
+.complete { min-height: 380px; display: grid; place-items: center; padding: 36px; border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(145deg,#7a1f2b,#9c3240); color: #fff; text-align: center; box-shadow: var(--shadow); }
+.complete h3 { margin: 10px 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(34px,6vw,58px); letter-spacing: -.04em; }
+.complete p { margin: 0 0 22px; color: rgba(255,255,255,.72); }
+.complete .button { border-color: var(--accent); background: var(--accent); color: var(--ink); }
+.course-ladder { display: grid; gap: 8px; margin: 18px 0; }
+.ladder-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 13px; background: #f8f4e9; }
+.ladder-badge { display: grid; flex: 0 0 auto; width: 30px; height: 30px; place-items: center; border-radius: 9px; background: var(--primary); color: #fff; font-size: 14px; font-weight: 800; }
+.ladder-row strong { display: block; font-size: 14px; }
+.ladder-row small { color: var(--muted); font-size: 12px; }
+.course-steps { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.course-step { padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--muted); font-size: 11px; font-weight: 800; }
+.course-step.done { border-color: var(--accent-deep); background: var(--accent); color: var(--ink); }
+.course-step.current { border-color: var(--primary); background: var(--primary); color: #fff; }
+.course-term { margin: 20px 0 6px; text-align: center; font-family: Georgia, "Times New Roman", serif; font-size: clamp(34px,5.4vw,58px); line-height: 1; letter-spacing: -.04em; overflow-wrap: anywhere; }
+.course-pos { text-align: center; }
+.course-def { margin-top: 14px; text-align: center; font-size: clamp(17px,2.4vw,23px); line-height: 1.45; }
+.course-def-ko { margin-top: 6px; text-align: center; color: var(--muted); font-size: clamp(13px,1.8vw,16px); line-height: 1.45; }
+.course-example { max-width: 620px; margin: 16px auto 0; padding-top: 15px; border-top: 1px dashed var(--line); text-align: center; color: var(--muted); font-size: clamp(13px,1.7vw,16px); line-height: 1.55; }
+.course-card-actions { display: flex; justify-content: center; gap: 9px; }
+.hint-text { margin: 0 0 14px; text-align: center; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 20px; letter-spacing: .2em; }
+.course-restart { width: 100%; margin-top: 8px; padding: 13px; }
+.test-config { margin-top: 24px; padding: 28px; border: 1px solid var(--line); border-radius: 22px; background: #fff; box-shadow: 0 12px 36px rgba(27,36,54,.08); }
+.test-config h3 { margin: 0 0 6px; font-family: Georgia, "Times New Roman", serif; font-size: 30px; letter-spacing: -.03em; }
+.test-config > p { margin: 0 0 24px; color: var(--muted); line-height: 1.55; }
+.test-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.test-field { padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: #f8f4e9; }
+.test-field .label { margin-bottom: 7px; }
+.test-direction { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 12px 0 22px; }
+.direction-option { position: relative; }
+.direction-option input { position: absolute; opacity: 0; pointer-events: none; }
+.direction-option span { display: block; min-height: 92px; padding: 17px; border: 1px solid var(--line); border-radius: 14px; background: #fff; cursor: pointer; }
+.direction-option strong { display: block; margin-bottom: 5px; }
+.direction-option small { color: var(--muted); line-height: 1.4; }
+.direction-option input:checked + span { border-color: var(--primary); background: #f8eef0; box-shadow: 0 0 0 2px rgba(122,31,43,.1); }
+.test-start { width: 100%; padding: 15px; }
+.review-preview { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin: 14px 0; padding: 14px 16px; border-radius: 13px; background: #fbeef0; color: var(--muted); font-size: 13px; }
+.review-preview strong { color: #a6323f; font-size: 22px; }
+.test-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 24px 0 12px; }
+.test-progress { flex: 1; height: 9px; overflow: hidden; border-radius: 999px; background: #e6ddc8; }
+.test-progress > span { display: block; height: 100%; border-radius: inherit; background: var(--primary); transition: width .25s ease; }
+.test-choice.selected { border-color: var(--primary); background: #f8eef0; box-shadow: inset 0 0 0 1px var(--primary); }
+.test-actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 14px; }
+.test-actions span { color: var(--muted); font-size: 12px; }
+.results-card { margin-top: 24px; padding: 28px; border: 1px solid var(--line); border-radius: 22px; background: #fff; box-shadow: 0 12px 36px rgba(27,36,54,.08); }
+.score-ring { width: 150px; height: 150px; display: grid; place-items: center; margin: 0 auto 18px; border-radius: 50%; background: conic-gradient(var(--accent) var(--score),#e6dfcd 0); position: relative; }
+.score-ring::after { content: ""; position: absolute; inset: 12px; border-radius: 50%; background: #fff; }
+.score-ring strong { position: relative; z-index: 1; font-family: Georgia, "Times New Roman", serif; font-size: 38px; }
+.results-title { text-align: center; }
+.results-title h3 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 34px; }
+.results-title p { color: var(--muted); }
+.result-actions { display: flex; justify-content: center; gap: 9px; margin: 20px 0; }
+.wrong-list { display: grid; gap: 8px; margin-top: 20px; }
+.wrong-row { padding: 15px 16px; border: 1px solid var(--line); border-radius: 13px; background: #fdf6ee; }
+.wrong-row .prompt { margin-bottom: 7px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+.wrong-row .answer { line-height: 1.5; }
+.wrong-row .answer del { color: #a6323f; }
+.wrong-row .answer strong { color: var(--primary); }
+@media (max-width: 820px) {
+  .shell { width: min(100% - 20px, 700px); padding-top: 12px; }
+  .topbar { padding: 0 4px; }
+  .source { display: none; }
+  .hero { padding: 26px 22px; border-radius: 22px; }
+  .workspace { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .set-grid, .shortcuts { display: none; }
+  .content { padding: 18px; }
+  .content-head { align-items: stretch; flex-direction: column; }
+  .content-head > div:first-child { flex: 0 0 auto; }
+  .tabs { width: 100%; flex-wrap: wrap; justify-content: center; gap: 4px; }
+  .tab { flex: 1 1 auto; max-width: 34%; padding: 9px 5px; font-size: 12px; }
+  .flashcard { min-height: 320px; padding: 24px 18px; }
+  .controls { grid-template-columns: 1fr 1fr; }
+  .controls .known { grid-column: 1 / -1; grid-row: 1; }
+  .learn-status { grid-template-columns: 1fr 1fr 1fr; }
+  .mastery { grid-column: 1 / -1; }
+  .learn-mode { padding: 10px 4px; font-size: 12px; }
+  .learn-card { min-height: 390px; padding: 22px 16px; }
+  .choices { grid-template-columns: 1fr; }
+  .answer-form { flex-direction: column; width: 100%; }
+  .learn-feedback { align-items: stretch; flex-direction: column; }
+  .learn-utility { align-items: stretch; }
+  .test-config { padding: 22px 16px; }
+  .test-grid, .test-direction { grid-template-columns: 1fr; }
+  .test-head { align-items: stretch; flex-direction: column; }
+  .test-actions { align-items: stretch; flex-direction: column; }
+  .test-actions .button { width: 100%; }
+  .result-actions { flex-direction: column; }
+  .list-tools { flex-wrap: wrap; }
+  .list-sort { width: 100%; }
+  .word-row { grid-template-columns: 1fr auto; gap: 7px 10px; }
+  .meaning { grid-column: 1 / -1; }
+}
+@media (max-width: 359px) {
+  .tabs { gap: 3px; }
+  .tab { max-width: 40%; padding: 8px 4px; font-size: 11px; }
+  .learn-mode-switch { gap: 5px; }
+  .learn-mode { padding: 10px 2px; font-size: 11px; }
+}
+@media print {
+  body { background: #fff; }
+  .topbar, .hero, .sidebar, .tabs, #learn-panel, #wrong-review-panel, #test-panel, .progress-wrap, .flashcard, .controls, .utility, .list-tools, .set-footer, .footer-note { display: none !important; }
+  .shell { width: 100%; padding: 0; }
+  .workspace { display: block; margin: 0; }
+  .content { border: 0; box-shadow: none; padding: 0; }
+  #list-panel { display: block !important; }
+  .rows { grid-template-columns: 1fr 1fr; gap: 5mm; }
+  .word-row { break-inside: avoid; padding: 8px 0; border: 0; border-bottom: 1px solid #ddd; border-radius: 0; grid-template-columns: 35% 65%; }
+  .speak { display: none; }
+}
+</style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="mark">P</span><span>AP Lang Vocabulary</span></div>
+      <div class="source">Source: AP Lang vocabulary list</div>
+    </header>
+    <section class="hero">
+      <div class="eyebrow" id="hero-eyebrow">1 unit so far</div>
+      <h1>Master exam-ready vocabulary.</h1>
+      <p>영어 정의와 한국어 뜻, 실제 예문으로 학습합니다. 학습하기에서는 정의↔단어뿐 아니라 예문을 암기하거나 뒤섞인 단어를 순서대로 배치해 문장을 완성하는 연습도 할 수 있습니다.</p>
+      <div class="stat-row" id="hero-stats"></div>
+    </section>
+    <section class="workspace">
+      <aside class="sidebar">
+        <label class="label" for="set-select">학습 유닛</label>
+        <select class="select" id="set-select" aria-label="학습 유닛 선택"></select>
+        <div class="wrong-summary"><div><span id="wrong-set-label">누적 오답</span><strong id="wrong-total">0회</strong></div><button class="wrong-reset" id="reset-wrong">초기화</button></div>
+        <div class="data-transfer"><div class="data-transfer-title">학습 데이터 이동</div><div class="data-transfer-buttons"><button class="button" id="export-data">내보내기</button><button class="button" id="import-data">가져오기</button></div><input id="import-data-file" type="file" accept="application/json,.json" hidden></div>
+        <div class="set-grid" id="set-grid" aria-label="유닛 바로가기"></div>
+        <div class="shortcuts"><strong>코스</strong><br><kbd>1</kbd>–<kbd>4</kbd> 답 선택<br><kbd>Space</kbd> / <kbd>Enter</kbd> 다음<br><br><strong>학습·오답학습</strong><br><kbd>1</kbd>–<kbd>4</kbd> 답 선택<br><kbd>Space</kbd> / <kbd>Enter</kbd> 다음 문제<br><br><strong>테스트</strong><br><kbd>1</kbd>–<kbd>4</kbd> 답 선택<br><kbd>Space</kbd> 다음 문제<br><br><strong>카드</strong><br><kbd>Space</kbd> 카드 뒤집기<br><kbd>←</kbd> <kbd>→</kbd> 이전·다음 단어</div>
+      </aside>
+      <div class="content">
+        <div class="content-head">
+          <div><h2 class="set-title" id="set-title"></h2><div class="set-note" id="set-note"></div></div>
+          <div class="tabs" role="tablist"><button class="tab" data-tab="course">코스</button><button class="tab" data-tab="sentence-course">문장 코스</button><button class="tab active" data-tab="learn">학습하기</button><button class="tab" data-tab="wrong-review">오답학습</button><button class="tab" data-tab="test">테스트</button><button class="tab" data-tab="cards">카드</button><button class="tab" data-tab="sentence-cards">문장 카드</button><button class="tab" data-tab="list">목록</button></div>
+        </div>
+        <section class="panel" id="course-panel">
+          <div id="course-stage"></div>
+        </section>
+        <section class="panel" id="sentence-course-panel">
+          <div id="sentence-course-stage"></div>
+        </section>
+        <section class="panel active" id="learn-panel">
+          <div class="learn-mode-switch" aria-label="학습 방향 선택">
+            <button class="learn-mode active" data-direction="definition-to-word">정의 → 단어</button>
+            <button class="learn-mode" data-direction="word-to-definition">단어 → 정의</button>
+            <button class="learn-mode" data-direction="example-to-word">예문 빈칸 → 단어</button>
+            <button class="learn-mode" data-direction="example-word-write">빈칸 주관식</button>
+            <button class="learn-mode" data-direction="example-sentence-write">문장 주관식</button>
+            <button class="learn-mode" data-direction="example-recall">예문 암기</button>
+            <button class="learn-mode" data-direction="example-scramble">문장 조합</button>
+            <button class="learn-mode" data-direction="audio-to-word">듣고 쓰기</button>
+          </div>
+          <div class="mastery-toggle-row" id="mastery-toggle-row">
+            <span id="mastery-toggle-label">숙달 단계 사용: 완전히 익힐 때까지(숙달) 반복 출제됩니다.</span>
+            <button class="button" id="mastery-toggle">사용 함</button>
+          </div>
+          <div class="learn-status">
+            <div class="mastery" aria-label="학습 숙련도"><span id="mastery-bar"></span></div>
+            <div class="mastery-chip"><strong id="fresh-count">0</strong>모르는 단어</div>
+            <div class="mastery-chip"><strong id="learning-count">0</strong>학습 중</div>
+            <div class="mastery-chip"><strong id="mastered-count">0</strong>숙달</div>
+          </div>
+          <div id="learn-stage"></div>
+        </section>
+        <section class="panel" id="wrong-review-panel">
+          <div id="wrong-review-stage"></div>
+        </section>
+        <section class="panel" id="test-panel">
+          <div id="test-stage"></div>
+        </section>
+        <section class="panel" id="cards-panel">
+          <div class="progress-wrap"><div class="progress"><span id="progress-bar"></span></div><div class="counter" id="counter"></div></div>
+          <button class="flashcard" id="flashcard" aria-label="카드 뒤집기"><div class="face" id="card-face"></div><div class="flip-hint">눌러서 카드 뒤집기</div></button>
+          <div class="controls"><button class="button" id="prev">← 이전</button><button class="button known" id="known-button" aria-pressed="false">외웠어요</button><button class="button primary" id="next">다음 →</button></div>
+          <div class="utility"><button class="button" id="pronounce">◖) 발음 듣기</button><button class="button" id="shuffle">순서 섞기</button><button class="button" id="reset">외운 표시 초기화</button></div>
+        </section>
+        <section class="panel" id="sentence-cards-panel">
+          <div class="progress-wrap"><div class="progress"><span id="scard-progress-bar"></span></div><div class="counter" id="scard-counter"></div></div>
+          <button class="flashcard" id="sentence-flashcard" aria-label="문장 카드 뒤집기"><div class="face" id="scard-face"></div><div class="flip-hint">눌러서 카드 뒤집기</div></button>
+          <div class="controls"><button class="button" id="scard-prev">← 이전</button><button class="button known" id="scard-known-button" aria-pressed="false">외웠어요</button><button class="button primary" id="scard-next">다음 →</button></div>
+          <div class="utility"><button class="button" id="scard-pronounce">◖) 발음 듣기</button><button class="button" id="scard-shuffle">순서 섞기</button><button class="button" id="scard-reset">외운 표시 초기화</button></div>
+        </section>
+        <section class="panel" id="list-panel">
+          <div class="list-tools"><input class="search" id="search" type="search" placeholder="단어 · 정의 · 예문 검색" aria-label="단어, 정의, 예문 검색"><select class="select list-sort" id="list-sort" aria-label="목록 정렬"><option value="source">원래 순서</option><option value="wrong">오답 많은 순</option><option value="alpha">알파벳순</option></select><button class="button" id="print">인쇄</button></div>
+          <div class="rows" id="rows"></div>
+        </section>
+        <div class="set-footer"><button class="button" id="prev-set">← 이전 유닛</button><button class="button" id="next-set">다음 유닛 →</button></div>
+      </div>
+    </section>
+    <div class="footer-note">AP Lang vocabulary study file · Progress is saved only in this browser.</div>
+  </main>
+<script>const DATA = {"1": {"title": "Helpful and Harmful", "words": [{"term": "beneficial", "pos": "adj", "definition": "Having a positive effect or producing good results.", "pattern": "★ to / ★ for", "examples": [{"en": "Jogging is ★ to your health.", "ko": "조깅은 건강에 유익하다."}, {"en": "Regular meditation is ★ for stress reduction.", "ko": "규칙적인 명상은 스트레스 감소에 유익하다."}], "definitionKo": "긍정적인 효과를 내거나 좋은 결과를 만들어 내는"}, {"term": "advantageous", "pos": "adj", "definition": "Providing an advantage or favorable conditions", "pattern": "", "examples": [{"en": "It would be ★ to work together on this project.", "ko": "이 프로젝트를 함께하는 것이 유리할 것이다."}, {"en": "You might find an ★ spot to hang your yard sale sign.", "ko": "당신은 벼룩시장 안내판을 걸기에 유리한 장소를 찾을 수 있을 것이다."}], "definitionKo": "유리한 조건을 제공하는; 이점이 있는"}, {"term": "constructive", "pos": "adj", "definition": "Serving a useful purpose; helping to improve or develop something.", "pattern": "", "examples": [{"en": "The manager offered ★ feedback on the project.", "ko": "매니저는 그 프로젝트에 대해 건설적인 피드백을 제공했다."}], "definitionKo": "도움이 되는 목적에 부합하는; 개선이나 발전에 보탬이 되는"}, {"term": "conducive", "pos": "adj", "definition": "Tending to promote or contribute to a particular result or condition.", "pattern": "★ to", "examples": [{"en": "A quiet environment is ★ to studying effectively.", "ko": "조용한 환경은 효과적인 공부에 도움이 된다."}], "definitionKo": "특정 결과나 상태를 촉진하거나 거들어 주는"}, {"term": "practical", "pos": "adj", "definition": "Concerned with what is real rather than imagined or theoretical", "pattern": "", "examples": [{"en": "Buying an umbrella when it's raining is a ★ decision.", "ko": "비 올 때 우산을 사는 것은 실용적인 결정이다."}], "definitionKo": "상상이나 이론이 아닌 실제와 관련된"}, {"term": "pragmatic", "pos": "adj", "definition": "Realistic; concerned with real applications, consequences, etc.", "pattern": "", "examples": [{"en": "They were looking for ★ solutions to the problem.", "ko": "그들은 그 문제에 대한 현실적인 해결책을 찾고 있었다."}], "definitionKo": "현실적인; 실제 적용과 결과에 관심을 두는"}, {"term": "reinforce", "pos": "v", "definition": "To strengthen or support something", "pattern": "", "examples": [{"en": "The coach ★d the proper shooting technique by having the basketball players practice it over and over again.", "ko": "코치는 농구 선수들에게 올바른 슛 기술을 계속 반복해서 연습하게 하며 그것을 강화시켰다."}], "definitionKo": "무언가를 강화하거나 뒷받침하다"}, {"term": "bolster", "pos": "v", "definition": "To support or hold up", "pattern": "", "examples": [{"en": "I drank three energy drinks to ★ my remaining brain cells before the exam.", "ko": "시험 직전에 남은 뇌세포들을 강화하기 위해 에너지 드링크를 세 캔 마셨다."}, {"en": "Mindy presented historical data to ★ her argument.", "ko": "민디는 자신의 핵심 주장을 뒷받침하기/강화하기 위해 과거 데이터를 제시했다."}], "definitionKo": "지지하다, 떠받치다"}, {"term": "buttress", "pos": "v", "definition": "To reinforce; to provide physical support", "pattern": "", "examples": [{"en": "Mindy presented historical data to ★ her argument.", "ko": "민디는 자신의 핵심 주장을 뒷받침하기/강화하기 위해 과거 데이터를 제시했다."}, {"en": "Workers ★ed the old wall with wooden beams.", "ko": "인부들은 나무 기둥으로 오래된 벽을 받쳤다/보강했다."}], "definitionKo": "강화하다; 물리적으로 지지대를 제공하다"}, {"term": "utilize", "pos": "v", "definition": "To make practical use of", "pattern": "", "examples": [{"en": "The engineer ★d advanced software to design the new bridge.", "ko": "그 엔지니어는 새로운 다리를 설계하기 위해 첨단 소프트웨어를 활용했다."}], "definitionKo": "실용적으로 활용하다"}, {"term": "employ", "pos": "v", "definition": "To apply or make use of a skill or resource", "pattern": "", "examples": [{"en": "The teacher ★ed various strategies to keep the students engaged.", "ko": "교사는 학생들의 집중을 유지하기 위해 다양한 전략을 사용했다."}], "definitionKo": "기술이나 자원을 적용하거나 활용하다"}, {"term": "exploit", "pos": "v", "definition": "To use something or someone, especially to gain a profit or selfishly achieve a goal", "pattern": "", "examples": [{"en": "The evil man ★ed child labor to maximize profits.", "ko": "그 악랄한 남자는 이익을 극대화하기 위해 아동 노동을 착취했다."}], "definitionKo": "특히 이익을 얻거나 이기적인 목적을 위해 무언가·누군가를 이용하다"}, {"term": "leverage", "pos": "v", "definition": "To make use of; to achieve a particular result", "pattern": "", "examples": [{"en": "The dog successfully ★d his cute puppy eyes to secure an extra piece of bacon from the dinner table.", "ko": "그 강아지는 저녁 식탁에서 베이컨 한 조각을 더 얻어내기 위해 자신의 귀여운 눈빛을 적극 활용하는 데 성공했다."}], "definitionKo": "활용하다; 특정 결과를 얻어 내다"}, {"term": "expedite", "pos": "v", "definition": "To speed something up: to do something quickly", "pattern": "", "examples": [{"en": "The spy had to bribe the guard to ★ the delivery of the antidote.", "ko": "스파이는 해독제 배달을 신속하게 처리하기[서두르기] 위해 경비원에게 뇌물을 주어야만 했다."}], "definitionKo": "무언가를 빠르게 처리하다, 서두르다"}, {"term": "facilitate", "pos": "v", "definition": "To assist; to aid the progress of something or someone", "pattern": "", "examples": [{"en": "The new app ★d communication between doctors and patients.", "ko": "새로운 앱은 의사와 환자 간의 의사소통을 촉진시켰다."}], "definitionKo": "돕다; 어떤 일의 진행을 수월하게 하다"}, {"term": "accommodate", "pos": "v", "definition": "To provide something needed or wanted", "pattern": "", "examples": [{"en": "The hotel can ★ up to 500 guests.", "ko": "그 호텔은 최대 500명까지의 투숙객을 수용할 수 있다."}], "definitionKo": "필요하거나 원하는 것을 제공하다"}, {"term": "apt", "pos": "adj", "definition": "Appropriate", "pattern": "", "examples": [{"en": "The word 'zombie' is an ★ description of students with their eyes half open during 5th period.", "ko": "5교시 수업 시간에 눈을 반쯤 뜬 채 앉아 있는 학생들에게 '좀비'라는 단어는 정말 찰떡같은(적절한) 표현이야."}], "definitionKo": "적절한"}, {"term": "relevant", "pos": "adj", "definition": "Important or meaningful to the current topic, subject, or situation", "pattern": "★ to A", "examples": [{"en": "Please keep your comments ★ to the topic.", "ko": "발언을 주제와 관련되게 해 주세요."}], "definitionKo": "현재 주제·문제·상황과 관련이 있고 의미 있는"}, {"term": "pertinent", "pos": "adj", "definition": "Important to the current situation or matter", "pattern": "★ to A", "examples": [{"en": "Your TikTok dance skills are impressive, but they are not ★ to this math exam.", "ko": "너의 틱톡 댄스 실력은 정말 대단하지만, 이번 수학 시험이랑은 아무런 상관이 없단다."}, {"en": "She asked a very ★ question during class.", "ko": "그녀는 수업 중 매우 적절한 질문을 했다."}], "definitionKo": "현재 상황이나 문제와 관련이 있는"}, {"term": "efficacious", "pos": "adj", "definition": "Producing the desired outcome or result", "pattern": "", "examples": [{"en": "The new drug proved to be ★ in treating the disease.", "ko": "새 약은 그 병 치료에 효과적임이 입증되었다."}], "definitionKo": "원하는 결과나 효과를 만들어 내는"}, {"term": "means", "pos": "n", "definition": "A method or tool used to achieve a result or objective", "pattern": "", "examples": [{"en": "Education is a ★ to achieving personal growth.", "ko": "교육은 개인의 성장을 이루는 수단이다."}], "definitionKo": "결과나 목표를 이루기 위해 쓰이는 방법이나 도구"}, {"term": "medium", "pos": "n", "definition": "A method or tool for doing something", "pattern": "", "examples": [{"en": "Television is still a popular ★ for advertising.", "ko": "텔레비전은 여전히 광고의 대중적인 매체다."}], "definitionKo": "무언가를 하기 위한 방법이나 도구"}, {"term": "mechanism", "pos": "n", "definition": "A system or process designed for a particular goal", "pattern": "", "examples": [{"en": "The body has a natural ★ to fight infections.", "ko": "인체에는 감염을 물리치는 자연적인 기제/작동 원리가 있다."}], "definitionKo": "특정 목표를 위해 고안된 체계나 과정"}, {"term": "boon", "pos": "n", "definition": "Something which provides a benefit or advantage", "pattern": "", "examples": [{"en": "The new policy is a ★ for small businesses.", "ko": "새로운 정책은 소규모 기업들에게 큰 혜택이다."}], "definitionKo": "혜택이나 이점을 주는 것"}, {"term": "benign", "pos": "adj", "definition": "Gentle and kind; not harmful", "pattern": "", "examples": [{"en": "The tumor was found to be ★.", "ko": "그 종양은 양성인 것으로 밝혀졌다."}], "definitionKo": "온화하고 친절한; 해롭지 않은"}, {"term": "innocuous", "pos": "adj", "definition": "Not likely to cause harm or offense", "pattern": "", "examples": [{"en": "Ron's joke was completely ★, but Professor Snape took offense.", "ko": "론의 농담은 전혀 해롭지 않았지만, 스네이프 교수님은 기분 나쁘게 받아들였다."}], "definitionKo": "해나 불쾌감을 줄 가능성이 낮은"}, {"term": "nuisance", "pos": "n", "definition": "Something that causes annoyance", "pattern": "", "examples": [{"en": "The mosquito in the bedroom became a real ★ for the students trying to sleep.", "ko": "침실에 있는 모기는 잠을 청하려는 학생들에게 진짜 골칫거리가 되었다."}], "definitionKo": "성가심을 유발하는 것"}, {"term": "forestall", "pos": "v", "definition": "To prevent something from happening by acting before it can occur", "pattern": "", "examples": [{"en": "Ron stayed up all night with his wand ready, determined to ★ the next mosquito attack.", "ko": "론은 다음 모기 습격을 차단하겠다는(방지하겠다는) 일념으로 지팡이를 쥔 채 밤을 지새웠다."}], "definitionKo": "미리 조치를 취해 어떤 일이 일어나지 않도록 막다"}, {"term": "preclude", "pos": "v", "definition": "To make something impossible; to prevent something from happening", "pattern": "", "examples": [{"en": "His injury ★s him from playing in the game.", "ko": "그의 부상은 그가 경기에 출전하는 것을 불가능하게 한다."}, {"en": "The rules ★ a refund.", "ko": "규정은 환불을 제한합니다 = 규정 상 환불이 불가능합니다"}], "definitionKo": "무언가를 불가능하게 만들다; 어떤 일이 일어나지 않도록 막다"}, {"term": "impede", "pos": "v", "definition": "To slow or delay the progress of something", "pattern": "", "examples": [{"en": "Heavy snow ★ed the Hogwarts Express.", "ko": "폭설이 호그와트 급행열차의 운행을 가로막았다."}], "definitionKo": "어떤 일의 진행을 늦추거나 지연시키다"}, {"term": "inhibit", "pos": "v", "definition": "1. To prevent someone from doing something by making them feel nervous or embarrassed; 2. To slow down a process or the growth of something", "pattern": "", "examples": [{"en": "His fear of heights ★ed him from trying out the rollercoaster.", "ko": "고소공포증이 그를 위축시켜서(안에서 억제해서) 롤러코스터를 타지 못하게 만들었다."}, {"en": "This drug ★s the growth of tumours.", "ko": "이 약은 종양의 성장을 억제합니다."}], "definitionKo": "1. 누군가를 긴장·부끄럽게 만들어 어떤 행동을 못 하게 하다; 2. 과정이나 성장을 늦추다"}, {"term": "hamper", "pos": "v", "definition": "To prevent someone doing something easily", "pattern": "", "examples": [{"en": "Bad weather ★ed the rescue efforts.", "ko": "악천후가 구조 작업을 방해했다."}], "definitionKo": "누군가가 어떤 일을 쉽게 하지 못하도록 방해하다"}, {"term": "hinder", "pos": "v", "definition": "To limit the ability of someone to do something, or to limit the development of something", "pattern": "", "examples": [{"en": "A poor diet can ★ mental and physical growth.", "ko": "부실한 식단은 정신적, 육체적 성장을 저해할[방해할] 수 있다."}], "definitionKo": "누군가의 능력이나 무언가의 발전을 제한하다"}, {"term": "thwart", "pos": "v", "definition": "To successfully stop someone or something; to prevent something from happening", "pattern": "", "examples": [{"en": "The villain spent three years building a powerful bomb, only to have his evil plans ★ed by a single typo: typing blast_earth() instead of blast_Earth().", "ko": "그 악당은 3년 동안 강력한 폭탄을 만들었지만, blast_Earth() 대신 blast_earth()라고 입력한 단 하나의 오타 때문에 그의 사악한 계획은 좌절되고 말았다."}], "definitionKo": "누군가·무언가를 성공적으로 저지하다; 어떤 일이 일어나지 못하게 막다"}, {"term": "stymie", "pos": "v", "definition": "To present an obstacle to; stand in the way of", "pattern": "", "examples": [{"en": "Red tape ★d the project.", "ko": "복잡한 행정 절차가 프로젝트를 가로막았습니다."}], "definitionKo": "장애물을 놓다; 가로막다"}, {"term": "undermine", "pos": "v", "definition": "To gradually damage or weaken something or someone", "pattern": "", "examples": [{"en": "His constant criticism ★d her confidence.", "ko": "그의 끊임없는 비판이 그녀의 자신감을 약화시켰다."}], "definitionKo": "서서히 무언가·누군가를 손상시키거나 약화시키다"}, {"term": "compromise", "pos": "v", "definition": "1. To reach an agreement where both sides give up part of their demands to find middle ground; 2. To put something (like safety, reputation, security, or health) in a vulnerable or harmful position.", "pattern": "", "examples": [{"en": "The two sides were unwilling to ★.", "ko": "양측은 타협할 의지가 없었다."}, {"en": "The hacker ★d the security of the system.", "ko": "해커가 시스템의 보안을 위태롭게 했다."}], "definitionKo": "1. 양측이 요구를 일부 양보해 합의에 이르다; 2. 안전·평판·보안·건강 등을 취약하거나 위험한 상태로 만들다"}, {"term": "crude", "pos": "adj", "definition": "Unfinished; rough (as in rough draft)", "pattern": "", "examples": [{"en": "The pirate drew a ★ map showing where the treasure was buried.", "ko": "해적은 보물을 묻은 곳이 적힌 엉성한(대충 그린) 지도를 그렸습니다."}, {"en": "His ★ jokes made everyone uncomfortable.", "ko": "그의 저속한/거친 농담은 모든 사람을 불편하게 했다."}], "definitionKo": "미완성의; 대충 만든(초안처럼)"}, {"term": "makeshift", "pos": "adj", "definition": "Serving as a temporary substitute", "pattern": "", "examples": [{"en": "They built a ★ shelter from branches.", "ko": "그들은 나뭇가지로 임시 방편의 쉼터를 만들었다."}], "definitionKo": "임시 대용으로 쓰이는"}, {"term": "rudimentary", "pos": "adj", "definition": "Basic or simple in form", "pattern": "", "examples": [{"en": "He has only a ★ knowledge of French.", "ko": "그는 프랑스어에 대해 기초적인 지식만 가지고 있다."}], "definitionKo": "형태가 기초적이거나 단순한"}, {"term": "exacerbate", "pos": "v", "definition": "To make more severe", "pattern": "", "examples": [{"en": "Jerry's taunts ★d the situation.", "ko": "제리의 조롱이 상황을 악화시켰다."}], "definitionKo": "더 심각하게 만들다"}, {"term": "aggravate", "pos": "v", "definition": "1. To make more severe; 2. To make someone angry/irritated, especially by bothering them again and again", "pattern": "", "examples": [{"en": "Jerry's taunts ★d the situation.", "ko": "제리의 조롱이 상황을 악화시켰다."}, {"en": "Jerry's taunts ★d Tom.", "ko": "제리의 조롱이 톰을 화나게(짜증 나게) 만들었다."}], "definitionKo": "1. 더 심각하게 만들다; 2. 특히 반복적으로 괴롭혀 누군가를 화나게·짜증나게 만들다"}, {"term": "endanger", "pos": "v", "definition": "To cause (someone) to be in danger", "pattern": "", "examples": [{"en": "Pollution ★s marine life.", "ko": "오염은 해양 생물을 위험에 빠뜨린다."}], "definitionKo": "누군가를 위험에 빠뜨리다"}, {"term": "jeopardize", "pos": "v", "definition": "To put someone or something in danger or at risk", "pattern": "", "examples": [{"en": "His reckless actions could ★ the mission.", "ko": "그의 무모한 행동은 임무를 위태롭게 할 수 있다."}], "definitionKo": "누군가·무언가를 위험이나 위기에 처하게 하다"}, {"term": "adverse", "pos": "adj", "definition": "Unfavorable or harmful; preventing or opposing success", "pattern": "", "examples": [{"en": "The project was delayed due to ★ weather.", "ko": "불리한 기상 조건 때문에 프로젝트가 지연되었다."}], "definitionKo": "불리하거나 해로운; 성공을 막거나 방해하는"}, {"term": "detrimental", "pos": "adj", "definition": "Tending to cause harm; to have a negative effect", "pattern": "", "examples": [{"en": "Smoking has a ★ effect on health.", "ko": "흡연은 건강에 해로운 영향을 준다."}], "definitionKo": "해를 끼치는 경향이 있는; 부정적인 영향을 미치는"}, {"term": "insidious", "pos": "adj", "definition": "Subtle and dangerous; gradual and harmful", "pattern": "", "examples": [{"en": "Corruption is an ★ problem that destroys trust in society.", "ko": "부패는 사회적 신뢰를 서서히 좀먹는(은밀하게 파괴하는) 문제다."}], "definitionKo": "은밀하고 위험한; 서서히 해를 끼치는"}, {"term": "pernicious", "pos": "adj", "definition": "Extremely harmful or wicked", "pattern": "", "examples": [{"en": "★ lies spread quickly on social media.", "ko": "해로운 거짓말이 소셜 미디어에서 빠르게 퍼진다."}], "definitionKo": "극도로 해롭거나 악의적인"}, {"term": "bane", "pos": "n", "definition": "Something that causes a great nuisance", "pattern": "★ of something", "examples": [{"en": "Traffic jams are the ★ of city life.", "ko": "교통 체증은 도시 생활의 골칫거리다."}], "definitionKo": "큰 골칫거리를 유발하는 것"}]}, "2": {"title": "Prove It!", "words": [{"term": "speculate", "pos": "v", "definition": "to develop a conclusion without knowing the facts.", "pattern": "", "examples": [{"en": "Looking at the empty plate, six-year-old Timmy ★d that the cake had vanished by magic. His older brother, Greg, said he saw it happen.", "ko": "빈 접시를 보고, 여섯 살 티미는 케이크가 마법처럼 사라졌다고 억측했다. 그의 형 그렉은 자기가 그 장면을 직접 봤다고 말했다."}], "definitionKo": "사실을 모른 채로 결론을 내리다; 억측하다"}, {"term": "surmise", "pos": "v", "definition": "to make an educated guess based on incomplete information", "pattern": "", "examples": [{"en": "Kate ★d from Greg's shaky voice that he wasn't just a witness.", "ko": "케이트는 그렉의 떨리는 목소리에서 그가 단순한 목격자가 아님을 짐작했다."}], "definitionKo": "불충분한 정보를 바탕으로 근거 있는 추측을 하다"}, {"term": "presume", "pos": "v", "definition": "to believe something to be true because it is very likely, although you are not certain", "pattern": "", "examples": [{"en": "Given his track record of eating desserts alone, she ★d Greg was guilty.", "ko": "혼자 디저트를 다 먹어 버리던 그의 전력을 고려할 때, 그렉에게 혐의가 있다고 추측했다."}], "definitionKo": "확실하지 않지만 가능성이 매우 높아서 사실이라고 믿다; 추정하다"}, {"term": "conjecture", "pos": "n", "definition": "a conclusion formed without supporting evidence", "pattern": "", "examples": [{"en": "Kate dismissed Greg's \"I saw it disappear\" story as mere ★, with zero evidence.", "ko": "케이트는 그렉의 \"사라지는 걸 봤다\"는 이야기를 아무 증거 없는 억측으로 일축했다."}], "definitionKo": "뒷받침하는 증거 없이 내린 결론; 억측"}, {"term": "supposition", "pos": "n", "definition": "a belief based on limited evidence (from: to suppose)", "pattern": "", "examples": [{"en": "In fact, Greg's plan rested on one shaky ★: Kate would not intervene.", "ko": "사실 그렉의 계획은 허술한 가정 하나에 달려 있었다. 바로 케이트가 개입하지 않을 것이라는 점이었다."}], "definitionKo": "제한된 증거에 근거한 믿음; 가정"}, {"term": "hypothesize", "pos": "v", "definition": "to propose a possible explanation", "pattern": "", "examples": [{"en": "Kate ★d that the stains on Greg's T-shirt came from the frosting.", "ko": "케이트는 그렉의 티셔츠에 생긴 얼룩이 케이크 크림 때문일 것이라고 가설을 세웠다."}], "definitionKo": "가능한 설명을 가설로 제시하다"}, {"term": "postulate", "pos": "v", "definition": "To assume a basic rule as true so you can build an argument on top of it.", "pattern": "", "examples": [{"en": "Kate ★d that Greg always wipes his hands on his T-shirt; therefore, the frosting must be from his fingers.", "ko": "케이트는 그렉이 항상 티셔츠에 손을 닦는다는 것을 기본 전제로 삼았고, 따라서 그 얼룩은 그의 손가락에서 묻은 것이 틀림없다는 결론을 내렸다."}], "definitionKo": "논리를 세우기 위해 기본 규칙을 사실이라고 가정하다"}, {"term": "posit", "pos": "v", "definition": "to put forward a fact, idea, or theory as a suggestion or the basis for an argument. Think of it as \"positioning\" an idea on the table for people to consider.", "pattern": "", "examples": [{"en": "Desperate for an excuse, Greg ★ed that their dog ate the cake.", "ko": "변명이 급해진 그렉은 그들의 강아지가 케이크를 먹었을 것이라는 주장을 내놓았다."}], "definitionKo": "사실·생각·이론을 논의의 근거로 내놓다, 제시하다"}, {"term": "contend", "pos": "v", "definition": "to claim something is true, especially during an active conflict or debate.", "pattern": "", "examples": [{"en": "Greg ★ed that the frosting on his shirt was yesterday's.", "ko": "그렉은 셔츠에 묻은 크림이 어제 것이라고 강하게 주장했다."}], "definitionKo": "특히 논쟁 중에 무언가가 사실이라고 강하게 주장하다"}, {"term": "maintain", "pos": "v", "definition": "to keep holding the same position over time, consistently and without changing your mind", "pattern": "", "examples": [{"en": "Even after Kate showed him the evidence, he ★ed his innocence.", "ko": "케이트가 증거를 제시한 후에도 그는 결백함을 일관되게 고수했다."}], "definitionKo": "시간이 지나도 입장을 바꾸지 않고 일관되게 고수하다; 주장하다"}, {"term": "grapple", "pos": "v", "definition": "to engage in a mental or intellectual struggle", "pattern": "★ with", "examples": [{"en": "Timmy was still ★ing with how an entire cake could vanish into thin air.", "ko": "티미는 어떻게 케이크 한 판이 감쪽같이 사라질 수 있는지 이해하려 여전히 애쓰고 있었다."}], "definitionKo": "정신적으로 씨름하다, 이해하려 애쓰다"}, {"term": "delve", "pos": "v", "definition": "to explore thoroughly for a deeper understanding, often with great effort", "pattern": "★ into something", "examples": [{"en": "Kate ★d into the trash can for clues.", "ko": "케이트는 단서를 찾아 쓰레기통을 파고들었다."}], "definitionKo": "깊이 있는 이해를 위해 철저히 파고들다"}, {"term": "peruse", "pos": "v", "definition": "to read something very carefully (can also mean to read in a relaxed way)", "pattern": "", "examples": [{"en": "Greg pretended to ★ his book to avoid eye contact with Kate.", "ko": "그렉은 케이트와 눈을 마주치지 않으려고 책을 꼼꼼히 읽는 척했다."}], "definitionKo": "매우 꼼꼼히 읽다(여유롭게 훑어 읽다는 뜻도 있음)"}, {"term": "scrutinize", "pos": "v", "definition": "to closely and thoroughly investigate or examine something", "pattern": "", "examples": [{"en": "She ★d Greg's shirt under the light.", "ko": "그녀는 불빛 아래에서 그렉의 셔츠를 세밀히 조사했다."}], "definitionKo": "면밀하고 철저하게 조사·검토하다"}, {"term": "heed", "pos": "v", "definition": "to listen to 주의를 기울이다, 경청하다", "pattern": "", "examples": [{"en": "Jonah warned his friends to ★ the storm warning, but Theo laughed it off.", "ko": "조나는 친구들에게 폭풍 경보에 주의를 기울이라고 경고했지만, 테오는 웃어넘겼다."}], "definitionKo": "귀 기울이다, 주의를 기울이다"}, {"term": "observe", "pos": "v", "definition": "Besides \"to watch something carefully,\" observe can also mean to follow/obey a rule.", "pattern": "", "examples": [{"en": "Priya, always the rule-follower, insisted they ★ the \"no hiking in storms\" rule and turn back.", "ko": "늘 규칙을 지키는 프리야는 \"폭풍 속 등산 금지\" 규칙을 준수하고 돌아가야 한다고 주장했다."}], "definitionKo": "주의 깊게 관찰하다; (규칙을) 준수하다"}, {"term": "calculate", "pos": "v", "definition": "to determine based on careful consideration or estimation", "pattern": "", "examples": [{"en": "Given their pace, Priya ★d they could reach camp before the storm hit.", "ko": "그들의 속도를 고려할 때, 프리야는 폭풍이 오기 전에 캠프에 도착할 수 있다고 계산했다."}], "definitionKo": "신중한 고려나 추산을 바탕으로 판단하다; 계산하다"}, {"term": "formulate", "pos": "v", "definition": "to create something with systematic thought", "pattern": "", "examples": [{"en": "But it started raining faster than expected. Jonah had to ★ a backup plan.", "ko": "하지만 비가 예상보다 빨리 내리기 시작했다. 조나는 대안을 수립해야 했다."}], "definitionKo": "체계적인 사고를 통해 만들어 내다; 수립하다"}, {"term": "devise", "pos": "v", "definition": "to plan or invent by careful thought", "pattern": "", "examples": [{"en": "Priya quickly ★d a flashlight signal to keep everyone together.", "ko": "프리아는 모두가 함께 다닐 수 있도록 손전등 신호를 빠르게 고안했다."}], "definitionKo": "신중히 생각하여 계획하거나 고안하다"}, {"term": "appraise", "pos": "v", "definition": "to evaluate the worth, importance, or value of something", "pattern": "", "examples": [{"en": "Jonah appraised their gear, deciding if it was sturdy enough for the storm.", "ko": "조나는 폭풍을 견딜 만큼 튼튼한지 판단하려고 그들의 장비를 평가했다."}], "definitionKo": "가치·중요성을 평가하다"}, {"term": "gauge", "pos": "v", "definition": "to measure something precisely", "pattern": "", "examples": [{"en": "Theo tried to ★ the river's depth with a stick, but it was too deep to cross.", "ko": "테오는 막대기로 강의 깊이를 가늠해 보려했지만, 건너기엔 너무 깊었다."}], "definitionKo": "정확하게 측정하다, 가늠하다"}, {"term": "predicate", "pos": "v", "definition": "to base an action/theory/statement on a condition or belief. Similar to be \"based on\" or \"dependent on.\"", "pattern": "be ★d on/upon", "examples": [{"en": "Their new route was ★d on the rain stopping soon.", "ko": "그들이 새로 정한 경로는 비가 곧 그칠 것이라는 전제에 기반한 것이었다."}], "definitionKo": "행동·이론·진술을 어떤 조건이나 믿음에 근거를 두다"}, {"term": "extrapolate", "pos": "v", "definition": "to predict or infer from given data or past experience", "pattern": "★ from", "examples": [{"en": "Priya ★d from the rising river levels that a flood would occur within the hour.", "ko": "프리아는 상승하는 강물 수위로부터 한 시간 내에 홍수가 발생할 것이라고 추정해 냈다."}], "definitionKo": "주어진 데이터나 과거 경험을 바탕으로 예측·추정하다"}, {"term": "deduce", "pos": "v", "definition": "to conclude through the use of logic", "pattern": "", "examples": [{"en": "Jonah saw fresh tracks. He ★d a bear had just passed through.", "ko": "조나는 신선한 발자국을 보았다. 그는 곰이 방금 지나갔다고 추론했다."}], "definitionKo": "논리를 통해 결론을 내리다; 추론하다"}, {"term": "ascertain", "pos": "v", "definition": "to find out; determine something with certainty", "pattern": "", "examples": [{"en": "Alarmed, he stopped to ★ exactly how close the bear might be.", "ko": "놀란 그는 곰이 얼마나 가까이 있는지 확인하기 위해 멈췄다."}], "definitionKo": "확실하게 알아내다, 확인하다"}, {"term": "determine", "pos": "v", "definition": "to decide something using facts", "pattern": "", "examples": [{"en": "Using her compass, Priya helped the group ★ a safer path around the bear.", "ko": "나침반을 사용해, 프리아는 그들이 곰을 우회하는 더 안전한 경로를 확실히 결정하도록 도왔다."}], "definitionKo": "사실에 근거하여 결정하다"}, {"term": "epiphany", "pos": "n", "definition": "a sudden realization", "pattern": "have an ★ about something", "examples": [{"en": "Suddenly, Theo had an ★: his rope could be used for climbing, not just tying gear.", "ko": "문득, 테오는 머리속을 스치는 번뜩이는 깨달음이 있었다. 그의 밧줄은 장비를 묶는 것뿐만 아니라 등반에도 쓰일 수 있었다."}], "definitionKo": "갑작스러운 깨달음"}, {"term": "revelation", "pos": "n", "definition": "the sudden reveal of a surprising (previously unknown) fact", "pattern": "", "examples": [{"en": "When Theo shared it with the group, the ★ came just in time, right before a steep climb.", "ko": "테오가 이를 일행에게 공유했을 때, 그 새로운 발견(드러난 사실)은 가파른 등반을 앞두고 절묘한 타이밍에 찾아온 것이었다."}], "definitionKo": "몰랐던 놀라운 사실이 갑자기 드러남; 뜻밖의 발견, 폭로"}, {"term": "feasible", "pos": "adj", "definition": "capable of being achieved; likely or probable", "pattern": "", "examples": [{"en": "The rocks were too slippery. Climbing them bare-handed was not ★ in the storm.", "ko": "바위가 너무 미끄러웠다. 맨손으로 바위를 오르는 것은 폭풍 속에서 실현 가능하지 않았다."}], "definitionKo": "실현 가능한; 실행할 수 있는"}, {"term": "viable", "pos": "adj", "definition": "workable, sustainable", "pattern": "", "examples": [{"en": "To pass the rocks and reach the shelter, using Theo's rope was the only ★ choice left.", "ko": "바위를 넘어 대피소에 도달하려면 테오의 로프를 사용하는 것만이 남겨진 유일하게 유효한 선택지였다."}], "definitionKo": "실행 가능하고 지속 가능한; 성공할 수 있는"}, {"term": "plausible", "pos": "adj", "definition": "unproven but still capable of being true or possible", "pattern": "", "examples": [{"en": "In the courtroom, Elena, the prosecutor, tried to prove Derek's guilt, while Vanessa, his defense attorney, fought to protect him. Given his alibi, Derek's story sounded ★ at first.", "ko": "법정에서 검사인 엘레나는 데릭의 유죄를 증명하려 했고, 그의 변호사인 바네사는 그를 지키기 위해 싸웠다. 그의 알리바이를 고려할 때, 데릭의 이야기는 처음에는 그럴듯하게 들렸다."}], "definitionKo": "증명되지는 않았지만 사실일 가능성이 있는; 그럴듯한"}, {"term": "tenable", "pos": "adj", "definition": "able to be maintained or defended", "pattern": "", "examples": [{"en": "But once Elena analyzed the evidence, his story was no longer ★.", "ko": "하지만 엘레나가 증거를 분석하자, 그의 이야기는 더 이상 유지될 수 없었다."}], "definitionKo": "(주장 등이) 유지되거나 방어될 수 있는"}, {"term": "contradict", "pos": "v", "definition": "to assert the opposite; to deny the truth", "pattern": "", "examples": [{"en": "In fact, Derek's new statement seemed to ★ what he'd said before.", "ko": "사실, 데릭의 새로운 진술은 이전에 한 말과 모순되는 것 같았다."}], "definitionKo": "반대되는 것을 주장하다; 모순되다"}, {"term": "rebut", "pos": "v", "definition": "to argue that a statement or claim is not true", "pattern": "", "examples": [{"en": "Vanessa stood up quickly to ★ Elena's point, her voice booming through the courtroom.", "ko": "법정에 목소리를 쩌렁쩌렁 울리며, 바네사는 엘레나의 주장을 반박하기 위해 재빨리 일어섰다."}], "definitionKo": "진술이나 주장이 사실이 아니라고 반박하다"}, {"term": "refute", "pos": "v", "definition": "to prove with facts/evidence that something is wrong/false", "pattern": "", "examples": [{"en": "Armed with security footage, Elena ★d Derek's excuse.", "ko": "보안 영상을 무기 삼아(앞세워), 엘레나는 데릭의 변명을 반증했다."}], "definitionKo": "증거로 무언가가 틀렸음을 입증하다; 반증하다"}, {"term": "demonstrate", "pos": "v", "definition": "to show or prove something clearly and convincingly", "pattern": "", "examples": [{"en": "The footage ★d the contradiction in Derek's excuse and made Elena's case airtight.", "ko": "그 영상은 데릭의 변명 안에 있는 모순을 입증했고, 엘레나의 케이스(주장)를 빈틈없게(공기 하나 새지 못하게) 만들었다."}], "definitionKo": "명확하고 설득력 있게 보여주거나 증명하다"}, {"term": "establish", "pos": "v", "definition": "show to be true; certain by determining the facts", "pattern": "", "examples": [{"en": "Determined to save Derek's case, Vanessa tried to ★ a new timeline.", "ko": "데릭의 사건을 살리기로 결심한 바네사는 새로운 타임라인을 확립하려 했다."}], "definitionKo": "사실을 확인하여 참임을 밝히다; 확립하다"}, {"term": "substantiate", "pos": "v", "definition": "to use proof or evidence to support a claim", "pattern": "", "examples": [{"en": "Elena calmly ★d her claim with witness statements.", "ko": "엘레나는 목격자 진술로 그녀의 주장을 침착하게 뒷받침했다."}], "definitionKo": "증거로 주장을 뒷받침하다"}, {"term": "validate", "pos": "v", "definition": "to check the validity of something", "pattern": "", "examples": [{"en": "Then, a second video ★d the witness's account.", "ko": "그 후, 두 번째 영상이 목격자의 이야기를 검증해주었다."}], "definitionKo": "타당성을 검증하다"}, {"term": "corroborate", "pos": "v", "definition": "to confirm or support an explanation, statement or theory", "pattern": "", "examples": [{"en": "This clearer footage ★d the entire timeline of the crime.", "ko": "더 선명한 이 영상은 범죄의 전체 타임라인을 뒷받침해 주었다."}], "definitionKo": "설명·진술·이론을 확인하거나 뒷받침하다"}, {"term": "affirm", "pos": "v", "definition": "to state or declare positively, often with strong belief or authority", "pattern": "", "examples": [{"en": "When Vanessa questioned the footage, Judge Walter overruled the objection and ★d that the evidence was legally admissible.", "ko": "바네사가 영상에 의문을 제기하자, 월터 판사는 이의를 기각하고 해당 증거가 법적으로 채택 가능하다고 확언했다."}], "definitionKo": "확신을 가지고 단호하게 진술·선언하다; 확언하다"}, {"term": "be (a) testament to", "pos": "v", "definition": "to prove that something exists or is true [be (a) testamant to]", "pattern": "", "examples": [{"en": "Vanessa’s sudden silence was ★ how devastating this new evidence was for Derek.", "ko": "바네사의 갑작스러운 침묵은 이 새로운 증거가 데릭에게 얼마나 치명적인지를 보여주었다."}], "definitionKo": "무언가의 존재나 사실을 입증하다, 보여주다"}, {"term": "evince", "pos": "v", "definition": "to be evidence of; indicate", "pattern": "", "examples": [{"en": "Derek's shaking hands ★d his anxiety.", "ko": "데릭의 떨리는 손이 그의 불안감을 드러냈다."}], "definitionKo": "무언가의 증거가 되다; 드러내다"}, {"term": "rational", "pos": "adj", "definition": "having the ability to reason well", "pattern": "", "examples": [{"en": "Elena remained entirely ★ in her arguments, even as Vanessa grew red-faced and more aggressive.", "ko": "바네사가 얼굴이 붉어질 정도로 흥분하고 더욱 공격적으로 나와도, 엘레나는 자신의 변론에 있어 철저히 이성적인 상태를 유지했다."}], "definitionKo": "이성적으로 잘 판단할 수 있는"}, {"term": "analytical", "pos": "adj", "definition": "using logical reasoning to examine something", "pattern": "", "examples": [{"en": "Her ★ eye had caught the one detail from the security footage that everyone else missed.", "ko": "그녀의 분석적인 눈은 보안 영상에서 다른 모두가 놓친 단 하나의 세부사항을 포착했던 것이었다."}], "definitionKo": "논리적 추론을 이용해 분석하는"}, {"term": "sound", "pos": "adj", "definition": "based on solid reasoning or evidence", "pattern": "", "examples": [{"en": "Judge Walter, never one for compliments, admitted her reasoning was ★.", "ko": "칭찬에 인색한 월터 판사조차 그녀의 논리가 타당하다고 인정했다."}], "definitionKo": "탄탄한 근거나 논리에 기반한; 타당한"}, {"term": "compelling", "pos": "adj", "definition": "convincing; difficult to argue against", "pattern": "", "examples": [{"en": "Given the overwhelming evidence, the jury found the case ★.", "ko": "압도적인 증거를 고려할 때, 배심원단은 그 사건이 설득력 있다고 판단했다."}], "definitionKo": "설득력 있는; 반박하기 어려운"}, {"term": "cogent", "pos": "adj", "definition": "logical and convincing, esp. of an idea or argument", "pattern": "", "examples": [{"en": "In the end, Elena's ★ arguments won the trial, and even Vanessa shook her hand.", "ko": "결국, 엘레나의 논리적이고 설득력 있는 논거가 재판에서 승리를 가져왔고, 바네사조차 그녀와 악수를 나눴다."}], "definitionKo": "논리적이고 설득력 있는(특히 생각·논거가)"}]}, "3": {"title": "Beliefs", "words": [{"term": "promote", "pos": "v", "definition": "to support or actively encourage", "pattern": "", "examples": [{"en": "Zach's campaign for School President aimed to ★ one cause: Pizza Day, every Friday, no exceptions.", "ko": "잭의 전교 회장 캠페인은 단 하나의 목표를 장려하는 데 있었다: 매 주 금요일, 예외 없이 피자데이."}], "definitionKo": "지지하거나 장려하다; 홍보하다"}, {"term": "advocate", "pos": "v", "definition": "to argue on behalf of someone or in support of", "pattern": "★ for someone/something", "examples": [{"en": "He asked the student council to ★ for his plan, with a chart \"proving\" pizza boosted morale.", "ko": "그는 학생회에 자신의 계획을 지지해 달라고 요청하며, 피자가 사기를 높인다는 것을 \"증명하는\" 차트를 보여주었다."}], "definitionKo": "공개적으로 지지하거나 옹호하다"}, {"term": "endorse", "pos": "v", "definition": "to declare public support or approval", "pattern": "", "examples": [{"en": "The school newspaper ★d his campaign after the reporter admitted she just wanted pizza too.", "ko": "학교 신문은 그의 선거 운동을 지지했는데, 기자가 자신 역시 단지 피자를 원했을 뿐이라고 인정한 후였다."}], "definitionKo": "공식적으로 지지·승인을 표명하다"}, {"term": "champion", "pos": "v", "definition": "to support, defend, or fight for a particular cause or belief", "pattern": "", "examples": [{"en": "He ★ed weekly Pizza Day as his signature promise, printed in size-72 font on every flyer.", "ko": "그는 매주 피자 데이를 자신의 대표 공약으로 내세우며, 모든 전단지에 72포인트 글씨로 인쇄했다."}], "definitionKo": "적극적으로 옹호하고 옹호자로서 앞장서다"}, {"term": "proponent", "pos": "n", "definition": "a person who advocate for a particular idea or cause", "pattern": "★ of something", "examples": [{"en": "His best friend Cedric was an avid ★, handing out flyers at lunch.", "ko": "그의 가장 친한 친구인 세드릭은 열렬한 지지자였으며, 점심시간에 전단지를 나누어 주었다."}], "definitionKo": "특정 생각이나 대의를 지지하는 사람; 지지자"}, {"term": "opponent", "pos": "n", "definition": "a person who competes against or opposes someone else, especially in a contest, debate, or conflict.", "pattern": "★ of something", "examples": [{"en": "Zach's ★ ran a rival campaign under the slogan \"Taco Tuesdays.\"", "ko": "잭의 상대 후보는 \"타코 화요일\"이라는 슬로건으로 경쟁 캠페인을 벌였다."}], "definitionKo": "반대하는 사람; 상대편"}, {"term": "inclination", "pos": "n", "definition": "a liking or preference; a tendency to act or behave a certain way", "pattern": "★ for", "examples": [{"en": "Myra didn't know who to vote for, but her natural ★ leaned toward Mexican food.", "ko": "마이라는 누구에게 투표해야 할지 몰랐지만, 그녀의 자연스러운 성향은 멕시코 음식 쪽으로 기울어 있었다."}], "definitionKo": "무언가를 하고 싶어하는 경향이나 성향"}, {"term": "predilection", "pos": "n", "definition": "a preference or strong like for something", "pattern": "★ for something", "examples": [{"en": "Cedric had a ★ for over-the-top stunts, like wearing a pepperoni costume every day for a month.", "ko": "세드릭은 한 달 내내 매일 페퍼로니 의상을 입는 것 같은 과한 이벤트를 유독 좋아했다."}], "definitionKo": "특정한 것을 특별히 선호하는 성향, 취향"}, {"term": "propensity", "pos": "n", "definition": "a natural tendency to do something", "pattern": "★ to do something", "examples": [{"en": "He also had a ★ to get his zipper stuck and show up late to school in that costume.", "ko": "그는 또한 지퍼가 걸려 그 의상을 입은 채 학교에 지각하는 경향도 있었다."}], "definitionKo": "특정 방식으로 행동하는 자연스러운 경향, 성향(대개 부정적인 것에 사용)"}, {"term": "vow", "pos": "v", "definition": "to make a solemn promise (carries more personal, emotional weight, i.e. a ★ to another person, a wedding ★)", "pattern": "", "examples": [{"en": "To Cedric, Zach ★d to buy him all the pizza he wanted for the rest of the semester.", "ko": "잭은 세드릭에게 이번 학기 남은 기간 동안 원하는 만큼 피자를 다 사주겠다고 맹세했다."}], "definitionKo": "진지하게 하겠다고 다짐하는 약속; 맹세하다"}, {"term": "pledge", "pos": "v", "definition": "to make a solemn promise (carries a more formal or public commitment, i.e. ★ allegiance, ★ money)", "pattern": "", "examples": [{"en": "To the student body, he ★d never to cancel Pizza Day, even during testing week.", "ko": "그는 전교생에게 시험 기간에도 피자 데이를 취소하지 않겠다고 공약했다."}], "definitionKo": "공식적으로 하겠다고 약속하다; 서약하다"}, {"term": "adhere", "pos": "v", "definition": "to stick to or comply with (a rule, plan, or belief)", "pattern": "★ to", "examples": [{"en": "Once elected, he ★d to that promise, negotiating hard when the school tried \"Salad Friday\" instead.", "ko": "당선된 후, 그는 학교가 \"샐러드 금요일\"로 바꾸려 하자 강하게 협상하며 그 약속을 지켰다."}], "definitionKo": "규칙·믿음·계획 등을 고수하다, 지키다"}, {"term": "ideology", "pos": "n", "definition": "a system of beliefs", "pattern": "", "examples": [{"en": "Aldric built a commune around a singular ★: toes must be freed from shoes.", "ko": "알드릭은 '발가락은 신발에서 해방되어야 한다'는 단 하나의 이념을 바탕으로 공동체를 건설했다."}], "definitionKo": "한 집단이 공유하는 신념과 사상의 체계"}, {"term": "doctrine", "pos": "n", "definition": "a set of principles in a system or belief", "pattern": "", "examples": [{"en": "New members had to accept the group's strict ★ of walking on hot gravel every day, \"to harden both the sole and soul.\"", "ko": "새 회원들은 \"발바닥과 영혼을 모두 단련하기 위해\" 매일 뜨거운 자갈 위를 걷는 그 단체의 엄격한 교리를 받아들여야 했다."}], "definitionKo": "종교·정치 집단이 진리로 가르치고 믿는 원칙들; 교리"}, {"term": "principle", "pos": "n", "definition": "a fundamental truth, rule, or standard that guides behavior or reasoning.", "pattern": "", "examples": [{"en": "Aldric did not adhere to this ★ and secretly wore padded socks inside his cabin.", "ko": "알드릭은 이 원칙을 지키지 않고 오두막 안에서 몰래 푹신한 양말을 신었다."}], "definitionKo": "행동이나 판단의 기초가 되는 근본 규칙이나 신념; 원칙"}, {"term": "forsake", "pos": "v", "definition": "to leave or abandon, esp. someone/something valued or loved", "pattern": "", "examples": [{"en": "When his own daughter discovered his hypocrisy, she chose to ★ the commune entirely.", "ko": "그의 딸이 그의 위선을 발견했을 때, 그녀는 공동체를 완전히 버리기로 결정했다."}], "definitionKo": "완전히 버리다, 포기하다(사람이나 신념을)"}, {"term": "renounce", "pos": "v", "definition": "to abandon or give something up, \nesp. formally and voluntarily", "pattern": "", "examples": [{"en": "When angry believers asked him to explain, Aldric ★d his title as \"Barefoot Sage.\"", "ko": "화가 난 신도들이 해명을 요구하자, 알드릭은 스스로 \"맨발의 현자\"라는 칭호를 포기했다."}], "definitionKo": "공식적으로 포기하겠다고 선언하다(믿음·지위 등을)"}, {"term": "recant", "pos": "v", "definition": "to withdraw or disavow a statement or belief, usually in a public or formal manner", "pattern": "", "examples": [{"en": "He tried to ★ that statement a week later, after publishing a hand-written apology.", "ko": "일주일 후, 그는 손으로 쓴 사과문을 발표하며 그 발언을 철회하려 했다."}], "definitionKo": "이전에 말했던 것이 틀렸다고 공개적으로 철회하다"}, {"term": "repudiate", "pos": "v", "definition": "to refuse to accept, deny the truth of, or formally disown something or someone", "pattern": "", "examples": [{"en": "With Aldric's hypocrisy exposed, the council ★d his authority, exiled him, and changed the commune's Wi-Fi password.", "ko": "그의 위선이 폭로되자, 위원회는 그의 권위를 거부하고 그를 추방한 뒤 공동체의 와이파이 비밀번호를 바꿔버렸다"}], "definitionKo": "무언가를 사실·타당하다고 인정하기를 거부하다; 부인하다"}, {"term": "dubious", "pos": "adj", "definition": "something being questionable/suspect (ex. a dubious claim) or someone feeling doubtful about something's truth or quality", "pattern": "", "examples": [{"en": "Aldric reached out to the local news, but reporter Sana found his claims ★.", "ko": "알드릭은 지역 뉴스에 연락했지만, 사나 기자는 그의 주장이 미심쩍다고 생각했다."}], "definitionKo": "의심스러운, 확신이 서지 않는"}, {"term": "incredulous", "pos": "adj", "definition": "unwilling to believe something as the truth because it is very surprising or shocking", "pattern": "", "examples": [{"en": "She was ★ that Aldric really had spiritual powers as he claimed.", "ko": "그녀는 알드릭이 주장한 대로 정말로 영적 능력을 가지고 있다는 사실을 믿을 수 없어 했다."}], "definitionKo": "믿을 수 없어 하는, 회의적인(놀라움을 동반)"}, {"term": "skeptical", "pos": "adj", "definition": "doubtful; not easily or willingly convinced of something", "pattern": "", "examples": [{"en": "Most readers of her article were ★ too. It was hard to believe that a man exiled over padded socks had any spiritual powers.", "ko": "그녀의 기사를 읽은 대부분의 독자들 역시 회의적이었다. 푹신한 양말 때문에 추방당한 남자가 그 어떤 영적 능력이라도 가지고 있다는 것은 믿기 어려웠다."}], "definitionKo": "쉽게 믿지 않고 의심하는; 회의적인"}, {"term": "reservation", "pos": "n", "definition": "a feeling of doubt or hesitation about a plan, idea, or decision", "pattern": "~have ★s about~", "examples": [{"en": "Time was running out. Spider-Man, Peter Parker, had serious ★s about his choice: he had to save twenty strangers and let his best friend die.", "ko": "시간이 얼마 남지 않았다. 스파이더맨인 피터 파커는 자신의 선택을 두고 심각한 주저함을 느꼈다. 낯선 사람 20명을 구하고 가장 친한 친구는 죽게 내버려둬야만 했던 것이다."}], "definitionKo": "완전히 동의하지 않아서 갖는 의구심이나 망설임"}, {"term": "indecisive", "pos": "adj", "definition": "having difficulty making decisions", "pattern": "", "examples": [{"en": "Peter was ★ and could not move.", "ko": "피터는 우유부단하고 움직일 수 없었다."}], "definitionKo": "결정을 잘 내리지 못하는, 우유부단한"}, {"term": "ambivalent", "pos": "adj", "definition": "uncertain or indecisive; having contradictory feelings or thoughts", "pattern": "", "examples": [{"en": "He felt ★ about his power. How could he be a superhero if he couldn't save his closest friend?", "ko": "그는 자신의 힘에 대해 양가적인 감정을 느꼈다. 가장 가까운 친구를 구하지 못한다면 어떻게 수퍼히어로라 할 수 있을까?"}], "definitionKo": "두 가지 상반된 감정이나 생각을 동시에 가진"}, {"term": "conflicted", "pos": "adj", "definition": "having contradictory feelings", "pattern": "", "examples": [{"en": "Seeing Peter's ★ face, his friend shouted, \"Save them! Don't save me!\"", "ko": "피터의 갈등하는 표정을 보며, 그의 친구가 외쳤다. \"그들을 구해! 날 구하지 마!\""}], "definitionKo": "상반된 감정 때문에 마음이 갈등하는"}, {"term": "indifferent", "pos": "adj", "definition": "lacking interest or concern", "pattern": "★ to", "examples": [{"en": "His friend seemed ★ to his own fate, caring only that Peter did the right thing.", "ko": "그의 친구는 자신의 운명에 무관심해 보였고, 오직 피터가 옳은 일을 하는지에만 신경 썼다."}], "definitionKo": "관심이나 흥미가 없는; 무관심한"}, {"term": "apathetic", "pos": "adj", "definition": "showing a lack of emotion, enthusiasm, or concern", "pattern": "★ about/toward", "examples": [{"en": "\"How can you be so ★ about our lives?\" the strangers cried. \"Save us!\"", "ko": "\"어떻게 우리 목숨에 그렇게 무관심할 수 있어요?\" 낯선 사람들이 외쳤다. \"우리를 구해주세요!\""}], "definitionKo": "열정이나 관심이 전혀 없는; 냉담한"}, {"term": "moderate", "pos": "v", "definition": "to make something less extreme or intense", "pattern": "", "examples": [{"en": "Peter tried to ★ his voice so the strangers wouldn't hear him shaking.", "ko": "피터는 낯선 사람들이 그의 떨리는 목소리를 듣지 못하도록 목소리를 조절하려 애썼다."}], "definitionKo": "극단적이지 않은, 온건한; 완화시키다"}, {"term": "temper", "pos": "v", "definition": "to moderate or calm (something)", "pattern": "", "examples": [{"en": "He took a deep breath to ★ his fear.", "ko": "그는 두려움을 가라앉히기 위해 깊게 숨을 들이쉬었다."}], "definitionKo": "정도를 누그러뜨리다, 완화하다"}, {"term": "qualify", "pos": "v", "definition": "to modify or moderate something, esp. an opinion", "pattern": "", "examples": [{"en": "Peter had always promised to save lives. But now, he was forced to ★ his promise: He could only save as many as possible, not everyone.", "ko": "피터는 항상 생명을 구하겠다고 약속해왔다. 하지만 이제 그는 그 약속을 수정할 수밖에 없었다. 그는 가능한 한 많은 사람을 구할 수 있을 뿐, 모두를 구할 수는 없었다."}], "definitionKo": "조건을 붙여 진술을 제한하거나 수정하다"}, {"term": "impartial", "pos": "adj", "definition": "being fair, equal, and just; showing no bias or preference for one person or thing over another", "pattern": "", "examples": [{"en": "Peter wanted to be ★ and treat every life equally.", "ko": "피터는 공정하고 싶었고 모든 생명을 동등하게 대하고 싶었다."}], "definitionKo": "어느 한쪽 편을 들지 않는; 공정한"}, {"term": "objective", "pos": "adj", "definition": "neutral or detached; uninfluenced by personal feelings or opinions", "pattern": "", "examples": [{"en": "An ★ calculation seemed simple: twenty lives versus one.", "ko": "객관적인 계산은 단순해 보였다. 스무 명의 생명 대 한 명이었다."}], "definitionKo": "개인적 감정이나 의견에 치우치지 않은; 객관적인"}, {"term": "disinterested", "pos": "adj", "definition": "not influenced by personal feelings, opinions, or involvement", "pattern": "", "examples": [{"en": "But Peter could not be ★ when his best friend was the person he had to sacrifice.", "ko": "하지만 자신이 희생시켜야 할 사람이 가장 친한 친구였기에 피터는 사심 없이 있을 수 없었다."}], "definitionKo": "사적인 이해관계가 없어 공정한(무관심하다는 뜻이 아님에 주의)"}, {"term": "dispassionate", "pos": "adj", "definition": "not influenced by emotion or personal feeling", "pattern": "", "examples": [{"en": "He tried to remain ★ and ignore his personal feelings.", "ko": "그는 감정에 치우치지 않으려 애쓰며 개인적인 감정을 무시하려 했다."}], "definitionKo": "감정에 치우치지 않고 냉정한"}, {"term": "detached", "pos": "adj", "definition": "objective, neutral, or emotionally uninvolved", "pattern": "", "examples": [{"en": "For a moment, he felt ★, as if watching someone else's tragedy. Then his friend screamed, \"Peter, choose!\"", "ko": "한 순간, 그는 마치 다른 사람의 비극을 지켜보는 것처럼 거리감을 느꼈다. 그때 그의 친구가 비명을 질렀다. \"피터, 선택해!\""}], "definitionKo": "감정적으로 관여하지 않는, 초연한"}, {"term": "controversial", "pos": "adj", "definition": "causing public disagreement or debate.", "pattern": "", "examples": [{"en": "The manager's decision to ban pineapple pizza in the office became instantly ★.", "ko": "사무실에서 파인애플 피자를 금지하기로 한 매니저의 결정은 순식간에 논란이 되었다."}], "definitionKo": "사람들 사이에 의견이 크게 갈리는; 논란이 되는"}, {"term": "divisive", "pos": "adj", "definition": "causing disagreement or splitting people into opposing groups.", "pattern": "", "examples": [{"en": "Nothing had been this ★ since the Great Standing Desk Debate last spring.", "ko": "지난봄 스탠딩 데스크 대논쟁 이후로 이렇게 사람들을 분열시킨 일은 없었다."}], "definitionKo": "사람들 사이에 불화나 의견 대립을 일으키는"}, {"term": "contentious", "pos": "adj", "definition": "likely to cause argument; hotly disputed.", "pattern": "", "examples": [{"en": "The office group chat turned ★ within minutes, with two coworkers arguing in all caps.", "ko": "사무실 단체 채팅방은 몇 분 만에 논쟁적으로 변했고, 두 동료는 대문자로 싸우기 시작했다."}], "definitionKo": "논쟁을 일으키기 쉬운"}, {"term": "polarizing", "pos": "adj", "definition": "causing people to split into sharply opposing sides.", "pattern": "", "examples": [{"en": "Given how★ing the pineapple ban was, it was unsurprising that workers started fighting with each other.", "ko": "파인애플 금지령이 얼마나 의견을 갈라놓았는지(찬반이 팽팽했는지)를 고려할 때, 직원들이 서로 싸우기 시작한 것은 놀랄 일이 아니었다."}], "definitionKo": "사람들을 정반대의 두 입장으로 갈라놓는"}, {"term": "biased", "pos": "adj", "definition": "showing unfair positive or negative attitudes", "pattern": "★ against/toward", "examples": [{"en": "Sasha accused the manager of being ★ against pineapple ever since pineapple pieces landed on the office printer.", "ko": "사샤는 파인애플 조각이 사무실 프린터에 떨어진 이후로 매니저가 파인애플에 대해 편견을 가지고 있다고 비난했다."}], "definitionKo": "한쪽으로 치우친, 편향된"}, {"term": "prejudiced", "pos": "adj", "definition": "characterized by intolerance or dislike toward a person or group", "pattern": "★ against/toward", "examples": [{"en": "The manager denied the accusation, saying that Sasha was ★ against people who preferred traditional pizza toppings.", "ko": "매니저는 그 주장을 부인하며, 오히려 사샤야말로 전통적인 피자 토핑을 좋아하는 사람들을 삐딱하게 바라본다고 말했다."}], "definitionKo": "충분한 근거 없이 미리 형성된 부정적 의견을 가진; 편견을 가진"}, {"term": "subjective", "pos": "adj", "definition": "based on personal feelings, opinions, or beliefs rather than solid evidence", "pattern": "", "examples": [{"en": "Bella stepped in, saying that \"good pizza\" was ultimately ★.", "ko": "벨라가 끼어들어 \"좋은 피자\"란 결국 주관적인 것이라고 말했다."}], "definitionKo": "개인적 견해나 감정에 근거한; 주관적인"}, {"term": "stereotype", "pos": "n", "definition": "an oversimplified opinion applied to a whole group of people", "pattern": "", "examples": [{"en": "She rejected the ★ that messy people liked pineapple.", "ko": "그녀는 지저분한 사람들이 파인애플을 좋아한다는 고정관념을 거부했다."}], "definitionKo": "특정 집단에 대한 지나치게 단순화된 고정관념"}, {"term": "conformist", "pos": "n", "definition": "a person who complies with accepted or established rules or practices, often uncritically.", "pattern": "", "examples": [{"en": "Dave, the office's biggest ★, simply ordered whatever topping the manager chose, no questions asked.", "ko": "사무실에서 가장 순응적인 사람인 데이브는 아무 질문 없이 매니저가 고른 토핑을 그대로 주문했다."}], "definitionKo": "사회적 규범을 그대로 따르는 사람 또는 그런 성향의"}, {"term": "conventional", "pos": "adj", "definition": "based on or following accepted rules or standards", "pattern": "", "examples": [{"en": "He ordered a ★ pizza with just plain pepperoni.", "ko": "그는 페퍼로니만 올라간 평범한 피자를 주문했다."}], "definitionKo": "전통적 방식이나 사회적 규범을 따르는; 관습적인"}, {"term": "orthodox", "pos": "adj", "definition": "based on or following what is accepted as normal or true", "pattern": "", "examples": [{"en": "Francesco, who hailed from Napoli, had deeply ★ views on pizza, insisting that toppings like pineapple were an abomination.", "ko": "나폴리 출신인 프란체스코는 피자에 대해 매우 정통적인 견해를 가지고 있었고, 파인애플 같은 토핑은 말도 안 되는 것이라고 주장했다."}], "definitionKo": "전통적이거나 공인된 믿음·관습을 따르는; 정통의"}, {"term": "stringent", "pos": "adj", "definition": "strict and precise, esp. in rules or regulations", "pattern": "", "examples": [{"en": "With Dave and Francesco's backing, the manager passed ★ new rules limiting orders to three approved toppings.", "ko": "데이브와 프란체스코의 지지를 받아, 매니저는 주문을 승인된 토핑 세 가지로 제한하는 엄격한 새 규칙을 통과시켰다."}], "definitionKo": "엄격하고 까다로운(규칙·기준이)"}, {"term": "authoritarian", "pos": "adj", "definition": "strictly enforcing rules and laws, esp. in a way that restricts freedom", "pattern": "", "examples": [{"en": "Sasha called the new policy ★, and called the manager a dictator.", "ko": "사샤는 새 정책을 권위주의적이라고 부르며 매니저를 독재자라고 불렀다."}], "definitionKo": "개인의 자유보다 엄격한 복종을 강요하는; 권위주의적인"}, {"term": "rigid", "pos": "adj", "definition": "not flexible or willing to change", "pattern": "", "examples": [{"en": "Initially, the manager stayed ★ on the three-topping rule.", "ko": "처음에 매니저는 세 가지 토핑 규칙에 대해 완고한 태도를 유지했다."}], "definitionKo": "변화나 타협을 허용하지 않는; 경직된, 완고한"}, {"term": "dogmatic", "pos": "adj", "definition": "arrogant or unchangeable in opinions or beliefs", "pattern": "", "examples": [{"en": "In the end, though, she wasn't entirely ★ — when workers showed a chart proving pineapple pizza tripled office happiness, she quietly allowed it back.", "ko": "하지만 결국 그녀는 완전히 독단적이지는 않았다. 직원들이 파인애플 피자가 사무실 행복도를 세 배로 높였다는 것을 증명하는 차트를 보여주자, 그녀는 조용히 다시 허용해 주었다"}], "definitionKo": "증거를 고려하지 않고 자신의 믿음을 확고히 주장하는; 독단적인"}]}}; const INITIAL_UNIT = 1;
+const byId = id => document.getElementById(id);
+const allUnits = Object.keys(DATA).map(Number).sort((a,b) => a - b);
+const hashUnit = Number((location.hash.match(/unit-(\d+)/) || [])[1]);
+const state = {
+  unit: DATA[hashUnit] ? hashUnit : INITIAL_UNIT,
+  index: 0, flipped: false, order: [], tab: 'learn',
+  sentenceCard: { index: 0, flipped: false, order: [], exampleIndex: 0 },
+  course: { status: 'setup', planIndex: 0, queue: [], options: [], answered: false, selected: '', correct: false, hintShown: false, missed: {} },
+  sentenceCourse: { status: 'setup', planIndex: 0, queue: [], options: [], answered: false, selected: '', correct: false, hintShown: false, missed: {}, revealed: false, scrambleTokens: [], scramblePool: [], scrambleBuilt: [], exampleIndex: 0 },
+  learn: { direction: 'definition-to-word', current: null, type: 'choice', options: [], answered: false, chosen: '', correct: false, lastTerm: '', streak: 0, attempts: 0, revealed: false, scrambleTokens: [], scramblePool: [], scrambleBuilt: [], masteryEnabled: true, currentExampleIndex: 0, audioAutoPlayed: false },
+  test: { status: 'setup', from: allUnits[0], to: allUnits[allUnits.length - 1], direction: 'definition-to-word', count: '20', questions: [], index: 0, selected: '', answers: [] },
+  wrongReview: { status: 'setup', from: allUnits[0], to: allUnits[allUnits.length - 1], minimum: 1, direction: 'definition-to-word', questions: [], nextRound: [], round: 1, totalItems: 0, index: 0, selected: '', answered: false, correct: false, answers: [] }
+};
+
+function defLabel(item) { return `(${item.pos}) ${item.definition}`; }
+function pickExampleIndex(item) { return Math.floor(Math.random() * item.examples.length); }
+function clozeText(item, exIndex = 0) { return item.examples[exIndex].en.replace('★', '_____'); }
+function exampleKo(item, exIndex = 0) { return item.examples[exIndex].ko; }
+function revealedExample(item, exIndex = 0) { return item.examples[exIndex].en.replace('★', item.term); }
+
+const DIRECTIONS = {
+  'definition-to-word': { promptKey: 'defLabel', answerKey: 'term', short: '단어 고르기', title: '정의를 보고 단어 고르기', hint: '영어 정의를 읽고 알맞은 단어를 선택합니다.' },
+  'word-to-definition': { promptKey: 'term', answerKey: 'defLabel', short: '정의 고르기', title: '단어를 보고 정의 고르기', hint: '단어를 보고 알맞은 영어 정의를 선택합니다.' },
+  'example-to-word': { promptKey: 'cloze', answerKey: 'term', short: '예문 빈칸', title: '예문 빈칸을 보고 단어 고르기', hint: '예문의 빈칸에 들어갈 알맞은 단어를 선택합니다.' },
+  'example-word-write': { promptKey: 'cloze', answerKey: 'term', short: '빈칸 주관식', title: '예문 빈칸에 알맞은 단어 타이핑하기', hint: '예문의 빈칸에 들어갈 단어를 직접 입력합니다.', forceWrite: true, testable: false },
+  'example-sentence-write': { promptKey: 'term', answerKey: 'sentence', short: '문장 주관식', title: '단어와 뜻을 보고 예문 전체 타이핑하기', hint: '단어와 한글 뜻을 보고 해당 예문 전체를 영어로 직접 입력합니다.', forceWrite: true, testable: false },
+  'example-recall': { promptKey: 'exampleKo', answerKey: 'sentence', short: '예문 암기', title: '한글 뜻만 보고 예문 떠올리기', hint: '한글 번역만 보고 영어 예문 전체를 마음속으로 떠올린 뒤 눌러서 확인합니다.', forceFlip: true, testable: false },
+  'example-scramble': { promptKey: 'exampleKo', answerKey: 'sentence', short: '문장 조합', title: '뒤섞인 단어로 예문 완성하기', hint: '뒤섞인 단어를 순서대로 클릭해 예문을 완성합니다.', forceScramble: true, testable: false },
+  'audio-to-word': { promptKey: 'audioPrompt', answerKey: 'term', short: '듣고 쓰기', title: '발음만 듣고 단어 쓰기', hint: '단어의 발음만 듣고 알맞은 영단어를 입력합니다.', forceWrite: true, testable: false }
+};
+const DEFAULT_DIRECTION = 'definition-to-word';
+function directionInfo(direction) { return DIRECTIONS[direction] || DIRECTIONS[DEFAULT_DIRECTION]; }
+function fieldValue(item, key, exIndex = 0) {
+  if (key === 'defLabel') return defLabel(item);
+  if (key === 'cloze') return clozeText(item, exIndex);
+  if (key === 'sentence') return revealedExample(item, exIndex);
+  if (key === 'exampleKo') return exampleKo(item, exIndex);
+  if (key === 'audioPrompt') return '🔊 발음을 듣고 단어를 입력하세요';
+  return item[key];
+}
+function revealedExampleHtml(item, exIndex = 0) {
+  const raw = item.examples[exIndex].en;
+  const idx = raw.indexOf('★');
+  if (idx === -1) return escapeText(raw);
+  return `${escapeText(raw.slice(0, idx))}<strong>${escapeText(item.term)}</strong>${escapeText(raw.slice(idx + 1))}`;
+}
+function promptFor(item, direction, exIndex = 0) { return fieldValue(item, directionInfo(direction).promptKey, exIndex); }
+function answerFor(item, direction, exIndex = 0) { return fieldValue(item, directionInfo(direction).answerKey, exIndex); }
+function answersWithTerm(direction) { return directionInfo(direction).answerKey === 'term'; }
+function directionOptionsHtml(name, selected) {
+  return Object.entries(DIRECTIONS).filter(([, info]) => info.testable !== false).map(([value, info]) =>
+    `<label class="direction-option"><input type="radio" name="${name}" value="${value}" ${selected===value?'checked':''}><span><strong>${info.title}</strong><small>${info.hint}</small></span></label>`
+  ).join('');
+}
+const EXAMPLE_DIRECTIONS = ['example-to-word', 'example-word-write', 'example-sentence-write', 'example-recall', 'example-scramble'];
+function feedbackExtraFor(item, direction, exIndex = 0) {
+  if (EXAMPLE_DIRECTIONS.includes(direction)) return item.pattern ? `패턴: ${item.pattern}` : '';
+  return `${item.definitionKo ? item.definitionKo + ' · ' : ''}${revealedExample(item, exIndex)} — ${exampleKo(item, exIndex)}`;
+}
+function sentenceStarKey(term, exIndex) { return `${term}::${exIndex}`; }
+function starredSentencesKey() { return 'aplang-starred-sentences'; }
+function loadStarredSentences() {
+  try { return new Set(JSON.parse(localStorage.getItem(starredSentencesKey()) || '[]')); }
+  catch (_) { return new Set(); }
+}
+function saveStarredSentences(set) { localStorage.setItem(starredSentencesKey(), JSON.stringify([...set])); }
+function isSentenceStarred(term, exIndex) { return loadStarredSentences().has(sentenceStarKey(term, exIndex)); }
+function toggleSentenceStar(term, exIndex) {
+  const set = loadStarredSentences();
+  const key = sentenceStarKey(term, exIndex);
+  set.has(key) ? set.delete(key) : set.add(key);
+  saveStarredSentences(set);
+}
+
+function escapeText(value) {
+  return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+function shuffleArray(items) {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+function selectedItems() { return (DATA[state.unit] || {}).words || []; }
+function sentenceItems() {
+  const items = [];
+  selectedItems().forEach(item => {
+    item.examples.forEach((ex, exIndex) => {
+      items.push({ ...item, examples: [ex], exIndex, sentenceKey: `${item.term}::${exIndex}` });
+    });
+  });
+  return items;
+}
+function learnPool(direction) { return EXAMPLE_DIRECTIONS.includes(direction) ? sentenceItems() : selectedItems(); }
+function learnItemKey(item, direction) { return EXAMPLE_DIRECTIONS.includes(direction) ? item.sentenceKey : item.term; }
+function currentItem() { return selectedItems()[state.order[state.index]]; }
+function progressKey() { return `aplang-known-${state.unit}`; }
+function learnKey() { return `aplang-learn-v1-${state.learn.direction}-${state.unit}`; }
+function wrongCountsKey() { return 'aplang-wrong-counts-v1'; }
+function wrongTermsKey() { return 'aplang-wrong-terms-v1'; }
+function knownTerms() { return new Set(JSON.parse(localStorage.getItem(progressKey()) || '[]')); }
+function saveKnown(terms) { localStorage.setItem(progressKey(), JSON.stringify([...terms])); }
+function setOrder() { state.order = selectedItems().map((_, i) => i); state.index = 0; state.flipped = false; }
+function setSentenceCardOrder() {
+  state.sentenceCard.order = selectedItems().map((_, i) => i);
+  state.sentenceCard.index = 0;
+  state.sentenceCard.flipped = false;
+  const item = currentSentenceCardItem();
+  state.sentenceCard.exampleIndex = item ? pickExampleIndex(item) : 0;
+}
+function sentenceProgressKey() { return `aplang-sentence-known-${state.unit}`; }
+function sentenceKnownTerms() { return new Set(JSON.parse(localStorage.getItem(sentenceProgressKey()) || '[]')); }
+function saveSentenceKnown(terms) { localStorage.setItem(sentenceProgressKey(), JSON.stringify([...terms])); }
+function currentSentenceCardItem() { return selectedItems()[state.sentenceCard.order[state.sentenceCard.index]]; }
+function loadWrongCounts() {
+  try { return JSON.parse(localStorage.getItem(wrongCountsKey()) || '{}'); }
+  catch (_) { return {}; }
+}
+function wrongCount(unitNumber) { return Number(loadWrongCounts()[unitNumber]) || 0; }
+function loadWrongTerms() {
+  try { return JSON.parse(localStorage.getItem(wrongTermsKey()) || '{}'); }
+  catch (_) { return {}; }
+}
+function wrongTermCount(unitNumber, term) {
+  const terms = loadWrongTerms();
+  return Number(terms[unitNumber]?.[term]) || 0;
+}
+function recordWrong(unitNumber, term) {
+  const counts = loadWrongCounts();
+  counts[unitNumber] = (Number(counts[unitNumber]) || 0) + 1;
+  localStorage.setItem(wrongCountsKey(), JSON.stringify(counts));
+  const terms = loadWrongTerms();
+  if (!terms[unitNumber]) terms[unitNumber] = {};
+  terms[unitNumber][term] = (Number(terms[unitNumber][term]) || 0) + 1;
+  localStorage.setItem(wrongTermsKey(), JSON.stringify(terms));
+  renderSetButtons(); renderSelector(); renderWrongSummary();
+}
+function resetWrongCount() {
+  if (!confirm(`Unit ${state.unit}의 누적 오답 횟수를 초기화할까요?`)) return;
+  const counts = loadWrongCounts();
+  delete counts[state.unit];
+  localStorage.setItem(wrongCountsKey(), JSON.stringify(counts));
+  const terms = loadWrongTerms();
+  delete terms[state.unit];
+  localStorage.setItem(wrongTermsKey(), JSON.stringify(terms));
+  renderSetButtons(); renderSelector(); renderWrongSummary();
+  renderList();
+}
+function exportStudyData() {
+  const storage = {};
+  for (let index = 0; index < localStorage.length; index++) {
+    const key = localStorage.key(index);
+    if (key && key.startsWith('aplang-')) storage[key] = localStorage.getItem(key);
+  }
+  const payload = {
+    app: 'AP Lang Vocabulary',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    storage
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `APLang_vocabulary_backup_${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(link.href), 0);
+}
+async function importStudyData(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  try {
+    const payload = JSON.parse(await file.text());
+    const entries = Object.entries(payload?.storage || {}).filter(([key, value]) => key.startsWith('aplang-') && typeof value === 'string');
+    if (!entries.length) throw new Error('올바른 학습 데이터가 없습니다.');
+    if (!confirm(`${entries.length}개의 학습 데이터 항목을 가져올까요? 현재 이 파일의 기록은 백업 데이터로 교체됩니다.`)) return;
+    const currentKeys = [];
+    for (let index = 0; index < localStorage.length; index++) {
+      const key = localStorage.key(index);
+      if (key && key.startsWith('aplang-')) currentKeys.push(key);
+    }
+    currentKeys.forEach(key => localStorage.removeItem(key));
+    entries.forEach(([key, value]) => localStorage.setItem(key, value));
+    alert('학습 데이터를 가져왔습니다. 페이지를 새로고침합니다.');
+    location.reload();
+  } catch (error) {
+    alert(`가져오기에 실패했습니다: ${error.message}`);
+  } finally {
+    event.target.value = '';
+  }
+}
+function loadLearnProgress() {
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(learnKey()) || '{}'); } catch (_) {}
+  const progress = {};
+  const direction = state.learn.direction;
+  learnPool(direction).forEach(item => {
+    const key = learnItemKey(item, direction);
+    const old = saved[key] || {};
+    progress[key] = {
+      level: Math.max(0, Math.min(2, Number(old.level) || 0)),
+      correct: Number(old.correct) || 0,
+      wrong: Number(old.wrong) || 0
+    };
+  });
+  return progress;
+}
+function saveLearnProgress(progress) { localStorage.setItem(learnKey(), JSON.stringify(progress)); }
+function masteryEnabledKey() { return 'aplang-mastery-enabled'; }
+function loadMasteryEnabled() { return localStorage.getItem(masteryEnabledKey()) !== 'off'; }
+function toggleMasteryEnabled() {
+  state.learn.masteryEnabled = !state.learn.masteryEnabled;
+  localStorage.setItem(masteryEnabledKey(), state.learn.masteryEnabled ? 'on' : 'off');
+  state.learn.current = null;
+  state.learn.lastTerm = '';
+  renderLearn();
+}
+function masteryCapFor() { return state.learn.masteryEnabled ? 2 : 1; }
+function learnDirectionComplete(direction, progress = loadLearnProgress()) {
+  const cap = masteryCapFor(direction);
+  return learnPool(direction).every(item => progress[learnItemKey(item, direction)].level >= cap);
+}
+function learnSummary(progress = loadLearnProgress()) {
+  const direction = state.learn.direction;
+  const levels = learnPool(direction).map(item => progress[learnItemKey(item, direction)].level);
+  return {
+    fresh: levels.filter(level => level === 0).length,
+    learning: levels.filter(level => level === 1).length,
+    mastered: levels.filter(level => level === 2).length,
+    percent: Math.round(levels.reduce((sum, level) => sum + level, 0) / (levels.length * 2) * 100)
+  };
+}
+
+function renderSetButtons() {
+  const wrap = byId('set-grid');
+  wrap.innerHTML = allUnits.map(n => `<button class="set-button ${n===state.unit?'active':''}" data-unit="${n}"><strong>Unit ${n}</strong><small>${escapeText(DATA[n].title)}${wrongCount(n) ? ` · 오답 ${wrongCount(n)}` : ''}</small></button>`).join('');
+  wrap.querySelectorAll('button').forEach(button => button.onclick = () => chooseUnit(Number(button.dataset.unit)));
+}
+function renderSelector() {
+  byId('set-select').innerHTML = allUnits.map(n => `<option value="${n}" ${n===state.unit?'selected':''}>Unit ${n} · ${escapeText(DATA[n].title)} · ${DATA[n].words.length}단어 · 오답 ${wrongCount(n)}</option>`).join('');
+}
+function renderWrongSummary() {
+  byId('wrong-set-label').textContent = `Unit ${state.unit} 누적 오답`;
+  byId('wrong-total').textContent = `${wrongCount(state.unit)}회`;
+}
+function renderHeader() {
+  const unit = DATA[state.unit];
+  byId('set-title').textContent = `Unit ${state.unit} · ${unit.title}`;
+  byId('set-note').textContent = '정의↔단어, 예문 빈칸 세 방향을 각각 학습하고 숙련도를 따로 쌓을 수 있습니다.';
+  byId('hero-eyebrow').textContent = `${allUnits.length}개 유닛 진행 중`;
+  const totalWords = allUnits.reduce((sum, n) => sum + DATA[n].words.length, 0);
+  byId('hero-stats').innerHTML = `<span class="stat">${allUnits.length} unit${allUnits.length>1?'s':''}</span><span class="stat">${totalWords} words</span><span class="stat">영어 정의 + 한국어 뜻</span><span class="stat">문장 암기 · 조합 학습</span><span class="stat">offline ready</span>`;
+}
+
+function setLearnDirection(direction) {
+  if (!DIRECTIONS[direction]) return;
+  state.learn.direction = direction;
+  state.learn.current = null;
+  state.learn.lastTerm = '';
+  state.learn.answered = false;
+  renderLearn();
+}
+
+function createLearnQuestion() {
+  const progress = loadLearnProgress();
+  const direction = state.learn.direction;
+  const cap = masteryCapFor(direction);
+  const pool = learnPool(direction);
+  const candidates = pool.filter(item => progress[learnItemKey(item, direction)].level < cap);
+  if (!candidates.length) { state.learn.current = null; return; }
+  let weighted = [];
+  candidates.forEach(item => {
+    const record = progress[learnItemKey(item, direction)];
+    const weight = Math.max(1, 4 - record.level + Math.min(record.wrong, 3));
+    for (let i = 0; i < weight; i++) weighted.push(item);
+  });
+  if (candidates.length > 1) weighted = weighted.filter(item => learnItemKey(item, direction) !== state.learn.lastTerm);
+  const item = weighted[Math.floor(Math.random() * weighted.length)] || candidates[0];
+  const level = progress[learnItemKey(item, direction)].level;
+  const typable = answersWithTerm(direction);
+  const forceWrite = !!directionInfo(direction).forceWrite;
+  const forceFlip = !!directionInfo(direction).forceFlip;
+  const forceScramble = !!directionInfo(direction).forceScramble;
+  state.learn.current = item;
+  state.learn.currentExampleIndex = 0;
+  state.learn.audioAutoPlayed = false;
+  state.learn.type = forceFlip ? 'flip' : (forceScramble ? 'scramble' : (forceWrite ? 'write' : (!typable || level === 0 ? 'choice' : 'write')));
+  state.learn.options = state.learn.type === 'choice'
+    ? shuffleArray([item, ...shuffleArray(selectedItems().filter(other => other.term !== item.term)).slice(0, 3)]).map(option => answerFor(option, direction))
+    : [];
+  if (state.learn.type === 'scramble') scrambleStateReset(state.learn, item, state.learn.currentExampleIndex);
+  state.learn.answered = false;
+  state.learn.chosen = '';
+  state.learn.correct = false;
+  state.learn.revealed = false;
+}
+function scrambleStateReset(target, item, exIndex = 0) {
+  target.scrambleTokens = revealedExample(item, exIndex).split(' ');
+  target.scramblePool = shuffleArray(target.scrambleTokens.map((_, i) => i));
+  target.scrambleBuilt = [];
+}
+function scramblePickIn(target, idx) {
+  target.scramblePool = target.scramblePool.filter(i => i !== idx);
+  target.scrambleBuilt = [...target.scrambleBuilt, idx];
+}
+function scrambleRemoveIn(target, idx) {
+  target.scrambleBuilt = target.scrambleBuilt.filter(i => i !== idx);
+  target.scramblePool = [...target.scramblePool, idx];
+}
+function scrambleResetIn(target) {
+  target.scramblePool = shuffleArray(target.scrambleTokens.map((_, i) => i));
+  target.scrambleBuilt = [];
+}
+function scramblePick(idx) {
+  if (state.learn.answered) return;
+  scramblePickIn(state.learn, idx);
+  renderLearn();
+}
+function scrambleRemove(idx) {
+  if (state.learn.answered) return;
+  scrambleRemoveIn(state.learn, idx);
+  renderLearn();
+}
+function scrambleResetOrder() {
+  if (state.learn.answered) return;
+  scrambleResetIn(state.learn);
+  renderLearn();
+}
+function scrambleSubmit() {
+  if (state.learn.scrambleBuilt.length !== state.learn.scrambleTokens.length) return;
+  gradeLearn(state.learn.scrambleBuilt.map(i => state.learn.scrambleTokens[i]).join(' '));
+}
+function sCoursePick(idx) {
+  if (state.sentenceCourse.answered) return;
+  scramblePickIn(state.sentenceCourse, idx);
+  renderSentenceCourse();
+}
+function sCourseRemove(idx) {
+  if (state.sentenceCourse.answered) return;
+  scrambleRemoveIn(state.sentenceCourse, idx);
+  renderSentenceCourse();
+}
+function sCourseResetOrder() {
+  if (state.sentenceCourse.answered) return;
+  scrambleResetIn(state.sentenceCourse);
+  renderSentenceCourse();
+}
+function sCourseSubmit() {
+  if (state.sentenceCourse.scrambleBuilt.length !== state.sentenceCourse.scrambleTokens.length) return;
+  gradeSentenceCourse(state.sentenceCourse.scrambleBuilt.map(i => state.sentenceCourse.scrambleTokens[i]).join(' '));
+}
+function renderLearnStatus() {
+  const summary = learnSummary();
+  byId('mastery-bar').style.width = `${summary.percent}%`;
+  byId('fresh-count').textContent = summary.fresh;
+  byId('learning-count').textContent = summary.learning;
+  byId('mastered-count').textContent = summary.mastered;
+}
+function renderLearn() {
+  document.querySelectorAll('.learn-mode').forEach(button => button.classList.toggle('active', button.dataset.direction === state.learn.direction));
+  byId('mastery-toggle').textContent = state.learn.masteryEnabled ? '사용 함' : '사용 안 함 (빠른 진행)';
+  byId('mastery-toggle').classList.toggle('primary', state.learn.masteryEnabled);
+  byId('mastery-toggle-label').textContent = state.learn.masteryEnabled
+    ? '숙달 단계 사용: 완전히 익힐 때까지(숙달) 반복 출제됩니다.'
+    : '숙달 단계 사용 안 함: 한 번만 맞히면(학습 중) 다음으로 넘어갑니다.';
+  renderLearnStatus();
+  const stage = byId('learn-stage');
+  if (!state.learn.current && learnDirectionComplete(state.learn.direction)) {
+    const poolLen = learnPool(state.learn.direction).length;
+    stage.innerHTML = `<div class="complete"><div><div class="eyebrow">Unit ${state.unit} complete</div><h3>모두 익혔어요!</h3><p>${poolLen}개 ${EXAMPLE_DIRECTIONS.includes(state.learn.direction) ? '문장을' : '단어를'} 모두 학습했습니다.</p><button class="button" id="review-all">전체 복습 시작</button></div></div>`;
+    byId('review-all').onclick = reviewAll;
+    return;
+  }
+  if (!state.learn.current) createLearnQuestion();
+  const item = state.learn.current;
+  if (!item) return;
+  const isChoice = state.learn.type === 'choice';
+  const isFlip = state.learn.type === 'flip';
+  const isScramble = state.learn.type === 'scramble';
+  const direction = state.learn.direction;
+  const exIdx = state.learn.currentExampleIndex || 0;
+  const isSentenceDir = EXAMPLE_DIRECTIONS.includes(direction);
+  const prompt = promptFor(item, direction, exIdx);
+  const correctAnswer = answerFor(item, direction, exIdx);
+  const feedbackExtra = feedbackExtraFor(item, direction, exIdx);
+  const starKey = item.exIndex || 0;
+  const starred = isSentenceDir && isSentenceStarred(item.term, starKey);
+  const question = `
+    <div class="learn-card">
+      <div>
+        <div class="question-kicker">${directionInfo(direction).short} · ${isChoice ? '객관식 · 1–4 키로 선택' : (isFlip ? '암기 카드 · 눌러서 확인' : (isScramble ? '단어를 순서대로 클릭' : (direction === 'audio-to-word' ? '듣기 · 소리만 듣고 받아쓰기' : '직접 입력 · 기억에서 꺼내기')))}</div>
+        <div class="${(direction === 'example-recall' || direction === 'example-scramble') ? 'question-prompt-ko' : 'question-prompt'}">${escapeText(prompt)}</div>
+        ${(direction === 'example-to-word' || direction === 'example-word-write') ? `<div class="question-ko">${escapeText(exampleKo(item, exIdx))}</div>` : ''}
+        ${direction === 'example-sentence-write' ? `<div class="question-ko">${escapeText(exampleKo(item, exIdx))} · 위 뜻이 담긴 예문을 영어로 써보세요</div>` : ''}
+        ${direction === 'audio-to-word' ? `<div style="text-align:center;margin-top:18px"><button class="button primary test-start" id="audio-play-btn">🔊 다시 듣기</button></div>` : ''}
+      </div>
+      <div>
+        ${isFlip ? (state.learn.revealed
+          ? `<div class="example-list"><div class="example-item"><div class="example-en">${revealedExampleHtml(item, exIdx)}</div></div></div>${!state.learn.answered ? `<div class="flip-actions"><button class="choice" data-answer=""><span class="choice-number">✕</span>다시 볼게요</button><button class="choice" data-answer="${escapeText(correctAnswer)}"><span class="choice-number">✓</span>기억났어요</button></div>` : ''}`
+          : `<button class="button primary test-start" id="flip-reveal">예문 확인하기 →</button>`
+        ) : isScramble ? `
+          <div class="scramble-built">${state.learn.scrambleBuilt.length ? state.learn.scrambleBuilt.map(idx => `<button class="scramble-chip placed" data-idx="${idx}" ${state.learn.answered?'disabled':''}>${escapeText(state.learn.scrambleTokens[idx])}</button>`).join('') : '<span class="scramble-placeholder">아래 단어를 순서대로 눌러 문장을 완성하세요</span>'}</div>
+          <div class="scramble-pool">${state.learn.scramblePool.map(idx => `<button class="scramble-chip" data-idx="${idx}" ${state.learn.answered?'disabled':''}>${escapeText(state.learn.scrambleTokens[idx])}</button>`).join('')}</div>
+          ${!state.learn.answered ? `<div class="scramble-actions"><button class="button" id="scramble-reset-order">다시 배치</button><button class="button primary" id="scramble-check" ${state.learn.scrambleBuilt.length === state.learn.scrambleTokens.length ? '' : 'disabled'}>확인</button></div>` : ''}
+        ` : (isChoice ? `<div class="choices">${state.learn.options.map((option, optionIndex) => {
+          const className = state.learn.answered ? (option === correctAnswer ? 'correct' : (option === state.learn.chosen ? 'wrong' : '')) : '';
+          return `<button class="choice ${className}" data-answer="${escapeText(option)}" ${state.learn.answered?'disabled':''}><span class="choice-number">${optionIndex + 1}</span>${escapeText(option)}</button>`;
+        }).join('')}</div>` : `<form class="answer-form" id="answer-form"><input class="answer-input" id="answer-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="${direction === 'example-sentence-write' ? '예문 전체를 영어로 입력하세요' : '영단어를 입력하세요'}" value="${escapeText(state.learn.chosen)}" ${state.learn.answered?'disabled':''}><button class="button primary" type="submit" ${state.learn.answered?'disabled':''}>확인</button></form>`)}
+        ${state.learn.answered ? `<div class="learn-feedback ${state.learn.correct?'good':'bad'}"><div><strong>${state.learn.correct?'정답입니다!':'다시 기억해 보세요.'}</strong>${state.learn.correct ? `${escapeText(item.term)} · ${escapeText(defLabel(item))}` : `정답은 <b>${escapeText(correctAnswer)}</b>입니다.`}${feedbackExtra ? `<span class="feedback-extra">${escapeText(feedbackExtra)}</span>` : ''}</div><button class="button primary" id="next-question">다음 문제 →</button></div>` : ''}
+      </div>
+    </div>
+    <div class="learn-utility"><button class="button" id="dont-know">${state.learn.answered?'진행 기록 초기화':'잘 모르겠어요'}</button>${isSentenceDir ? `<button class="star-toggle ${starred?'starred':''}" id="star-toggle" title="이 문장 즐겨찾기">${starred?'★ 즐겨찾기됨':'☆ 즐겨찾기'}</button>` : ''}<button class="button" id="learn-speak">◖) 정답 발음</button></div>`;
+  stage.innerHTML = question;
+  if (!state.learn.answered) {
+    stage.querySelectorAll('.choice').forEach(button => button.onclick = () => gradeLearn(button.dataset.answer));
+    const form = byId('answer-form');
+    if (form) {
+      form.onsubmit = event => { event.preventDefault(); gradeLearn(byId('answer-input').value); };
+      setTimeout(() => byId('answer-input')?.focus(), 0);
+    }
+    byId('dont-know').onclick = () => gradeLearn('');
+    if (byId('flip-reveal')) byId('flip-reveal').onclick = () => { state.learn.revealed = true; renderLearn(); };
+    stage.querySelectorAll('.scramble-chip.placed').forEach(btn => btn.onclick = () => scrambleRemove(Number(btn.dataset.idx)));
+    stage.querySelectorAll('.scramble-chip:not(.placed)').forEach(btn => btn.onclick = () => scramblePick(Number(btn.dataset.idx)));
+    if (byId('scramble-reset-order')) byId('scramble-reset-order').onclick = scrambleResetOrder;
+    if (byId('scramble-check')) byId('scramble-check').onclick = scrambleSubmit;
+    if (byId('star-toggle')) byId('star-toggle').onclick = () => { toggleSentenceStar(item.term, starKey); renderLearn(); };
+    if (byId('audio-play-btn')) {
+      byId('audio-play-btn').onclick = () => speak(item.term);
+      if (!state.learn.audioAutoPlayed) { state.learn.audioAutoPlayed = true; speak(item.term); }
+    }
+  } else {
+    byId('next-question').onclick = nextLearnQuestion;
+    byId('dont-know').onclick = resetLearnProgress;
+    if (byId('star-toggle')) byId('star-toggle').onclick = () => { toggleSentenceStar(item.term, starKey); renderLearn(); };
+  }
+  byId('learn-speak').onclick = () => speak(item.term);
+}
+function normalizeAnswer(value) { return value.trim().toLowerCase(); }
+function normalizeSentence(value) { return value.trim().toLowerCase().replace(/[.,!?;:'"()]/g, '').replace(/\s+/g, ' '); }
+function gradeLearn(answer) {
+  if (state.learn.answered || !state.learn.current) return;
+  const item = state.learn.current;
+  const direction = state.learn.direction;
+  const correctAnswer = answerFor(item, direction, state.learn.currentExampleIndex || 0);
+  const normalize = (direction === 'example-sentence-write' || direction === 'example-scramble') ? normalizeSentence : normalizeAnswer;
+  const correct = normalize(answer) === normalize(correctAnswer);
+  const progress = loadLearnProgress();
+  const record = progress[learnItemKey(item, direction)];
+  if (correct) {
+    record.level = Math.min(2, record.level + 1);
+    record.correct += 1;
+    state.learn.streak += 1;
+  } else {
+    record.level = Math.max(0, record.level - 1);
+    record.wrong += 1;
+    state.learn.streak = 0;
+    recordWrong(state.unit, item.term);
+  }
+  saveLearnProgress(progress);
+  state.learn.attempts += 1;
+  state.learn.answered = true;
+  state.learn.chosen = answer;
+  state.learn.correct = correct;
+  renderLearn();
+}
+function nextLearnQuestion() {
+  state.learn.lastTerm = state.learn.current ? learnItemKey(state.learn.current, state.learn.direction) : '';
+  state.learn.current = null;
+  renderLearn();
+}
+function resetLearnProgress() {
+  if (!confirm(`Unit ${state.unit}의 학습 기록을 초기화할까요?`)) return;
+  localStorage.removeItem(learnKey());
+  state.learn.current = null;
+  state.learn.lastTerm = '';
+  state.learn.streak = 0;
+  renderLearn();
+}
+function reviewAll() {
+  const progress = loadLearnProgress();
+  Object.values(progress).forEach(record => record.level = 1);
+  saveLearnProgress(progress);
+  state.learn.current = null;
+  renderLearn();
+}
+
+function poolForRange(from, to) {
+  const fromIndex = allUnits.indexOf(Number(from));
+  const toIndex = allUnits.indexOf(Number(to));
+  const low = Math.min(fromIndex, toIndex), high = Math.max(fromIndex, toIndex);
+  return allUnits.slice(low, high + 1).flatMap(unitNumber => DATA[unitNumber].words.map(item => ({ ...item, unitNumber })));
+}
+function testPool() { return poolForRange(state.test.from, state.test.to); }
+function buildTestQuestions() {
+  const pool = testPool();
+  const requested = state.test.count === 'all' ? pool.length : Number(state.test.count);
+  const selected = shuffleArray(pool).slice(0, Math.min(requested, pool.length));
+  const direction = state.test.direction;
+  state.test.questions = selected.map(item => {
+    const correct = answerFor(item, direction);
+    const possible = [...new Set(pool.filter(other => other.term !== item.term).map(other => answerFor(other, direction)))].filter(option => option !== correct);
+    const options = shuffleArray([correct, ...shuffleArray(possible).slice(0, 3)]);
+    return {
+      unitNumber: item.unitNumber,
+      term: item.term,
+      prompt: promptFor(item, direction),
+      correct,
+      options,
+      direction
+    };
+  });
+  state.test.status = 'running';
+  state.test.index = 0;
+  state.test.selected = '';
+  state.test.answers = [];
+  renderTest();
+}
+function startTest() {
+  state.test.from = Number(byId('test-from').value);
+  state.test.to = Number(byId('test-to').value);
+  if (allUnits.indexOf(state.test.from) > allUnits.indexOf(state.test.to)) {
+    [state.test.from, state.test.to] = [state.test.to, state.test.from];
+  }
+  state.test.count = byId('test-count').value;
+  state.test.direction = document.querySelector('input[name="test-direction"]:checked').value;
+  buildTestQuestions();
+}
+function renderTestSetup() {
+  const unitOptions = allUnits.map(number => `<option value="${number}">Unit ${number}</option>`).join('');
+  byId('test-stage').innerHTML = `
+    <div class="test-config">
+      <h3>테스트 만들기</h3>
+      <p>시험 범위와 문제 방향을 선택하세요. 정답은 시험을 마친 뒤 한꺼번에 확인합니다.</p>
+      <div class="test-grid">
+        <div class="test-field"><label class="label" for="test-from">시작 유닛</label><select class="select" id="test-from">${unitOptions}</select></div>
+        <div class="test-field"><label class="label" for="test-to">끝 유닛</label><select class="select" id="test-to">${unitOptions}</select></div>
+        <div class="test-field"><label class="label" for="test-count">문제 수</label><select class="select" id="test-count"><option value="10">10문제</option><option value="20">20문제</option><option value="30">30문제</option><option value="50">50문제</option><option value="all">범위 전체</option></select></div>
+      </div>
+      <div class="test-direction">${directionOptionsHtml('test-direction', state.test.direction)}</div>
+      <button class="button primary test-start" id="start-test">테스트 시작</button>
+    </div>`;
+  byId('test-from').value = state.test.from;
+  byId('test-to').value = state.test.to;
+  byId('test-count').value = state.test.count;
+  byId('start-test').onclick = startTest;
+}
+function selectTestAnswer(answer) {
+  if (state.test.status !== 'running') return;
+  state.test.selected = answer;
+  renderTest();
+}
+function nextTestQuestion() {
+  if (!state.test.selected || state.test.status !== 'running') return;
+  const question = state.test.questions[state.test.index];
+  const correct = state.test.selected === question.correct;
+  state.test.answers.push({ selected: state.test.selected, correct });
+  if (!correct) recordWrong(question.unitNumber, question.term);
+  state.test.index += 1;
+  state.test.selected = '';
+  if (state.test.index >= state.test.questions.length) state.test.status = 'results';
+  renderTest();
+}
+function renderTestQuestion() {
+  const question = state.test.questions[state.test.index];
+  const total = state.test.questions.length;
+  byId('test-stage').innerHTML = `
+    <div class="test-head"><div class="test-progress"><span style="width:${state.test.index / total * 100}%"></span></div><div class="counter">${state.test.index + 1} / ${total}</div></div>
+    <div class="learn-card">
+      <div><div class="question-kicker">Unit ${question.unitNumber} · ${directionInfo(question.direction).short} · 1–4 키</div><div class="question-prompt">${escapeText(question.prompt)}</div></div>
+      <div class="choices">${question.options.map((option, index) => `<button class="choice test-choice ${state.test.selected===option?'selected':''}" data-answer="${escapeText(option)}"><span class="choice-number">${index + 1}</span>${escapeText(option)}</button>`).join('')}</div>
+    </div>
+    <div class="test-actions"><span>선택한 답의 정오 여부는 시험 종료 후 공개됩니다.</span><button class="button primary" id="test-next" ${state.test.selected?'':'disabled'}>${state.test.index === total - 1 ? '채점하기' : '다음 문제'} →</button></div>`;
+  byId('test-stage').querySelectorAll('.test-choice').forEach(button => button.onclick = () => selectTestAnswer(button.dataset.answer));
+  byId('test-next').onclick = nextTestQuestion;
+}
+function renderTestResults() {
+  const total = state.test.questions.length;
+  const score = state.test.answers.filter(answer => answer.correct).length;
+  const percent = Math.round(score / total * 100);
+  const wrong = state.test.questions.map((question, index) => ({ question, answer: state.test.answers[index] })).filter(result => !result.answer.correct);
+  byId('test-stage').innerHTML = `
+    <div class="results-card">
+      <div class="score-ring" style="--score:${percent * 3.6}deg"><strong>${percent}%</strong></div>
+      <div class="results-title"><h3>${score} / ${total}</h3><p>Unit ${state.test.from}–${state.test.to} 범위 테스트를 완료했습니다.</p></div>
+      <div class="result-actions"><button class="button primary" id="repeat-test">같은 설정으로 다시 보기</button><button class="button" id="test-settings">범위 다시 설정</button></div>
+      ${wrong.length ? `<div class="wrong-list"><div class="label">오답 ${wrong.length}개</div>${wrong.map(({question,answer}) => `<article class="wrong-row"><div class="prompt">Unit ${question.unitNumber} · ${escapeText(question.prompt)}</div><div class="answer"><del>${escapeText(answer.selected)}</del> → <strong>${escapeText(question.correct)}</strong></div></article>`).join('')}</div>` : '<div class="empty">모든 문제를 맞혔습니다!</div>'}
+    </div>`;
+  byId('repeat-test').onclick = buildTestQuestions;
+  byId('test-settings').onclick = () => { state.test.status = 'setup'; renderTest(); };
+}
+function renderTest() {
+  if (state.test.status === 'setup') renderTestSetup();
+  else if (state.test.status === 'running') renderTestQuestion();
+  else renderTestResults();
+}
+
+function wrongReviewCandidates(from = state.wrongReview.from, to = state.wrongReview.to, minimum = state.wrongReview.minimum) {
+  const termCounts = loadWrongTerms();
+  return poolForRange(from, to).filter(item => (Number(termCounts[item.unitNumber]?.[item.term]) || 0) >= Number(minimum));
+}
+function updateWrongReviewPreview() {
+  const from = Number(byId('review-from').value);
+  const to = Number(byId('review-to').value);
+  const minimum = Math.max(1, Number(byId('review-minimum').value) || 1);
+  const count = wrongReviewCandidates(from, to, minimum).length;
+  byId('review-preview-count').textContent = `${count}개`;
+  byId('start-wrong-review').disabled = count === 0;
+}
+function renderWrongReviewSetup() {
+  const unitOptions = allUnits.map(number => `<option value="${number}">Unit ${number}</option>`).join('');
+  byId('wrong-review-stage').innerHTML = `
+    <div class="test-config">
+      <h3>오답 복습 만들기</h3>
+      <p>누적 오답 데이터를 바탕으로 자주 틀린 단어만 모아 복습합니다.</p>
+      <div class="test-grid">
+        <div class="test-field"><label class="label" for="review-from">시작 유닛</label><select class="select" id="review-from">${unitOptions}</select></div>
+        <div class="test-field"><label class="label" for="review-to">끝 유닛</label><select class="select" id="review-to">${unitOptions}</select></div>
+        <div class="test-field"><label class="label" for="review-minimum">최소 오답 횟수</label><select class="select" id="review-minimum"><option value="1">1회 이상</option><option value="2">2회 이상</option><option value="3">3회 이상</option><option value="5">5회 이상</option></select></div>
+      </div>
+      <div class="test-direction">${directionOptionsHtml('review-direction', state.wrongReview.direction)}</div>
+      <div class="review-preview"><span>복습 가능한 단어</span><strong id="review-preview-count">0개</strong></div>
+      <button class="button primary test-start" id="start-wrong-review">오답 복습 시작</button>
+    </div>`;
+  byId('review-from').value = state.wrongReview.from;
+  byId('review-to').value = state.wrongReview.to;
+  byId('review-minimum').value = state.wrongReview.minimum;
+  byId('review-from').onchange = updateWrongReviewPreview;
+  byId('review-to').onchange = updateWrongReviewPreview;
+  byId('review-minimum').onchange = updateWrongReviewPreview;
+  updateWrongReviewPreview();
+  byId('start-wrong-review').onclick = () => {
+    state.wrongReview.from = Number(byId('review-from').value);
+    state.wrongReview.to = Number(byId('review-to').value);
+    if (allUnits.indexOf(state.wrongReview.from) > allUnits.indexOf(state.wrongReview.to)) {
+      [state.wrongReview.from, state.wrongReview.to] = [state.wrongReview.to, state.wrongReview.from];
+    }
+    state.wrongReview.minimum = Math.max(1, Number(byId('review-minimum').value) || 1);
+    state.wrongReview.direction = document.querySelector('input[name="review-direction"]:checked').value;
+    buildWrongReview();
+  };
+}
+function buildWrongReview() {
+  const pool = wrongReviewCandidates();
+  const direction = state.wrongReview.direction;
+  state.wrongReview.totalItems = pool.length;
+  state.wrongReview.round = 1;
+  state.wrongReview.questions = shuffleArray(pool);
+  state.wrongReview.nextRound = [];
+  state.wrongReview.index = 0;
+  state.wrongReview.selected = '';
+  state.wrongReview.answered = false;
+  state.wrongReview.correct = false;
+  state.wrongReview.answers = [];
+  state.wrongReview.status = 'running';
+  renderWrongReview();
+}
+function currentWrongReviewItem() { return state.wrongReview.questions[state.wrongReview.index]; }
+function buildWrongReviewOptions(item) {
+  const direction = state.wrongReview.direction;
+  const correct = answerFor(item, direction);
+  const pool = poolForRange(state.wrongReview.from, state.wrongReview.to);
+  const possible = [...new Set(pool.filter(other => other.term !== item.term).map(other => answerFor(other, direction)))].filter(option => option !== correct);
+  return shuffleArray([correct, ...shuffleArray(possible).slice(0, 3)]);
+}
+function renderWrongReviewQuestion() {
+  const item = currentWrongReviewItem();
+  if (!item) { finishWrongReviewRound(); return; }
+  const direction = state.wrongReview.direction;
+  if (!item.options) item.options = buildWrongReviewOptions(item);
+  const correctAnswer = answerFor(item, direction);
+  byId('wrong-review-stage').innerHTML = `
+    <div class="test-head"><div class="test-progress"><span style="width:${state.wrongReview.index / state.wrongReview.questions.length * 100}%"></span></div><div class="counter">라운드 ${state.wrongReview.round} · ${state.wrongReview.index + 1} / ${state.wrongReview.questions.length}</div></div>
+    <div class="learn-card">
+      <div><div class="question-kicker">Unit ${item.unitNumber} · ${directionInfo(direction).short}</div><div class="question-prompt">${escapeText(promptFor(item, direction))}</div></div>
+      <div class="choices">${item.options.map((option, index) => {
+        const className = state.wrongReview.answered ? (option === correctAnswer ? 'correct' : (option === state.wrongReview.selected ? 'wrong' : '')) : '';
+        return `<button class="choice ${className}" data-answer="${escapeText(option)}" ${state.wrongReview.answered?'disabled':''}><span class="choice-number">${index + 1}</span>${escapeText(option)}</button>`;
+      }).join('')}</div>
+      ${state.wrongReview.answered ? `<div class="learn-feedback ${state.wrongReview.correct?'good':'bad'}"><div><strong>${state.wrongReview.correct?'정답입니다!':'다시 기억해 보세요.'}</strong>${escapeText(item.term)} · ${escapeText(defLabel(item))}</div><button class="button primary" id="wrong-review-next">다음 →</button></div>` : ''}
+    </div>`;
+  if (!state.wrongReview.answered) {
+    byId('wrong-review-stage').querySelectorAll('.choice').forEach(button => button.onclick = () => gradeWrongReview(button.dataset.answer));
+  } else {
+    byId('wrong-review-next').onclick = nextWrongReview;
+  }
+}
+function gradeWrongReview(answer) {
+  if (state.wrongReview.answered) return;
+  const item = currentWrongReviewItem();
+  const direction = state.wrongReview.direction;
+  const correct = normalizeAnswer(answer) === normalizeAnswer(answerFor(item, direction));
+  state.wrongReview.answered = true;
+  state.wrongReview.selected = answer;
+  state.wrongReview.correct = correct;
+  state.wrongReview.answers.push({ term: item.term, correct });
+  if (!correct) { recordWrong(item.unitNumber, item.term); state.wrongReview.nextRound.push(item); }
+  renderWrongReview();
+}
+function nextWrongReview() {
+  state.wrongReview.index += 1;
+  state.wrongReview.selected = '';
+  state.wrongReview.answered = false;
+  state.wrongReview.correct = false;
+  if (state.wrongReview.index >= state.wrongReview.questions.length) { finishWrongReviewRound(); return; }
+  renderWrongReview();
+}
+function finishWrongReviewRound() {
+  if (state.wrongReview.nextRound.length) {
+    state.wrongReview.round += 1;
+    state.wrongReview.questions = shuffleArray(state.wrongReview.nextRound);
+    state.wrongReview.nextRound = [];
+    state.wrongReview.index = 0;
+    state.wrongReview.selected = '';
+    state.wrongReview.answered = false;
+    renderWrongReview();
+    return;
+  }
+  state.wrongReview.status = 'results';
+  renderWrongReview();
+}
+function renderWrongReviewResults() {
+  const total = state.wrongReview.answers.length;
+  const correctCount = state.wrongReview.answers.filter(a => a.correct).length;
+  byId('wrong-review-stage').innerHTML = `
+    <div class="results-card">
+      <div class="score-ring" style="--score:360deg"><strong>완료</strong></div>
+      <div class="results-title"><h3>오답 복습 완료</h3><p>대상 ${state.wrongReview.totalItems}개 단어를 모두 맞힐 때까지 반복했습니다 (총 ${state.wrongReview.round}라운드, ${total}문제 응시).</p></div>
+      <div class="result-actions"><button class="button primary" id="repeat-wrong-review">다시 복습하기</button><button class="button" id="wrong-review-settings">범위 다시 설정</button></div>
+    </div>`;
+  byId('repeat-wrong-review').onclick = buildWrongReview;
+  byId('wrong-review-settings').onclick = () => { state.wrongReview.status = 'setup'; renderWrongReview(); };
+}
+function renderWrongReview() {
+  if (state.wrongReview.status === 'setup') renderWrongReviewSetup();
+  else if (state.wrongReview.status === 'running') renderWrongReviewQuestion();
+  else renderWrongReviewResults();
+}
+
+const COURSE_BATCH = 5;
+const COURSE_STEPS = [
+  { key: 'preview',   kind: 'card',   badge: '①', label: '단어 보기',    kicker: '눈으로 익히기' },
+  { key: 'recognize', kind: 'choice', badge: '②', label: '정의 → 단어',  kicker: '방금 본 단어 중에서', direction: 'definition-to-word', pool: 'batch' },
+  { key: 'reverse',   kind: 'choice', badge: '③', label: '단어 → 정의',  kicker: '반대 방향으로',       direction: 'word-to-definition', pool: 'set' },
+  { key: 'recall',    kind: 'write',  badge: '④', label: '직접 쓰기',    kicker: '첫 글자 힌트와 함께', direction: 'definition-to-word', hint: true },
+  { key: 'example',   kind: 'write',  badge: '⑤', label: '예문 빈칸 쓰기', kicker: '문장 속에서 떠올리기', direction: 'example-word-write', hint: false }
+];
+const REVIEW_SPEC = { key: 'review', kind: 'write', badge: '↻', label: '누적 복습', kicker: '지금까지 배운 단어', direction: 'definition-to-word', hint: true };
+const FINAL_SPEC  = { key: 'final',  kind: 'write', badge: '★', label: '최종 점검', kicker: '힌트 없이 떠올리기', direction: 'definition-to-word', hint: false };
+
+function courseKey() { return `aplang-course-v1-${state.unit}`; }
+function loadCourseSave() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(courseKey()) || '{}');
+    return { planIndex: Math.max(0, Number(saved.planIndex) || 0), missed: saved.missed && typeof saved.missed === 'object' ? saved.missed : {} };
+  } catch (_) { return { planIndex: 0, missed: {} }; }
+}
+function saveCourse() { localStorage.setItem(courseKey(), JSON.stringify({ planIndex: state.course.planIndex, missed: state.course.missed })); }
+function courseBatches() {
+  const terms = selectedItems().map(item => item.term);
+  const batches = [];
+  for (let i = 0; i < terms.length; i += COURSE_BATCH) batches.push(terms.slice(i, i + COURSE_BATCH));
+  return batches;
+}
+function coursePlan() {
+  const batches = courseBatches();
+  const plan = [];
+  batches.forEach((batch, b) => {
+    COURSE_STEPS.forEach((_, s) => plan.push({ type: 'step', step: s, batch: b, terms: batch }));
+    if (b > 0) plan.push({ type: 'review', batch: b, terms: batches.slice(0, b + 1).flat() });
+  });
+  plan.push({ type: 'final', terms: batches.flat() });
+  return plan;
+}
+function courseItem(term) { return selectedItems().find(item => item.term === term); }
+function courseNode() { return coursePlan()[state.course.planIndex] || null; }
+function courseSpec() {
+  const node = courseNode();
+  if (!node) return null;
+  if (node.type === 'step') return COURSE_STEPS[node.step];
+  return node.type === 'review' ? REVIEW_SPEC : FINAL_SPEC;
+}
+function wordHint(word) {
+  return String(word).split('').map((c, i) => i === 0 ? c : (/[a-z]/i.test(c) ? '_' : c)).join(' ');
+}
+function buildCourseOptions() {
+  const spec = courseSpec(), node = courseNode(), term = state.course.queue[0];
+  if (!spec || !node || !term || spec.kind !== 'choice') { state.course.options = []; return; }
+  const item = courseItem(term);
+  const correct = answerFor(item, spec.direction);
+  const source = spec.pool === 'batch'
+    ? node.terms.filter(other => other !== term).map(courseItem).filter(Boolean)
+    : selectedItems().filter(other => other.term !== term);
+  const possible = [...new Set(source.map(other => answerFor(other, spec.direction)))].filter(option => option !== correct);
+  state.course.options = shuffleArray([correct, ...shuffleArray(possible).slice(0, 3)]);
+}
+function enterCourseNode() {
+  const node = courseNode(), spec = courseSpec();
+  state.course.answered = false;
+  state.course.selected = '';
+  state.course.correct = false;
+  state.course.hintShown = false;
+  if (!node || !spec) { state.course.queue = []; return; }
+  if (node.type === 'review') state.course.queue = shuffleArray(node.terms).slice(0, COURSE_BATCH);
+  else state.course.queue = spec.kind === 'card' ? [...node.terms] : shuffleArray(node.terms);
+  buildCourseOptions();
+}
+function startCourse(restart) {
+  const saved = loadCourseSave();
+  state.course.planIndex = restart ? 0 : saved.planIndex;
+  state.course.missed = restart ? {} : saved.missed;
+  if (state.course.planIndex >= coursePlan().length) { finishCourse(); return; }
+  state.course.status = 'running';
+  enterCourseNode();
+  saveCourse();
+  renderCourse();
+}
+function advanceCourse() {
+  state.course.planIndex += 1;
+  if (state.course.planIndex >= coursePlan().length) { finishCourse(); return; }
+  enterCourseNode();
+  saveCourse();
+  renderCourse();
+}
+function gradeCourse(answer) {
+  if (state.course.answered) return;
+  const spec = courseSpec(), term = state.course.queue[0];
+  if (!spec || !term) return;
+  const item = courseItem(term);
+  const correct = normalizeAnswer(answer) === normalizeAnswer(answerFor(item, spec.direction));
+  state.course.answered = true;
+  state.course.selected = answer;
+  state.course.correct = correct;
+  if (!correct) {
+    state.course.missed[term] = (Number(state.course.missed[term]) || 0) + 1;
+    recordWrong(state.unit, term);
+  }
+  saveCourse();
+  renderCourse();
+}
+function nextCourseQuestion() {
+  const spec = courseSpec();
+  if (!spec) return;
+  if (spec.kind !== 'card' && !state.course.answered) return;
+  const term = state.course.queue.shift();
+  if (spec.kind !== 'card' && !state.course.correct) state.course.queue.push(term);
+  state.course.answered = false;
+  state.course.selected = '';
+  state.course.correct = false;
+  state.course.hintShown = false;
+  if (!state.course.queue.length) { advanceCourse(); return; }
+  buildCourseOptions();
+  renderCourse();
+}
+function finishCourse() {
+  state.course.planIndex = coursePlan().length;
+  state.course.status = 'complete';
+  ['definition-to-word','word-to-definition','example-to-word','example-word-write'].forEach(direction => {
+    const key = `aplang-learn-v1-${direction}-${state.unit}`;
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch (_) {}
+    selectedItems().forEach(item => {
+      const old = saved[item.term] || {};
+      saved[item.term] = { level: Math.max(1, Math.min(2, Number(old.level) || 0)), correct: Number(old.correct) || 0, wrong: Number(old.wrong) || 0 };
+    });
+    localStorage.setItem(key, JSON.stringify(saved));
+  });
+  saveCourse();
+  state.learn.current = null;
+  state.learn.lastTerm = '';
+  state.learn.answered = false;
+  renderCourse();
+  renderLearn();
+}
+function renderCourseIntro() {
+  const saved = loadCourseSave();
+  const plan = coursePlan();
+  const batches = courseBatches().length;
+  const finished = saved.planIndex >= plan.length;
+  const resumable = saved.planIndex > 0 && !finished;
+  byId('course-stage').innerHTML = `
+    <div class="test-config">
+      <h3>Unit ${state.unit} 첫 학습 코스</h3>
+      <p>단어를 하나도 몰라도 괜찮습니다. 먼저 보여주고 그 다음에 물어봅니다. ${selectedItems().length}개를 ${COURSE_BATCH}개씩 ${batches}묶음으로 나눠, 아래 다섯 단계를 묶음마다 반복하며 따라가기만 하면 됩니다.</p>
+      <div class="course-ladder">${COURSE_STEPS.map(step => `<div class="ladder-row"><span class="ladder-badge">${step.badge}</span><div><strong>${step.label}</strong><small>${step.kicker}</small></div></div>`).join('')}</div>
+      <div class="review-preview"><span>묶음이 끝날 때마다 누적 복습, 마지막에 전체 점검</span><strong>${plan.length}단계</strong></div>
+      ${finished ? '<div class="learn-feedback good"><div><strong>이미 완주한 유닛입니다.</strong>학습하기 탭에서 복습하거나 코스를 다시 돌 수 있습니다.</div></div>' : ''}
+      <button class="button primary test-start" id="course-start">${resumable ? `${Math.round(saved.planIndex / plan.length * 100)}%부터 이어하기` : '코스 시작하기'}</button>
+      ${(resumable || finished) ? '<button class="button course-restart" id="course-restart">처음부터 다시</button>' : ''}
+    </div>`;
+  byId('course-start').onclick = () => startCourse(finished);
+  if (byId('course-restart')) byId('course-restart').onclick = () => { if (confirm(`Unit ${state.unit} 코스를 처음부터 다시 시작할까요?`)) startCourse(true); };
+}
+function renderCourseStage() {
+  const node = courseNode(), spec = courseSpec();
+  if (!node || !spec) { finishCourse(); return; }
+  const term = state.course.queue[0];
+  const item = courseItem(term);
+  if (!item) { advanceCourse(); return; }
+  const plan = coursePlan();
+  const batches = courseBatches().length;
+  const position = node.type === 'step' ? `묶음 ${node.batch + 1} / ${batches}` : (node.type === 'review' ? `누적 복습 ${node.batch} / ${batches - 1}` : '최종 점검');
+  const chips = COURSE_STEPS.map((step, i) => {
+    const status = node.type !== 'step' ? 'done' : (i < node.step ? 'done' : (i === node.step ? 'current' : ''));
+    return `<span class="course-step ${status}">${step.badge} ${step.label}</span>`;
+  }).join('') + (node.type !== 'step' ? `<span class="course-step current">${spec.badge} ${spec.label}</span>` : '');
+  const head = `
+    <div class="test-head"><div class="test-progress"><span style="width:${state.course.planIndex / plan.length * 100}%"></span></div><div class="counter">${position} · 남은 ${state.course.queue.length}개</div></div>
+    <div class="course-steps">${chips}</div>`;
+
+  if (spec.kind === 'card') {
+    byId('course-stage').innerHTML = head + `
+      <div class="learn-card">
+        <div>
+          <div class="question-kicker">${spec.badge} ${spec.label} · ${spec.kicker}</div>
+          <div class="course-term">${escapeText(item.term)}</div>
+          <div class="course-pos"><span class="pos-tag">${escapeText(item.pos)}</span></div>
+          <div class="course-def">${escapeText(defLabel(item))}</div>
+          ${item.definitionKo ? `<div class="course-def-ko">${escapeText(item.definitionKo)}</div>` : ''}
+          <div class="course-example">${escapeText(revealedExample(item))} — ${escapeText(exampleKo(item))}</div>
+        </div>
+        <div class="course-card-actions"><button class="button" id="course-speak">◖) 발음 듣기</button><button class="button primary" id="course-next">봤어요 →</button></div>
+      </div>
+      <div class="learn-utility"><button class="button" id="course-exit">코스 처음 화면</button><span></span></div>`;
+    byId('course-speak').onclick = () => speak(item.term);
+    byId('course-next').onclick = nextCourseQuestion;
+    byId('course-exit').onclick = exitCourse;
+    return;
+  }
+
+  const correctAnswer = answerFor(item, spec.direction);
+  const showHint = spec.hint || state.course.hintShown;
+  const body = spec.kind === 'choice'
+    ? `<div class="choices">${state.course.options.map((option, i) => {
+        const className = state.course.answered ? (option === correctAnswer ? 'correct' : (option === state.course.selected ? 'wrong' : '')) : '';
+        return `<button class="choice ${className}" data-answer="${escapeText(option)}" ${state.course.answered?'disabled':''}><span class="choice-number">${i + 1}</span>${escapeText(option)}</button>`;
+      }).join('')}</div>`
+    : `${showHint ? `<div class="hint-text">${escapeText(wordHint(correctAnswer))}</div>` : ''}<form class="answer-form" id="course-form"><input class="answer-input" id="course-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="영단어를 입력하세요" value="${escapeText(state.course.selected)}" ${state.course.answered?'disabled':''}><button class="button primary" type="submit" ${state.course.answered?'disabled':''}>확인</button></form>`;
+  const feedback = state.course.answered
+    ? `<div class="learn-feedback ${state.course.correct?'good':'bad'}"><div><strong>${state.course.correct ? '정답입니다!' : '괜찮아요. 이 단어는 뒤에서 다시 나옵니다.'}</strong>${escapeText(item.term)} · ${escapeText(defLabel(item))}</div><button class="button primary" id="course-next">다음 →</button></div>`
+    : '';
+  const utility = state.course.answered
+    ? `<div class="learn-utility"><button class="button" id="course-exit">코스 처음 화면</button><button class="button" id="course-speak">◖) ${escapeText(item.term)} 발음</button></div>`
+    : `<div class="learn-utility"><button class="button" id="course-dont-know">잘 모르겠어요</button>${spec.kind === 'write' && !showHint ? '<button class="button" id="course-hint">힌트 보기</button>' : '<span></span>'}</div>`;
+  byId('course-stage').innerHTML = head + `
+    <div class="learn-card">
+      <div><div class="question-kicker">${spec.badge} ${spec.label} · ${spec.kicker}</div><div class="question-prompt">${escapeText(promptFor(item, spec.direction))}</div>${spec.direction === 'example-word-write' ? `<div class="question-ko">${escapeText(exampleKo(item))}</div>` : ''}</div>
+      <div>${body}${feedback}</div>
+    </div>${utility}`;
+  if (state.course.answered) {
+    byId('course-next').onclick = nextCourseQuestion;
+    byId('course-speak').onclick = () => speak(item.term);
+    byId('course-exit').onclick = exitCourse;
+  } else {
+    byId('course-stage').querySelectorAll('.choice').forEach(button => button.onclick = () => gradeCourse(button.dataset.answer));
+    const form = byId('course-form');
+    if (form) {
+      form.onsubmit = event => { event.preventDefault(); gradeCourse(byId('course-input').value); };
+      setTimeout(() => byId('course-input')?.focus(), 0);
+    }
+    byId('course-dont-know').onclick = () => gradeCourse('');
+    if (byId('course-hint')) byId('course-hint').onclick = () => { state.course.hintShown = true; renderCourse(); };
+  }
+}
+function renderCourseComplete() {
+  const missed = Object.entries(state.course.missed).sort((a, b) => b[1] - a[1]);
+  byId('course-stage').innerHTML = `
+    <div class="results-card">
+      <div class="score-ring" style="--score:360deg"><strong>완주</strong></div>
+      <div class="results-title"><h3>Unit ${state.unit} 코스 완주</h3><p>${selectedItems().length}개 단어를 모두 통과했습니다. 학습하기의 세 방향 모두 <b>학습 중</b> 단계로 기록해 두었습니다.</p></div>
+      <div class="result-actions"><button class="button primary" id="course-to-learn">학습하기로 이동</button>${missed.length ? '<button class="button" id="course-to-review">오답학습 하기</button>' : ''}<button class="button" id="course-to-test">테스트 보기</button><button class="button" id="course-again">코스 다시 하기</button></div>
+      ${missed.length
+        ? `<div class="wrong-list"><div class="label">코스 중 헷갈린 단어 ${missed.length}개 · 누적 오답에 기록되었습니다</div>${missed.slice(0, 12).map(([term, count]) => `<article class="wrong-row"><div class="prompt">${count}번 헷갈림</div><div class="answer"><strong>${escapeText(term)}</strong> · ${escapeText(courseItem(term) ? defLabel(courseItem(term)) : '')}</div></article>`).join('')}</div>`
+        : '<div class="empty">한 번도 틀리지 않았습니다!</div>'}
+    </div>`;
+  byId('course-to-learn').onclick = () => setTab('learn');
+  if (byId('course-to-review')) byId('course-to-review').onclick = () => { state.wrongReview.status = 'setup'; setTab('wrong-review'); };
+  byId('course-to-test').onclick = () => setTab('test');
+  byId('course-again').onclick = () => { if (confirm(`Unit ${state.unit} 코스를 처음부터 다시 시작할까요?`)) startCourse(true); };
+}
+function exitCourse() { state.course.status = 'setup'; renderCourse(); }
+function renderCourse() {
+  if (state.course.status === 'setup') renderCourseIntro();
+  else if (state.course.status === 'complete') renderCourseComplete();
+  else renderCourseStage();
+}
+
+
+const SCOURSE_BATCH = 4;
+const SENTENCE_COURSE_STEPS = [
+  { key: 'preview',  kind: 'card',     badge: '①', label: '예문 보기',   kicker: '문장과 뜻 확인하기' },
+  { key: 'recall',   kind: 'flip',     badge: '②', label: '예문 암기',   kicker: '뜻만 보고 떠올리기',   direction: 'example-recall' },
+  { key: 'scramble', kind: 'scramble', badge: '③', label: '문장 조합',   kicker: '뒤섞인 단어 배치하기', direction: 'example-scramble' },
+  { key: 'blank',    kind: 'write',    badge: '④', label: '빈칸 쓰기',   kicker: '문장 속 단어 채우기',  direction: 'example-word-write', hint: false }
+];
+const SREVIEW_SPEC = { key: 'review', kind: 'scramble', badge: '↻', label: '누적 복습', kicker: '지금까지 배운 문장', direction: 'example-scramble' };
+const SFINAL_SPEC  = { key: 'final',  kind: 'scramble', badge: '★', label: '최종 점검', kicker: '전체 문장 복습',    direction: 'example-scramble' };
+
+function sentenceCourseKey() { return `aplang-scourse-v1-${state.unit}`; }
+function loadSentenceCourseSave() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(sentenceCourseKey()) || '{}');
+    return { planIndex: Math.max(0, Number(saved.planIndex) || 0), missed: saved.missed && typeof saved.missed === 'object' ? saved.missed : {} };
+  } catch (_) { return { planIndex: 0, missed: {} }; }
+}
+function saveSentenceCourse() { localStorage.setItem(sentenceCourseKey(), JSON.stringify({ planIndex: state.sentenceCourse.planIndex, missed: state.sentenceCourse.missed })); }
+function sentenceCourseBatches() {
+  const terms = selectedItems().map(item => item.term);
+  const batches = [];
+  for (let i = 0; i < terms.length; i += SCOURSE_BATCH) batches.push(terms.slice(i, i + SCOURSE_BATCH));
+  return batches;
+}
+function sentenceCoursePlan() {
+  const batches = sentenceCourseBatches();
+  const plan = [];
+  batches.forEach((batch, b) => {
+    SENTENCE_COURSE_STEPS.forEach((_, s) => plan.push({ type: 'step', step: s, batch: b, terms: batch }));
+    if (b > 0) plan.push({ type: 'review', batch: b, terms: batches.slice(0, b + 1).flat() });
+  });
+  plan.push({ type: 'final', terms: batches.flat() });
+  return plan;
+}
+function sentenceCourseNode() { return sentenceCoursePlan()[state.sentenceCourse.planIndex] || null; }
+function sentenceCourseSpec() {
+  const node = sentenceCourseNode();
+  if (!node) return null;
+  if (node.type === 'step') return SENTENCE_COURSE_STEPS[node.step];
+  return node.type === 'review' ? SREVIEW_SPEC : SFINAL_SPEC;
+}
+function prepareSentenceCourseTerm() {
+  const spec = sentenceCourseSpec();
+  const term = state.sentenceCourse.queue[0];
+  state.sentenceCourse.revealed = false;
+  if (!spec || !term) return;
+  const item = courseItem(term);
+  state.sentenceCourse.exampleIndex = pickExampleIndex(item);
+  if (spec.kind === 'scramble') scrambleStateReset(state.sentenceCourse, item, state.sentenceCourse.exampleIndex);
+}
+function enterSentenceCourseNode() {
+  const node = sentenceCourseNode(), spec = sentenceCourseSpec();
+  state.sentenceCourse.answered = false;
+  state.sentenceCourse.selected = '';
+  state.sentenceCourse.correct = false;
+  state.sentenceCourse.hintShown = false;
+  if (!node || !spec) { state.sentenceCourse.queue = []; return; }
+  if (node.type === 'review') state.sentenceCourse.queue = shuffleArray(node.terms).slice(0, SCOURSE_BATCH);
+  else state.sentenceCourse.queue = spec.kind === 'card' ? [...node.terms] : shuffleArray(node.terms);
+  prepareSentenceCourseTerm();
+}
+function startSentenceCourse(restart) {
+  const saved = loadSentenceCourseSave();
+  state.sentenceCourse.planIndex = restart ? 0 : saved.planIndex;
+  state.sentenceCourse.missed = restart ? {} : saved.missed;
+  if (state.sentenceCourse.planIndex >= sentenceCoursePlan().length) { finishSentenceCourse(); return; }
+  state.sentenceCourse.status = 'running';
+  enterSentenceCourseNode();
+  saveSentenceCourse();
+  renderSentenceCourse();
+}
+function advanceSentenceCourse() {
+  state.sentenceCourse.planIndex += 1;
+  if (state.sentenceCourse.planIndex >= sentenceCoursePlan().length) { finishSentenceCourse(); return; }
+  enterSentenceCourseNode();
+  saveSentenceCourse();
+  renderSentenceCourse();
+}
+function gradeSentenceCourse(answer) {
+  if (state.sentenceCourse.answered) return;
+  const spec = sentenceCourseSpec(), term = state.sentenceCourse.queue[0];
+  if (!spec || !term) return;
+  const item = courseItem(term);
+  const exIdx = state.sentenceCourse.exampleIndex || 0;
+  const normalize = (spec.direction === 'example-recall' || spec.direction === 'example-scramble') ? normalizeSentence : normalizeAnswer;
+  const correct = normalize(answer) === normalize(answerFor(item, spec.direction, exIdx));
+  state.sentenceCourse.answered = true;
+  state.sentenceCourse.selected = answer;
+  state.sentenceCourse.correct = correct;
+  if (!correct) {
+    state.sentenceCourse.missed[term] = (Number(state.sentenceCourse.missed[term]) || 0) + 1;
+    recordWrong(state.unit, term);
+  }
+  saveSentenceCourse();
+  renderSentenceCourse();
+}
+function nextSentenceCourseQuestion() {
+  const spec = sentenceCourseSpec();
+  if (!spec) return;
+  if (spec.kind !== 'card' && !state.sentenceCourse.answered) return;
+  const term = state.sentenceCourse.queue.shift();
+  if (spec.kind !== 'card' && !state.sentenceCourse.correct) state.sentenceCourse.queue.push(term);
+  state.sentenceCourse.answered = false;
+  state.sentenceCourse.selected = '';
+  state.sentenceCourse.correct = false;
+  if (!state.sentenceCourse.queue.length) { advanceSentenceCourse(); return; }
+  prepareSentenceCourseTerm();
+  renderSentenceCourse();
+}
+function finishSentenceCourse() {
+  state.sentenceCourse.planIndex = sentenceCoursePlan().length;
+  state.sentenceCourse.status = 'complete';
+  ['example-recall','example-scramble','example-word-write'].forEach(direction => {
+    const key = `aplang-learn-v1-${direction}-${state.unit}`;
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || '{}'); } catch (_) {}
+    selectedItems().forEach(item => {
+      const old = saved[item.term] || {};
+      saved[item.term] = { level: Math.max(1, Math.min(2, Number(old.level) || 0)), correct: Number(old.correct) || 0, wrong: Number(old.wrong) || 0 };
+    });
+    localStorage.setItem(key, JSON.stringify(saved));
+  });
+  saveSentenceCourse();
+  state.learn.current = null;
+  state.learn.lastTerm = '';
+  state.learn.answered = false;
+  renderSentenceCourse();
+  renderLearn();
+}
+function renderSentenceCourseIntro() {
+  const saved = loadSentenceCourseSave();
+  const plan = sentenceCoursePlan();
+  const batches = sentenceCourseBatches().length;
+  const finished = saved.planIndex >= plan.length;
+  const resumable = saved.planIndex > 0 && !finished;
+  byId('sentence-course-stage').innerHTML = `
+    <div class="test-config">
+      <h3>Unit ${state.unit} 문장 코스</h3>
+      <p>단어가 아니라 예문을 기준으로 학습합니다. ${selectedItems().length}개 문장을 ${SCOURSE_BATCH}개씩 ${batches}묶음으로 나눠, 아래 네 단계를 묶음마다 반복하며 예문 자체를 몸에 익힙니다.</p>
+      <div class="course-ladder">${SENTENCE_COURSE_STEPS.map(step => `<div class="ladder-row"><span class="ladder-badge">${step.badge}</span><div><strong>${step.label}</strong><small>${step.kicker}</small></div></div>`).join('')}</div>
+      <div class="review-preview"><span>묶음이 끝날 때마다 누적 복습, 마지막에 전체 문장 점검</span><strong>${plan.length}단계</strong></div>
+      ${finished ? '<div class="learn-feedback good"><div><strong>이미 완주한 문장 코스입니다.</strong>학습하기 탭의 예문 암기·문장 조합에서 계속 복습할 수 있습니다.</div></div>' : ''}
+      <button class="button primary test-start" id="scourse-start">${resumable ? `${Math.round(saved.planIndex / plan.length * 100)}%부터 이어하기` : '문장 코스 시작하기'}</button>
+      ${(resumable || finished) ? '<button class="button course-restart" id="scourse-restart">처음부터 다시</button>' : ''}
+    </div>`;
+  byId('scourse-start').onclick = () => startSentenceCourse(finished);
+  if (byId('scourse-restart')) byId('scourse-restart').onclick = () => { if (confirm(`Unit ${state.unit} 문장 코스를 처음부터 다시 시작할까요?`)) startSentenceCourse(true); };
+}
+function renderSentenceCourseStage() {
+  const node = sentenceCourseNode(), spec = sentenceCourseSpec();
+  if (!node || !spec) { finishSentenceCourse(); return; }
+  const term = state.sentenceCourse.queue[0];
+  const item = courseItem(term);
+  if (!item) { advanceSentenceCourse(); return; }
+  const plan = sentenceCoursePlan();
+  const batches = sentenceCourseBatches().length;
+  const position = node.type === 'step' ? `묶음 ${node.batch + 1} / ${batches}` : (node.type === 'review' ? `누적 복습 ${node.batch} / ${batches - 1}` : '최종 점검');
+  const chips = SENTENCE_COURSE_STEPS.map((step, i) => {
+    const status = node.type !== 'step' ? 'done' : (i < node.step ? 'done' : (i === node.step ? 'current' : ''));
+    return `<span class="course-step ${status}">${step.badge} ${step.label}</span>`;
+  }).join('') + (node.type !== 'step' ? `<span class="course-step current">${spec.badge} ${spec.label}</span>` : '');
+  const head = `
+    <div class="test-head"><div class="test-progress"><span style="width:${state.sentenceCourse.planIndex / plan.length * 100}%"></span></div><div class="counter">${position} · 남은 ${state.sentenceCourse.queue.length}개</div></div>
+    <div class="course-steps">${chips}</div>`;
+
+  if (spec.kind === 'card') {
+    byId('sentence-course-stage').innerHTML = head + `
+      <div class="learn-card">
+        <div>
+          <div class="question-kicker">${spec.badge} ${spec.label} · ${spec.kicker}</div>
+          <div class="course-term">${escapeText(item.term)}</div>
+          <div class="course-pos"><span class="pos-tag">${escapeText(item.pos)}</span></div>
+          ${item.definitionKo ? `<div class="course-def-ko">${escapeText(item.definitionKo)}</div>` : ''}
+          <div class="course-example">${escapeText(revealedExample(item, state.sentenceCourse.exampleIndex))} — ${escapeText(exampleKo(item, state.sentenceCourse.exampleIndex))}</div>
+        </div>
+        <div class="course-card-actions"><button class="button" id="scourse-speak">◖) 발음 듣기</button><button class="button primary" id="scourse-next">봤어요 →</button></div>
+      </div>
+      <div class="learn-utility"><button class="button" id="scourse-exit">코스 처음 화면</button><span></span></div>`;
+    byId('scourse-speak').onclick = () => speak(item.term);
+    byId('scourse-next').onclick = nextSentenceCourseQuestion;
+    byId('scourse-exit').onclick = exitSentenceCourse;
+    return;
+  }
+
+  const exIdx = state.sentenceCourse.exampleIndex || 0;
+  const correctAnswer = answerFor(item, spec.direction, exIdx);
+  const showHint = spec.hint || state.sentenceCourse.hintShown;
+  let body = '';
+  if (spec.kind === 'flip') {
+    body = state.sentenceCourse.revealed
+      ? `<div class="example-list"><div class="example-item"><div class="example-en">${revealedExampleHtml(item, exIdx)}</div></div></div>${!state.sentenceCourse.answered ? `<div class="flip-actions"><button class="choice" data-answer=""><span class="choice-number">✕</span>다시 볼게요</button><button class="choice" data-answer="${escapeText(correctAnswer)}"><span class="choice-number">✓</span>기억났어요</button></div>` : ''}`
+      : `<button class="button primary test-start" id="scourse-flip-reveal">예문 확인하기 →</button>`;
+  } else if (spec.kind === 'scramble') {
+    body = `
+      <div class="scramble-built">${state.sentenceCourse.scrambleBuilt.length ? state.sentenceCourse.scrambleBuilt.map(idx => `<button class="scramble-chip placed" data-idx="${idx}" ${state.sentenceCourse.answered?'disabled':''}>${escapeText(state.sentenceCourse.scrambleTokens[idx])}</button>`).join('') : '<span class="scramble-placeholder">아래 단어를 순서대로 눌러 문장을 완성하세요</span>'}</div>
+      <div class="scramble-pool">${state.sentenceCourse.scramblePool.map(idx => `<button class="scramble-chip" data-idx="${idx}" ${state.sentenceCourse.answered?'disabled':''}>${escapeText(state.sentenceCourse.scrambleTokens[idx])}</button>`).join('')}</div>
+      ${!state.sentenceCourse.answered ? `<div class="scramble-actions"><button class="button" id="scourse-scramble-reset">다시 배치</button><button class="button primary" id="scourse-scramble-check" ${state.sentenceCourse.scrambleBuilt.length === state.sentenceCourse.scrambleTokens.length ? '' : 'disabled'}>확인</button></div>` : ''}`;
+  } else {
+    body = `${showHint ? `<div class="hint-text">${escapeText(wordHint(correctAnswer))}</div>` : ''}<form class="answer-form" id="scourse-form"><input class="answer-input" id="scourse-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="영단어를 입력하세요" value="${escapeText(state.sentenceCourse.selected)}" ${state.sentenceCourse.answered?'disabled':''}><button class="button primary" type="submit" ${state.sentenceCourse.answered?'disabled':''}>확인</button></form>`;
+  }
+  const feedback = state.sentenceCourse.answered
+    ? `<div class="learn-feedback ${state.sentenceCourse.correct?'good':'bad'}"><div><strong>${state.sentenceCourse.correct ? '정답입니다!' : '괜찮아요. 이 문장은 뒤에서 다시 나옵니다.'}</strong>${escapeText(item.term)} · ${escapeText(defLabel(item))}</div><button class="button primary" id="scourse-next2">다음 →</button></div>`
+    : '';
+  const promptText = (spec.kind === 'flip' || spec.kind === 'scramble') ? exampleKo(item, exIdx) : promptFor(item, spec.direction, exIdx);
+  const promptClass = (spec.kind === 'flip' || spec.kind === 'scramble') ? 'question-prompt-ko' : 'question-prompt';
+  const utility = state.sentenceCourse.answered
+    ? `<div class="learn-utility"><button class="button" id="scourse-exit2">코스 처음 화면</button><button class="button" id="scourse-speak2">◖) ${escapeText(item.term)} 발음</button></div>`
+    : `<div class="learn-utility"><button class="button" id="scourse-dont-know">잘 모르겠어요</button>${spec.kind === 'write' && !showHint ? '<button class="button" id="scourse-hint">힌트 보기</button>' : '<span></span>'}</div>`;
+  byId('sentence-course-stage').innerHTML = head + `
+    <div class="learn-card">
+      <div><div class="question-kicker">${spec.badge} ${spec.label} · ${spec.kicker}</div><div class="${promptClass}">${escapeText(promptText)}</div></div>
+      <div>${body}${feedback}</div>
+    </div>${utility}`;
+  if (state.sentenceCourse.answered) {
+    byId('scourse-next2').onclick = nextSentenceCourseQuestion;
+    byId('scourse-speak2').onclick = () => speak(item.term);
+    byId('scourse-exit2').onclick = exitSentenceCourse;
+  } else {
+    byId('sentence-course-stage').querySelectorAll('.choice').forEach(button => button.onclick = () => gradeSentenceCourse(button.dataset.answer));
+    byId('sentence-course-stage').querySelectorAll('.scramble-chip.placed').forEach(button => button.onclick = () => sCourseRemove(Number(button.dataset.idx)));
+    byId('sentence-course-stage').querySelectorAll('.scramble-chip:not(.placed)').forEach(button => button.onclick = () => sCoursePick(Number(button.dataset.idx)));
+    if (byId('scourse-scramble-reset')) byId('scourse-scramble-reset').onclick = sCourseResetOrder;
+    if (byId('scourse-scramble-check')) byId('scourse-scramble-check').onclick = sCourseSubmit;
+    if (byId('scourse-flip-reveal')) byId('scourse-flip-reveal').onclick = () => { state.sentenceCourse.revealed = true; renderSentenceCourse(); };
+    const form = byId('scourse-form');
+    if (form) {
+      form.onsubmit = event => { event.preventDefault(); gradeSentenceCourse(byId('scourse-input').value); };
+      setTimeout(() => byId('scourse-input')?.focus(), 0);
+    }
+    byId('scourse-dont-know').onclick = () => gradeSentenceCourse('');
+    if (byId('scourse-hint')) byId('scourse-hint').onclick = () => { state.sentenceCourse.hintShown = true; renderSentenceCourse(); };
+  }
+}
+function renderSentenceCourseComplete() {
+  const missed = Object.entries(state.sentenceCourse.missed).sort((a, b) => b[1] - a[1]);
+  byId('sentence-course-stage').innerHTML = `
+    <div class="results-card">
+      <div class="score-ring" style="--score:360deg"><strong>완주</strong></div>
+      <div class="results-title"><h3>Unit ${state.unit} 문장 코스 완주</h3><p>${selectedItems().length}개 문장을 모두 통과했습니다. 예문 암기·문장 조합·빈칸 쓰기를 <b>학습 중</b> 단계로 기록해 두었습니다.</p></div>
+      <div class="result-actions"><button class="button primary" id="scourse-to-learn">학습하기로 이동</button>${missed.length ? '<button class="button" id="scourse-to-review">오답학습 하기</button>' : ''}<button class="button" id="scourse-to-test">테스트 보기</button><button class="button" id="scourse-again">문장 코스 다시 하기</button></div>
+      ${missed.length
+        ? `<div class="wrong-list"><div class="label">코스 중 헷갈린 문장 ${missed.length}개 · 누적 오답에 기록되었습니다</div>${missed.slice(0, 12).map(([term, count]) => `<article class="wrong-row"><div class="prompt">${count}번 헷갈림</div><div class="answer"><strong>${escapeText(term)}</strong> · ${escapeText(courseItem(term) ? revealedExample(courseItem(term)) : '')}</div></article>`).join('')}</div>`
+        : '<div class="empty">한 번도 틀리지 않았습니다!</div>'}
+    </div>`;
+  byId('scourse-to-learn').onclick = () => setTab('learn');
+  if (byId('scourse-to-review')) byId('scourse-to-review').onclick = () => { state.wrongReview.status = 'setup'; setTab('wrong-review'); };
+  byId('scourse-to-test').onclick = () => setTab('test');
+  byId('scourse-again').onclick = () => { if (confirm(`Unit ${state.unit} 문장 코스를 처음부터 다시 시작할까요?`)) startSentenceCourse(true); };
+}
+function exitSentenceCourse() { state.sentenceCourse.status = 'setup'; renderSentenceCourse(); }
+function renderSentenceCourse() {
+  if (state.sentenceCourse.status === 'setup') renderSentenceCourseIntro();
+  else if (state.sentenceCourse.status === 'complete') renderSentenceCourseComplete();
+  else renderSentenceCourseStage();
+}
+
+function renderCard() {
+  const item = currentItem();
+  if (!item) return;
+  byId('card-face').innerHTML = state.flipped
+    ? `<div class="face-label">Definition</div><div class="definition">${escapeText(defLabel(item))}</div>${item.definitionKo ? `<div class="definition-ko">${escapeText(item.definitionKo)}</div>` : ''}${item.pattern ? `<div class="pattern-tag">${escapeText(item.pattern)}</div>` : ''}<div class="example-list">${item.examples.map(ex => `<div class="example-item"><div class="example-en">${escapeText(ex.en.replace('★', item.term))}</div><div class="example-ko">${escapeText(ex.ko)}</div></div>`).join('')}</div>`
+    : `<div class="face-label">Term</div><div class="term">${escapeText(item.term)}</div><div class="course-pos"><span class="pos-tag">${escapeText(item.pos)}</span></div>`;
+  byId('counter').textContent = `${state.index + 1} / ${state.order.length}`;
+  byId('progress-bar').style.width = `${((state.index + 1) / state.order.length) * 100}%`;
+  const known = knownTerms().has(item.term);
+  byId('known-button').textContent = known ? '✓ 외운 단어' : '외웠어요';
+  byId('known-button').setAttribute('aria-pressed', known ? 'true' : 'false');
+}
+function renderSentenceCard() {
+  const item = currentSentenceCardItem();
+  if (!item) return;
+  const exIdx = state.sentenceCard.exampleIndex || 0;
+  byId('scard-face').innerHTML = state.sentenceCard.flipped
+    ? `<div class="face-label">Example</div><div class="definition">${revealedExampleHtml(item, exIdx)}</div><div class="course-pos"><span class="pos-tag">${escapeText(item.pos)}</span></div><div style="margin-top:14px;color:var(--muted);font-size:14px;line-height:1.5">${escapeText(item.term)} · ${escapeText(defLabel(item))}${item.definitionKo ? ' · ' + escapeText(item.definitionKo) : ''}</div>${item.pattern ? `<div class="pattern-tag">${escapeText(item.pattern)}</div>` : ''}`
+    : `<div class="face-label">Meaning</div><div class="definition">${escapeText(exampleKo(item, exIdx))}</div>`;
+  byId('scard-counter').textContent = `${state.sentenceCard.index + 1} / ${state.sentenceCard.order.length}`;
+  byId('scard-progress-bar').style.width = `${((state.sentenceCard.index + 1) / state.sentenceCard.order.length) * 100}%`;
+  const sknown = sentenceKnownTerms().has(item.term);
+  byId('scard-known-button').textContent = sknown ? '✓ 외운 문장' : '외웠어요';
+  byId('scard-known-button').setAttribute('aria-pressed', sknown ? 'true' : 'false');
+}
+function renderList() {
+  const query = byId('search').value.trim().toLowerCase();
+  const sort = byId('list-sort').value;
+  const termCounts = loadWrongTerms()[state.unit] || {};
+  const filtered = selectedItems()
+    .map((item, sourceIndex) => ({ ...item, sourceIndex, wrong: Number(termCounts[item.term]) || 0 }))
+    .filter(item => `${item.term} ${item.definition} ${item.definitionKo || ''} ${item.examples.map(e => e.en + ' ' + e.ko).join(' ')}`.toLowerCase().includes(query));
+  if (sort === 'wrong') filtered.sort((a, b) => b.wrong - a.wrong || a.sourceIndex - b.sourceIndex);
+  if (sort === 'alpha') filtered.sort((a, b) => a.term.localeCompare(b.term));
+  byId('rows').innerHTML = filtered.length ? filtered.map((item) => `
+    <article class="word-row">
+      <div class="word"><span style="color:var(--muted);font:600 11px system-ui">${String(item.sourceIndex+1).padStart(2,'0')}</span><br>${escapeText(item.term)}<span class="pos-tag">${escapeText(item.pos)}</span><br><span class="word-wrong">오답 ${item.wrong}회</span></div>
+      <div class="meaning">${escapeText(item.definition)}${item.definitionKo ? `<div class="definition-ko">${escapeText(item.definitionKo)}</div>` : ''}${item.pattern ? `<div class="pattern-tag">${escapeText(item.pattern)}</div>` : ''}<div class="example-list">${item.examples.map((ex, exIndex) => `<div class="example-item">${isSentenceStarred(item.term, exIndex) ? '<span class="star-toggle starred" style="padding:2px 8px;font-size:12px;margin-bottom:6px;display:inline-block">★ 즐겨찾기</span>' : ''}<div class="example-en">${escapeText(ex.en.replace('★', item.term))}</div><div class="example-ko">${escapeText(ex.ko)}</div></div>`).join('')}</div></div>
+      <button class="speak" data-word="${escapeText(item.term)}" aria-label="${escapeText(item.term)} 발음 듣기">◖)</button>
+    </article>`).join('') : '<div class="empty">검색 결과가 없습니다.</div>';
+  byId('rows').querySelectorAll('.speak').forEach(button => button.onclick = () => speak(button.dataset.word));
+}
+function chooseUnit(number) {
+  if (!DATA[number]) return;
+  state.unit = number;
+  const direction = state.learn.direction;
+  const masteryEnabled = state.learn.masteryEnabled;
+  state.learn = { direction, current: null, type: 'choice', options: [], answered: false, chosen: '', correct: false, lastTerm: '', streak: 0, attempts: 0, revealed: false, scrambleTokens: [], scramblePool: [], scrambleBuilt: [], masteryEnabled, currentExampleIndex: 0, audioAutoPlayed: false };
+  state.course = { status: 'setup', planIndex: 0, queue: [], options: [], answered: false, selected: '', correct: false, hintShown: false, missed: {} };
+  state.sentenceCourse = { status: 'setup', planIndex: 0, queue: [], options: [], answered: false, selected: '', correct: false, hintShown: false, missed: {}, revealed: false, scrambleTokens: [], scramblePool: [], scrambleBuilt: [], exampleIndex: 0 };
+  setOrder(); setSentenceCardOrder(); renderAll();
+  history.replaceState(null, '', `#unit-${number}`);
+}
+function move(delta) {
+  state.index = (state.index + delta + state.order.length) % state.order.length;
+  state.flipped = false; renderCard();
+}
+function flip() { state.flipped = !state.flipped; renderCard(); }
+function shuffle() { state.order = shuffleArray(state.order); state.index = 0; state.flipped = false; renderCard(); }
+function toggleKnown() {
+  const terms = knownTerms(); const term = currentItem().term;
+  terms.has(term) ? terms.delete(term) : terms.add(term);
+  saveKnown(terms); renderCard();
+}
+function moveSentenceCard(delta) {
+  state.sentenceCard.index = (state.sentenceCard.index + delta + state.sentenceCard.order.length) % state.sentenceCard.order.length;
+  state.sentenceCard.flipped = false;
+  state.sentenceCard.exampleIndex = pickExampleIndex(currentSentenceCardItem());
+  renderSentenceCard();
+}
+function flipSentenceCard() { state.sentenceCard.flipped = !state.sentenceCard.flipped; renderSentenceCard(); }
+function shuffleSentenceCard() {
+  state.sentenceCard.order = shuffleArray(state.sentenceCard.order);
+  state.sentenceCard.index = 0;
+  state.sentenceCard.flipped = false;
+  state.sentenceCard.exampleIndex = pickExampleIndex(currentSentenceCardItem());
+  renderSentenceCard();
+}
+function toggleSentenceKnown() {
+  const terms = sentenceKnownTerms(); const term = currentSentenceCardItem().term;
+  terms.has(term) ? terms.delete(term) : terms.add(term);
+  saveSentenceKnown(terms); renderSentenceCard();
+}
+function speak(word) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = 'en-US';
+  utterance.rate = .82;
+  const voices = speechSynthesis.getVoices();
+  const enVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+  if (enVoice) utterance.voice = enVoice;
+  speechSynthesis.speak(utterance);
+}
+function setTab(tab) {
+  state.tab = tab;
+  document.querySelectorAll('.tab').forEach(button => button.classList.toggle('active', button.dataset.tab === tab));
+  byId('course-panel').classList.toggle('active', tab === 'course');
+  byId('sentence-course-panel').classList.toggle('active', tab === 'sentence-course');
+  byId('learn-panel').classList.toggle('active', tab === 'learn');
+  byId('wrong-review-panel').classList.toggle('active', tab === 'wrong-review');
+  byId('test-panel').classList.toggle('active', tab === 'test');
+  byId('cards-panel').classList.toggle('active', tab === 'cards');
+  byId('sentence-cards-panel').classList.toggle('active', tab === 'sentence-cards');
+  byId('list-panel').classList.toggle('active', tab === 'list');
+  if (tab === 'course') renderCourse();
+  if (tab === 'sentence-course') renderSentenceCourse();
+  if (tab === 'learn') renderLearn();
+  if (tab === 'wrong-review') renderWrongReview();
+  if (tab === 'test') renderTest();
+  if (tab === 'list') renderList();
+}
+function renderFooter() {
+  const position = allUnits.indexOf(state.unit);
+  const prev = allUnits[Math.max(0, position - 1)], next = allUnits[Math.min(allUnits.length - 1, position + 1)];
+  byId('prev-set').disabled = position === 0;
+  byId('next-set').disabled = position === allUnits.length - 1;
+  byId('prev-set').textContent = `← Unit ${prev}`;
+  byId('next-set').textContent = `Unit ${next} →`;
+}
+function renderAll() {
+  renderSetButtons(); renderSelector(); renderWrongSummary(); renderHeader(); renderCourse(); renderSentenceCourse(); renderLearn(); renderWrongReview(); renderTest(); renderCard(); renderSentenceCard(); renderList(); renderFooter();
+}
+
+byId('set-select').onchange = event => chooseUnit(Number(event.target.value));
+byId('reset-wrong').onclick = resetWrongCount;
+byId('export-data').onclick = exportStudyData;
+byId('import-data').onclick = () => byId('import-data-file').click();
+byId('import-data-file').onchange = importStudyData;
+byId('flashcard').onclick = flip;
+byId('prev').onclick = () => move(-1);
+byId('next').onclick = () => move(1);
+byId('known-button').onclick = toggleKnown;
+byId('shuffle').onclick = shuffle;
+byId('pronounce').onclick = () => speak(currentItem().term);
+byId('reset').onclick = () => { localStorage.removeItem(progressKey()); renderCard(); };
+byId('sentence-flashcard').onclick = flipSentenceCard;
+byId('scard-prev').onclick = () => moveSentenceCard(-1);
+byId('scard-next').onclick = () => moveSentenceCard(1);
+byId('scard-known-button').onclick = toggleSentenceKnown;
+byId('scard-shuffle').onclick = shuffleSentenceCard;
+byId('scard-pronounce').onclick = () => speak(currentSentenceCardItem().term);
+byId('scard-reset').onclick = () => { localStorage.removeItem(sentenceProgressKey()); renderSentenceCard(); };
+byId('search').oninput = renderList;
+byId('list-sort').onchange = renderList;
+byId('print').onclick = () => { setTab('list'); window.print(); };
+byId('prev-set').onclick = () => chooseUnit(allUnits[allUnits.indexOf(state.unit) - 1]);
+byId('next-set').onclick = () => chooseUnit(allUnits[allUnits.indexOf(state.unit) + 1]);
+document.querySelectorAll('.tab').forEach(button => button.onclick = () => setTab(button.dataset.tab));
+document.querySelectorAll('.learn-mode').forEach(button => button.onclick = () => setLearnDirection(button.dataset.direction));
+document.addEventListener('keydown', event => {
+  const activeTag = document.activeElement.tagName;
+  if (state.tab === 'course' && state.course.status === 'running') {
+    const spec = courseSpec();
+    if (spec && spec.kind === 'choice' && !state.course.answered && /^[1-4]$/.test(event.key)) {
+      const answer = state.course.options[Number(event.key) - 1];
+      if (answer) { event.preventDefault(); gradeCourse(answer); }
+      return;
+    }
+    if ((state.course.answered || (spec && spec.kind === 'card')) && (event.code === 'Space' || event.key === 'Enter') && !['INPUT','TEXTAREA','BUTTON','SELECT'].includes(activeTag)) {
+      event.preventDefault(); nextCourseQuestion();
+    }
+    return;
+  }
+  if (state.tab === 'sentence-course' && state.sentenceCourse.status === 'running') {
+    const spec = sentenceCourseSpec();
+    if ((state.sentenceCourse.answered || (spec && spec.kind === 'card')) && (event.code === 'Space' || event.key === 'Enter') && !['INPUT','TEXTAREA','BUTTON','SELECT'].includes(activeTag)) {
+      event.preventDefault(); nextSentenceCourseQuestion();
+    }
+    return;
+  }
+  if (state.tab === 'wrong-review' && state.wrongReview.status === 'running') {
+    if (!state.wrongReview.answered && /^[1-4]$/.test(event.key)) {
+      const answer = state.wrongReview.questions[state.wrongReview.index]?.options[Number(event.key) - 1];
+      if (answer) { event.preventDefault(); gradeWrongReview(answer); }
+      return;
+    }
+    if (state.wrongReview.answered && (event.code === 'Space' || event.key === 'Enter') && !['INPUT','TEXTAREA','BUTTON','SELECT'].includes(activeTag)) {
+      event.preventDefault(); nextWrongReview();
+    }
+    return;
+  }
+  if (state.tab === 'test' && state.test.status === 'running') {
+    if (/^[1-4]$/.test(event.key)) {
+      const answer = state.test.questions[state.test.index]?.options[Number(event.key) - 1];
+      if (answer) { event.preventDefault(); selectTestAnswer(answer); }
+      return;
+    }
+    if (event.code === 'Space' && state.test.selected && !['INPUT','TEXTAREA','BUTTON','SELECT'].includes(activeTag)) {
+      event.preventDefault(); nextTestQuestion();
+    }
+    return;
+  }
+  if (state.tab === 'learn') {
+    if (!state.learn.answered && state.learn.type === 'choice' && /^[1-4]$/.test(event.key)) {
+      const answer = state.learn.options[Number(event.key) - 1];
+      if (answer) { event.preventDefault(); gradeLearn(answer); }
+      return;
+    }
+    if (state.learn.answered && (event.code === 'Space' || event.key === 'Enter') && !['INPUT','TEXTAREA','BUTTON','SELECT'].includes(activeTag)) {
+      event.preventDefault(); nextLearnQuestion();
+    }
+    return;
+  }
+  if (state.tab === 'sentence-cards' && !['INPUT','SELECT'].includes(activeTag)) {
+    if (event.key === 'ArrowLeft') moveSentenceCard(-1);
+    if (event.key === 'ArrowRight') moveSentenceCard(1);
+    if (event.key === ' ') { event.preventDefault(); flipSentenceCard(); }
+    return;
+  }
+  if (state.tab !== 'cards' || ['INPUT','SELECT'].includes(activeTag)) return;
+  if (event.key === 'ArrowLeft') move(-1);
+  if (event.key === 'ArrowRight') move(1);
+  if (event.key === ' ') { event.preventDefault(); flip(); }
+});
+byId('mastery-toggle').onclick = toggleMasteryEnabled;
+state.learn.masteryEnabled = loadMasteryEnabled();
+setOrder(); setSentenceCardOrder(); renderAll();
+</script>
+</body>
+</html>
