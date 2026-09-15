@@ -1542,7 +1542,7 @@ function renderSentenceCourseStage() {
     body = `${showHint ? `<div class="hint-text">${escapeText(wordHint(correctAnswer))}</div>` : ''}<form class="answer-form" id="scourse-form"><input class="answer-input" id="scourse-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="영단어를 입력하세요" value="${escapeText(state.sentenceCourse.selected)}" ${state.sentenceCourse.answered?'disabled':''}><button class="button primary" type="submit" ${state.sentenceCourse.answered?'disabled':''}>확인</button></form>`;
   }
   const feedback = state.sentenceCourse.answered
-    ? `<div class="learn-feedback ${state.sentenceCourse.correct?'good':'bad'}"><div><strong>${state.sentenceCourse.correct ? '정답입니다!' : '괜찮아요. 이 문장은 뒤에서 다시 나옵니다.'}</strong>${escapeText(item.term)} · ${escapeText(defLabel(item))}</div><button class="button primary" id="scourse-next2">다음 →</button></div>`
+    ? `<div class="learn-feedback ${state.sentenceCourse.correct?'good':'bad'}"><div><strong>${state.sentenceCourse.correct ? '정답입니다!' : '괜찮아요. 이 문장은 뒤에서 다시 나옵니다.'}</strong>${escapeText(item.term)} · ${escapeText(defLabel(item))}<span class="feedback-extra">${revealedExampleHtml(item, exIdx)} — ${escapeText(exampleKo(item, exIdx))}</span></div><button class="button primary" id="scourse-next2">다음 →</button></div>`
     : '';
   const promptText = (spec.kind === 'flip' || spec.kind === 'scramble') ? exampleKo(item, exIdx) : promptFor(item, spec.direction, exIdx);
   const promptClass = (spec.kind === 'flip' || spec.kind === 'scramble') ? 'question-prompt-ko' : 'question-prompt';
