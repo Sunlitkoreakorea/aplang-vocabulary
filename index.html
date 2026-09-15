@@ -154,6 +154,11 @@ kbd { padding: 2px 6px; border: 1px solid var(--line); border-bottom-width: 2px;
 .learn-feedback.bad { background: #fbe9e7; }
 .learn-feedback strong { display: block; }
 .feedback-extra { display: block; margin-top: 5px; color: rgba(27,36,54,.65); font-size: 13px; line-height: 1.5; }
+.sentence-diff { margin: 8px 0; padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.6); font-size: 14px; line-height: 1.7; }
+.diff-row + .diff-row { margin-top: 4px; }
+.diff-label { display: inline-block; min-width: 38px; margin-right: 6px; font-size: 11px; font-weight: 850; letter-spacing: .04em; color: var(--muted); vertical-align: middle; }
+.diff-wrong { background: #f6c8c0; color: #7a1f2b; text-decoration: line-through; border-radius: 4px; padding: 0 3px; }
+.diff-missing { background: #cdedd9; color: #1f6b3d; font-weight: 700; border-radius: 4px; padding: 0 3px; }
 .learn-utility { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 12px; }
 .learn-utility .button { color: var(--muted); font-size: 12px; }
 .complete { min-height: 380px; display: grid; place-items: center; padding: 36px; border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(145deg,#7a1f2b,#9c3240); color: #fff; text-align: center; box-shadow: var(--shadow); }
@@ -375,7 +380,7 @@ const DIRECTIONS = {
   'word-to-definition': { promptKey: 'term', answerKey: 'defLabel', short: '정의 고르기', title: '단어를 보고 정의 고르기', hint: '단어를 보고 알맞은 영어 정의를 선택합니다.' },
   'example-to-word': { promptKey: 'cloze', answerKey: 'term', short: '예문 빈칸', title: '예문 빈칸을 보고 단어 고르기', hint: '예문의 빈칸에 들어갈 알맞은 단어를 선택합니다.' },
   'example-word-write': { promptKey: 'cloze', answerKey: 'term', short: '빈칸 주관식', title: '예문 빈칸에 알맞은 단어 타이핑하기', hint: '예문의 빈칸에 들어갈 단어를 직접 입력합니다.', forceWrite: true, testable: false },
-  'example-sentence-write': { promptKey: 'term', answerKey: 'sentence', short: '문장 주관식', title: '단어와 뜻을 보고 예문 전체 타이핑하기', hint: '단어와 한글 뜻을 보고 해당 예문 전체를 영어로 직접 입력합니다.', forceWrite: true, testable: false },
+  'example-sentence-write': { promptKey: 'audioPromptSentence', answerKey: 'sentence', short: '문장 주관식', title: '발음과 뜻을 듣고 예문 전체 타이핑하기', hint: '단어 발음과 한글 뜻을 듣고 해당 예문 전체를 영어로 직접 입력합니다.', forceWrite: true, testable: false },
   'example-recall': { promptKey: 'exampleKo', answerKey: 'sentence', short: '예문 암기', title: '한글 뜻만 보고 예문 떠올리기', hint: '한글 번역만 보고 영어 예문 전체를 마음속으로 떠올린 뒤 눌러서 확인합니다.', forceFlip: true, testable: false },
   'example-scramble': { promptKey: 'exampleKo', answerKey: 'sentence', short: '문장 조합', title: '뒤섞인 단어로 예문 완성하기', hint: '뒤섞인 단어를 순서대로 클릭해 예문을 완성합니다.', forceScramble: true, testable: false },
   'audio-to-word': { promptKey: 'audioPrompt', answerKey: 'term', short: '듣고 쓰기', title: '발음만 듣고 단어 쓰기', hint: '단어의 발음만 듣고 알맞은 영단어를 입력합니다.', forceWrite: true, testable: false }
@@ -388,13 +393,18 @@ function fieldValue(item, key, exIndex = 0) {
   if (key === 'sentence') return revealedExample(item, exIndex);
   if (key === 'exampleKo') return exampleKo(item, exIndex);
   if (key === 'audioPrompt') return '🔊 발음을 듣고 단어를 입력하세요';
+  if (key === 'audioPromptSentence') return '🔊 발음을 듣고 예문 전체를 써보세요';
   return item[key];
 }
 function revealedExampleHtml(item, exIndex = 0) {
   const raw = item.examples[exIndex].en;
   const idx = raw.indexOf('★');
   if (idx === -1) return escapeText(raw);
-  return `${escapeText(raw.slice(0, idx))}<strong>${escapeText(item.term)}</strong>${escapeText(raw.slice(idx + 1))}`;
+  const before = raw.slice(0, idx);
+  const after = raw.slice(idx + 1);
+  const suffix = (after.match(/^\S*/) || [''])[0];
+  const rest = after.slice(suffix.length);
+  return `${escapeText(before)}<strong>${escapeText(item.term)}${escapeText(suffix)}</strong>${escapeText(rest)}`;
 }
 function promptFor(item, direction, exIndex = 0) { return fieldValue(item, directionInfo(direction).promptKey, exIndex); }
 function answerFor(item, direction, exIndex = 0) { return fieldValue(item, directionInfo(direction).answerKey, exIndex); }
@@ -747,7 +757,7 @@ function renderLearn() {
         <div class="${(direction === 'example-recall' || direction === 'example-scramble') ? 'question-prompt-ko' : 'question-prompt'}">${escapeText(prompt)}</div>
         ${(direction === 'example-to-word' || direction === 'example-word-write') ? `<div class="question-ko">${escapeText(exampleKo(item, exIdx))}</div>` : ''}
         ${direction === 'example-sentence-write' ? `<div class="question-ko">${escapeText(exampleKo(item, exIdx))} · 위 뜻이 담긴 예문을 영어로 써보세요</div>` : ''}
-        ${direction === 'audio-to-word' ? `<div style="text-align:center;margin-top:18px"><button class="button primary test-start" id="audio-play-btn">🔊 다시 듣기</button></div>` : ''}
+        ${(direction === 'audio-to-word' || direction === 'example-sentence-write') ? `<div style="text-align:center;margin-top:18px"><button class="button primary test-start" id="audio-play-btn">🔊 다시 듣기</button></div>` : ''}
       </div>
       <div>
         ${isFlip ? (state.learn.revealed
@@ -761,7 +771,7 @@ function renderLearn() {
           const className = state.learn.answered ? (option === correctAnswer ? 'correct' : (option === state.learn.chosen ? 'wrong' : '')) : '';
           return `<button class="choice ${className}" data-answer="${escapeText(option)}" ${state.learn.answered?'disabled':''}><span class="choice-number">${optionIndex + 1}</span>${escapeText(option)}</button>`;
         }).join('')}</div>` : `<form class="answer-form" id="answer-form"><input class="answer-input" id="answer-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="${direction === 'example-sentence-write' ? '예문 전체를 영어로 입력하세요' : '영단어를 입력하세요'}" value="${escapeText(state.learn.chosen)}" ${state.learn.answered?'disabled':''}><button class="button primary" type="submit" ${state.learn.answered?'disabled':''}>확인</button></form>`)}
-        ${state.learn.answered ? `<div class="learn-feedback ${state.learn.correct?'good':'bad'}"><div><strong>${state.learn.correct?'정답입니다!':'다시 기억해 보세요.'}</strong>${state.learn.correct ? `${escapeText(item.term)} · ${escapeText(defLabel(item))}` : `정답은 <b>${escapeText(correctAnswer)}</b>입니다.`}${feedbackExtra ? `<span class="feedback-extra">${escapeText(feedbackExtra)}</span>` : ''}</div><button class="button primary" id="next-question">다음 문제 →</button></div>` : ''}
+        ${state.learn.answered ? `<div class="learn-feedback ${state.learn.correct?'good':'bad'}"><div><strong>${state.learn.correct?'정답입니다!':'다시 기억해 보세요.'}</strong>${state.learn.correct ? `${escapeText(item.term)} · ${escapeText(defLabel(item))}` : `${direction === 'example-sentence-write' ? wordDiffHtml(state.learn.chosen, correctAnswer) : ''}정답은 <b>${escapeText(correctAnswer)}</b>입니다.`}${feedbackExtra ? `<span class="feedback-extra">${escapeText(feedbackExtra)}</span>` : ''}</div><button class="button primary" id="next-question">다음 문제 →</button></div>` : ''}
       </div>
     </div>
     <div class="learn-utility"><button class="button" id="dont-know">${state.learn.answered?'진행 기록 초기화':'잘 모르겠어요'}</button>${isSentenceDir ? `<button class="star-toggle ${starred?'starred':''}" id="star-toggle" title="이 문장 즐겨찾기">${starred?'★ 즐겨찾기됨':'☆ 즐겨찾기'}</button>` : ''}<button class="button" id="learn-speak">◖) 정답 발음</button></div>`;
@@ -793,6 +803,37 @@ function renderLearn() {
 }
 function normalizeAnswer(value) { return value.trim().toLowerCase(); }
 function normalizeSentence(value) { return value.trim().toLowerCase().replace(/[.,!?;:'"()]/g, '').replace(/\s+/g, ' '); }
+function wordDiffTokens(userText, correctText) {
+  const userTokens = userText.trim() ? userText.trim().split(/\s+/) : [];
+  const correctTokens = correctText.trim().split(/\s+/);
+  const norm = t => t.toLowerCase().replace(/[.,!?;:'"()]/g, '');
+  const a = userTokens.map(norm), b = correctTokens.map(norm);
+  const n = a.length, m = b.length;
+  const dp = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = m - 1; j >= 0; j--) {
+      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    }
+  }
+  let i = 0, j = 0;
+  const userOut = [], correctOut = [];
+  while (i < n && j < m) {
+    if (a[i] === b[j]) { userOut.push({ text: userTokens[i], ok: true }); correctOut.push({ text: correctTokens[j], ok: true }); i++; j++; }
+    else if (dp[i + 1][j] >= dp[i][j + 1]) { userOut.push({ text: userTokens[i], ok: false }); i++; }
+    else { correctOut.push({ text: correctTokens[j], ok: false }); j++; }
+  }
+  while (i < n) { userOut.push({ text: userTokens[i], ok: false }); i++; }
+  while (j < m) { correctOut.push({ text: correctTokens[j], ok: false }); j++; }
+  return { userOut, correctOut };
+}
+function wordDiffHtml(userText, correctText) {
+  const { userOut, correctOut } = wordDiffTokens(userText, correctText);
+  const userHtml = userOut.length
+    ? userOut.map(t => t.ok ? escapeText(t.text) : `<span class="diff-wrong">${escapeText(t.text)}</span>`).join(' ')
+    : '<span class="diff-wrong">(입력 없음)</span>';
+  const correctHtml = correctOut.map(t => t.ok ? escapeText(t.text) : `<span class="diff-missing">${escapeText(t.text)}</span>`).join(' ');
+  return `<div class="sentence-diff"><div class="diff-row"><span class="diff-label">내 답</span>${userHtml}</div><div class="diff-row"><span class="diff-label">정답</span>${correctHtml}</div></div>`;
+}
 function gradeLearn(answer) {
   if (state.learn.answered || !state.learn.current) return;
   const item = state.learn.current;
