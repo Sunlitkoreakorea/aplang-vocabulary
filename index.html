@@ -296,7 +296,7 @@ kbd { padding: 2px 6px; border: 1px solid var(--line); border-bottom-width: 2px;
       <div class="content">
         <div class="content-head">
           <div><h2 class="set-title" id="set-title"></h2><div class="set-note" id="set-note"></div></div>
-          <div class="tabs" role="tablist"><button class="tab" data-tab="course">코스</button><button class="tab" data-tab="sentence-course">문장 코스</button><button class="tab active" data-tab="learn">학습하기</button><button class="tab" data-tab="wrong-review">오답학습</button><button class="tab" data-tab="test">테스트</button><button class="tab" data-tab="cards">카드</button><button class="tab" data-tab="sentence-cards">문장 카드</button><button class="tab" data-tab="list">목록</button></div>
+          <div class="tabs" role="tablist"><button class="tab" data-tab="course">코스</button><button class="tab" data-tab="sentence-course">문장 코스</button><button class="tab active" data-tab="learn">학습하기</button><button class="tab" data-tab="wrong-review">오답학습</button><button class="tab" data-tab="test">테스트</button><button class="tab" data-tab="cards">카드</button><button class="tab" data-tab="sentence-cards">문장 카드</button><button class="tab" data-tab="list">목록</button><button class="tab" data-tab="prep">전치사</button></div>
         </div>
         <section class="panel" id="course-panel">
           <div id="course-stage"></div>
@@ -349,6 +349,16 @@ kbd { padding: 2px 6px; border: 1px solid var(--line); border-bottom-width: 2px;
           <div class="list-tools"><input class="search" id="search" type="search" placeholder="단어 · 정의 · 예문 검색" aria-label="단어, 정의, 예문 검색"><select class="select list-sort" id="list-sort" aria-label="목록 정렬"><option value="source">원래 순서</option><option value="wrong">오답 많은 순</option><option value="alpha">알파벳순</option></select><button class="button" id="print">인쇄</button></div>
           <div class="rows" id="rows"></div>
         </section>
+        <section class="panel" id="prep-panel">
+          <div class="set-note" style="margin-bottom:14px">전체 유닛에서 전치사가 필수로 붙는 단어들만 모아 발음을 듣고 단어+전치사를 함께 입력합니다.</div>
+          <div class="learn-status">
+            <div class="mastery" aria-label="전치사 학습 숙련도"><span id="prep-mastery-bar"></span></div>
+            <div class="mastery-chip"><strong id="prep-fresh-count">0</strong>모르는 단어</div>
+            <div class="mastery-chip"><strong id="prep-learning-count">0</strong>학습 중</div>
+            <div class="mastery-chip"><strong id="prep-mastered-count">0</strong>숙달</div>
+          </div>
+          <div id="prep-stage"></div>
+        </section>
         <div class="set-footer"><button class="button" id="prev-set">← 이전 유닛</button><button class="button" id="next-set">다음 유닛 →</button></div>
       </div>
     </section>
@@ -366,7 +376,8 @@ const state = {
   sentenceCourse: { status: 'setup', planIndex: 0, queue: [], options: [], answered: false, selected: '', correct: false, hintShown: false, missed: {}, revealed: false, scrambleTokens: [], scramblePool: [], scrambleBuilt: [], exampleIndex: 0 },
   learn: { direction: 'definition-to-word', current: null, type: 'choice', options: [], answered: false, chosen: '', correct: false, lastTerm: '', streak: 0, attempts: 0, revealed: false, scrambleTokens: [], scramblePool: [], scrambleBuilt: [], masteryEnabled: true, currentExampleIndex: 0, audioAutoPlayed: false },
   test: { status: 'setup', from: allUnits[0], to: allUnits[allUnits.length - 1], direction: 'definition-to-word', count: '20', questions: [], index: 0, selected: '', answers: [] },
-  wrongReview: { status: 'setup', from: allUnits[0], to: allUnits[allUnits.length - 1], minimum: 1, direction: 'definition-to-word', questions: [], nextRound: [], round: 1, totalItems: 0, index: 0, selected: '', answered: false, correct: false, answers: [] }
+  wrongReview: { status: 'setup', from: allUnits[0], to: allUnits[allUnits.length - 1], minimum: 1, direction: 'definition-to-word', questions: [], nextRound: [], round: 1, totalItems: 0, index: 0, selected: '', answered: false, correct: false, answers: [] },
+  prep: { current: null, answered: false, chosen: '', correct: false, lastTerm: '', audioAutoPlayed: false }
 };
 
 function defLabel(item) { return `(${item.pos}) ${item.definition}`; }
@@ -596,6 +607,181 @@ function learnSummary(progress = loadLearnProgress()) {
   };
 }
 
+function prepositionPool() {
+  const items = [];
+  allUnits.forEach(unitNumber => {
+    (DATA[unitNumber].words || []).forEach(word => {
+      if (word.pattern && word.pattern.trim()) items.push(word);
+    });
+  });
+  return items;
+}
+function normalizePrepAnswer(value) {
+  return value.trim().toLowerCase()
+    .replace(/[.,!?;:'"()~]/g, '')
+    .replace(/\b(something|someone|somebody|do|a)\b/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+function prepositionAnswerVariants(item) {
+  const filled = item.pattern.replace(/★/g, item.term);
+  const normalized = normalizePrepAnswer(filled);
+  const tokens = normalized.split(' ').filter(Boolean);
+  const segments = [[]];
+  tokens.forEach(token => {
+    if (token === '/') segments.push([]);
+    else segments[segments.length - 1].push(token);
+  });
+  const expandInlineSlash = segTokens => {
+    let variants = [[]];
+    segTokens.forEach(token => {
+      if (token.includes('/')) {
+        const options = token.split('/').filter(Boolean);
+        const next = [];
+        variants.forEach(variant => options.forEach(option => next.push([...variant, option])));
+        variants = next;
+      } else {
+        variants.forEach(variant => variant.push(token));
+      }
+    });
+    return variants.map(variant => variant.join(' '));
+  };
+  const all = [];
+  segments.forEach(segment => { if (segment.length) all.push(...expandInlineSlash(segment)); });
+  return [...new Set(all)];
+}
+function gradePrepositionAnswer(item, answer) {
+  return prepositionAnswerVariants(item).includes(normalizePrepAnswer(answer));
+}
+function prepPatternDisplay(item) {
+  return item.pattern.replace(/★/g, item.term).replace(/~/g, '').replace(/\s+/g, ' ').trim();
+}
+function prepKey() { return 'aplang-prep-progress-v1'; }
+function loadPrepProgress() {
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(prepKey()) || '{}'); } catch (_) {}
+  const progress = {};
+  prepositionPool().forEach(item => {
+    const old = saved[item.term] || {};
+    progress[item.term] = {
+      level: Math.max(0, Math.min(2, Number(old.level) || 0)),
+      correct: Number(old.correct) || 0,
+      wrong: Number(old.wrong) || 0
+    };
+  });
+  return progress;
+}
+function savePrepProgress(progress) { localStorage.setItem(prepKey(), JSON.stringify(progress)); }
+function prepSummary(progress = loadPrepProgress()) {
+  const levels = prepositionPool().map(item => progress[item.term].level);
+  return {
+    fresh: levels.filter(level => level === 0).length,
+    learning: levels.filter(level => level === 1).length,
+    mastered: levels.filter(level => level === 2).length,
+    percent: Math.round(levels.reduce((sum, level) => sum + level, 0) / (levels.length * 2) * 100)
+  };
+}
+function createPrepQuestion() {
+  const progress = loadPrepProgress();
+  const pool = prepositionPool();
+  const candidates = pool.filter(item => progress[item.term].level < 2);
+  if (!candidates.length) { state.prep.current = null; return; }
+  let weighted = [];
+  candidates.forEach(item => {
+    const record = progress[item.term];
+    const weight = Math.max(1, 4 - record.level + Math.min(record.wrong, 3));
+    for (let i = 0; i < weight; i++) weighted.push(item);
+  });
+  if (candidates.length > 1) weighted = weighted.filter(item => item.term !== state.prep.lastTerm);
+  const item = weighted[Math.floor(Math.random() * weighted.length)] || candidates[0];
+  state.prep.current = item;
+  state.prep.answered = false;
+  state.prep.chosen = '';
+  state.prep.correct = false;
+  state.prep.audioAutoPlayed = false;
+}
+function gradePrep(answer) {
+  if (state.prep.answered || !state.prep.current) return;
+  const item = state.prep.current;
+  const correct = gradePrepositionAnswer(item, answer);
+  const progress = loadPrepProgress();
+  const record = progress[item.term];
+  if (correct) { record.level = Math.min(2, record.level + 1); record.correct += 1; }
+  else { record.level = Math.max(0, record.level - 1); record.wrong += 1; }
+  savePrepProgress(progress);
+  state.prep.answered = true;
+  state.prep.chosen = answer;
+  state.prep.correct = correct;
+  renderPrep();
+}
+function nextPrepQuestion() {
+  state.prep.lastTerm = state.prep.current ? state.prep.current.term : '';
+  state.prep.current = null;
+  renderPrep();
+}
+function resetPrepProgress() {
+  if (!confirm('전치사 학습 기록을 초기화할까요?')) return;
+  localStorage.removeItem(prepKey());
+  state.prep.current = null;
+  state.prep.lastTerm = '';
+  renderPrep();
+}
+function prepReviewAll() {
+  const progress = loadPrepProgress();
+  Object.values(progress).forEach(record => record.level = 1);
+  savePrepProgress(progress);
+  state.prep.current = null;
+  renderPrep();
+}
+function renderPrepStatus() {
+  const summary = prepSummary();
+  byId('prep-mastery-bar').style.width = `${summary.percent}%`;
+  byId('prep-fresh-count').textContent = summary.fresh;
+  byId('prep-learning-count').textContent = summary.learning;
+  byId('prep-mastered-count').textContent = summary.mastered;
+}
+function renderPrep() {
+  renderPrepStatus();
+  const stage = byId('prep-stage');
+  const pool = prepositionPool();
+  if (!pool.length) { stage.innerHTML = ''; return; }
+  if (!state.prep.current) createPrepQuestion();
+  if (!state.prep.current) {
+    stage.innerHTML = `<div class="complete"><div><div class="eyebrow">전치사 학습</div><h3>모두 익혔어요!</h3><p>${pool.length}개 단어의 전치사를 모두 학습했습니다.</p><button class="button" id="prep-review-all">전체 복습 시작</button></div></div>`;
+    byId('prep-review-all').onclick = prepReviewAll;
+    return;
+  }
+  const item = state.prep.current;
+  const feedback = state.prep.answered
+    ? `<div class="learn-feedback ${state.prep.correct?'good':'bad'}"><div><strong>${state.prep.correct?'정답입니다!':'다시 기억해 보세요.'}</strong>${state.prep.correct ? '' : `정답: <b>${escapeText(prepPatternDisplay(item))}</b>`}<span class="feedback-extra">${escapeText(item.term)} · ${escapeText(defLabel(item))}${item.definitionKo ? ' · ' + escapeText(item.definitionKo) : ''}</span></div><button class="button primary" id="prep-next">다음 →</button></div>`
+    : '';
+  stage.innerHTML = `
+    <div class="learn-card">
+      <div>
+        <div class="question-kicker">전치사 학습 · 발음 듣고 단어+전치사 입력</div>
+        <div class="question-prompt">🔊 발음을 듣고 단어와 뒤에 오는 전치사를 함께 써보세요</div>
+        <div class="question-ko">${escapeText(item.definitionKo || item.definition)}</div>
+        <div style="text-align:center;margin-top:18px"><button class="button primary test-start" id="prep-play-btn">🔊 다시 듣기</button></div>
+      </div>
+      <div>
+        <form class="answer-form" id="prep-form"><input class="answer-input" id="prep-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="예: adhere to" value="${escapeText(state.prep.chosen)}" ${state.prep.answered?'disabled':''}><button class="button primary" type="submit" ${state.prep.answered?'disabled':''}>확인</button></form>
+        ${feedback}
+      </div>
+    </div>
+    <div class="learn-utility"><button class="button" id="prep-dont-know">${state.prep.answered?'진행 기록 초기화':'잘 모르겠어요'}</button><button class="button" id="prep-speak">◖) 정답 발음</button></div>`;
+  if (!state.prep.answered) {
+    const form = byId('prep-form');
+    form.onsubmit = event => { event.preventDefault(); gradePrep(byId('prep-input').value); };
+    setTimeout(() => byId('prep-input')?.focus(), 0);
+    byId('prep-dont-know').onclick = () => gradePrep('');
+    byId('prep-play-btn').onclick = () => speak(item.term);
+    if (!state.prep.audioAutoPlayed) { state.prep.audioAutoPlayed = true; speak(item.term); }
+  } else {
+    byId('prep-next').onclick = nextPrepQuestion;
+    byId('prep-dont-know').onclick = resetPrepProgress;
+  }
+  byId('prep-speak').onclick = () => speak(item.term);
+}
 function renderSetButtons() {
   const wrap = byId('set-grid');
   wrap.innerHTML = allUnits.map(n => `<button class="set-button ${n===state.unit?'active':''}" data-unit="${n}"><strong>Unit ${n}</strong><small>${escapeText(DATA[n].title)}${wrongCount(n) ? ` · 오답 ${wrongCount(n)}` : ''}</small></button>`).join('');
@@ -1743,12 +1929,14 @@ function setTab(tab) {
   byId('cards-panel').classList.toggle('active', tab === 'cards');
   byId('sentence-cards-panel').classList.toggle('active', tab === 'sentence-cards');
   byId('list-panel').classList.toggle('active', tab === 'list');
+  byId('prep-panel').classList.toggle('active', tab === 'prep');
   if (tab === 'course') renderCourse();
   if (tab === 'sentence-course') renderSentenceCourse();
   if (tab === 'learn') renderLearn();
   if (tab === 'wrong-review') renderWrongReview();
   if (tab === 'test') renderTest();
   if (tab === 'list') renderList();
+  if (tab === 'prep') renderPrep();
 }
 function renderFooter() {
   const position = allUnits.indexOf(state.unit);
@@ -1759,7 +1947,7 @@ function renderFooter() {
   byId('next-set').textContent = `Unit ${next} →`;
 }
 function renderAll() {
-  renderSetButtons(); renderSelector(); renderWrongSummary(); renderHeader(); renderCourse(); renderSentenceCourse(); renderLearn(); renderWrongReview(); renderTest(); renderCard(); renderSentenceCard(); renderList(); renderFooter();
+  renderSetButtons(); renderSelector(); renderWrongSummary(); renderHeader(); renderCourse(); renderSentenceCourse(); renderLearn(); renderWrongReview(); renderTest(); renderCard(); renderSentenceCard(); renderList(); renderPrep(); renderFooter();
 }
 
 byId('set-select').onchange = event => chooseUnit(Number(event.target.value));
