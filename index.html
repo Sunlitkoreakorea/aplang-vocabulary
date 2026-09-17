@@ -2051,6 +2051,12 @@ document.addEventListener('keydown', event => {
     }
     return;
   }
+  if (state.tab === 'prep') {
+    if (state.prep.answered && (event.code === 'Space' || event.key === 'Enter') && !['INPUT','TEXTAREA','BUTTON','SELECT'].includes(activeTag)) {
+      event.preventDefault(); nextPrepQuestion();
+    }
+    return;
+  }
   if (state.tab === 'sentence-cards' && !['INPUT','SELECT'].includes(activeTag)) {
     if (event.key === 'ArrowLeft') moveSentenceCard(-1);
     if (event.key === 'ArrowRight') moveSentenceCard(1);
