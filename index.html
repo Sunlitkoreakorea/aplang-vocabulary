@@ -350,7 +350,11 @@ kbd { padding: 2px 6px; border: 1px solid var(--line); border-bottom-width: 2px;
           <div class="rows" id="rows"></div>
         </section>
         <section class="panel" id="prep-panel">
-          <div class="set-note" style="margin-bottom:14px">전체 유닛에서 전치사가 필수로 붙는 단어들만 모아 발음을 듣고 단어+전치사를 함께 입력합니다.</div>
+          <div class="set-note" style="margin-bottom:14px">전치사가 필수로 붙는 단어들만 모아 발음을 듣고 단어+전치사를 함께 입력합니다.</div>
+          <div class="test-grid" style="margin-bottom:14px">
+            <div class="test-field"><label class="label" for="prep-from">시작 유닛</label><select class="select" id="prep-from"></select></div>
+            <div class="test-field"><label class="label" for="prep-to">끝 유닛</label><select class="select" id="prep-to"></select></div>
+          </div>
           <div class="learn-status">
             <div class="mastery" aria-label="전치사 학습 숙련도"><span id="prep-mastery-bar"></span></div>
             <div class="mastery-chip"><strong id="prep-fresh-count">0</strong>모르는 단어</div>
@@ -377,7 +381,7 @@ const state = {
   learn: { direction: 'definition-to-word', current: null, type: 'choice', options: [], answered: false, chosen: '', correct: false, lastTerm: '', streak: 0, attempts: 0, revealed: false, scrambleTokens: [], scramblePool: [], scrambleBuilt: [], masteryEnabled: true, currentExampleIndex: 0, audioAutoPlayed: false },
   test: { status: 'setup', from: allUnits[0], to: allUnits[allUnits.length - 1], direction: 'definition-to-word', count: '20', questions: [], index: 0, selected: '', answers: [] },
   wrongReview: { status: 'setup', from: allUnits[0], to: allUnits[allUnits.length - 1], minimum: 1, direction: 'definition-to-word', questions: [], nextRound: [], round: 1, totalItems: 0, index: 0, selected: '', answered: false, correct: false, answers: [] },
-  prep: { current: null, answered: false, chosen: '', correct: false, lastTerm: '', audioAutoPlayed: false }
+  prep: { current: null, answered: false, chosen: '', correct: false, lastTerm: '', audioAutoPlayed: false, from: allUnits[0], to: allUnits[allUnits.length - 1] }
 };
 
 function defLabel(item) { return `(${item.pos}) ${item.definition}`; }
@@ -607,14 +611,11 @@ function learnSummary(progress = loadLearnProgress()) {
   };
 }
 
-function prepositionPool() {
-  const items = [];
-  allUnits.forEach(unitNumber => {
-    (DATA[unitNumber].words || []).forEach(word => {
-      if (word.pattern && word.pattern.trim()) items.push(word);
-    });
-  });
-  return items;
+function prepositionPool(from = state.prep.from, to = state.prep.to) {
+  return poolForRange(from, to).filter(word => word.pattern && word.pattern.trim());
+}
+function allPrepositionItems() {
+  return poolForRange(allUnits[0], allUnits[allUnits.length - 1]).filter(word => word.pattern && word.pattern.trim());
 }
 function normalizePrepAnswer(value) {
   return value.trim().toLowerCase()
@@ -661,7 +662,7 @@ function loadPrepProgress() {
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(prepKey()) || '{}'); } catch (_) {}
   const progress = {};
-  prepositionPool().forEach(item => {
+  allPrepositionItems().forEach(item => {
     const old = saved[item.term] || {};
     progress[item.term] = {
       level: Math.max(0, Math.min(2, Number(old.level) || 0)),
@@ -720,15 +721,28 @@ function nextPrepQuestion() {
   renderPrep();
 }
 function resetPrepProgress() {
-  if (!confirm('전치사 학습 기록을 초기화할까요?')) return;
-  localStorage.removeItem(prepKey());
+  if (!confirm('선택한 범위의 전치사 학습 기록을 초기화할까요?')) return;
+  const progress = loadPrepProgress();
+  prepositionPool().forEach(item => { progress[item.term] = { level: 0, correct: 0, wrong: 0 }; });
+  savePrepProgress(progress);
+  state.prep.current = null;
+  state.prep.lastTerm = '';
+  renderPrep();
+}
+function setPrepRange() {
+  state.prep.from = Number(byId('prep-from').value);
+  state.prep.to = Number(byId('prep-to').value);
+  if (allUnits.indexOf(state.prep.from) > allUnits.indexOf(state.prep.to)) {
+    [state.prep.from, state.prep.to] = [state.prep.to, state.prep.from];
+  }
   state.prep.current = null;
   state.prep.lastTerm = '';
   renderPrep();
 }
 function prepReviewAll() {
   const progress = loadPrepProgress();
-  Object.values(progress).forEach(record => record.level = 1);
+  const poolTerms = new Set(prepositionPool().map(item => item.term));
+  Object.keys(progress).forEach(term => { if (poolTerms.has(term)) progress[term].level = 1; });
   savePrepProgress(progress);
   state.prep.current = null;
   renderPrep();
@@ -741,10 +755,17 @@ function renderPrepStatus() {
   byId('prep-mastered-count').textContent = summary.mastered;
 }
 function renderPrep() {
+  const unitOptions = allUnits.map(number => `<option value="${number}">Unit ${number}</option>`).join('');
+  byId('prep-from').innerHTML = unitOptions;
+  byId('prep-to').innerHTML = unitOptions;
+  byId('prep-from').value = state.prep.from;
+  byId('prep-to').value = state.prep.to;
+  byId('prep-from').onchange = setPrepRange;
+  byId('prep-to').onchange = setPrepRange;
   renderPrepStatus();
   const stage = byId('prep-stage');
   const pool = prepositionPool();
-  if (!pool.length) { stage.innerHTML = ''; return; }
+  if (!pool.length) { stage.innerHTML = '<p class="set-note">선택한 범위에는 전치사가 필수로 붙는 단어가 없습니다.</p>'; return; }
   if (!state.prep.current) createPrepQuestion();
   if (!state.prep.current) {
     stage.innerHTML = `<div class="complete"><div><div class="eyebrow">전치사 학습</div><h3>모두 익혔어요!</h3><p>${pool.length}개 단어의 전치사를 모두 학습했습니다.</p><button class="button" id="prep-review-all">전체 복습 시작</button></div></div>`;
@@ -758,7 +779,7 @@ function renderPrep() {
   stage.innerHTML = `
     <div class="learn-card">
       <div>
-        <div class="question-kicker">전치사 학습 · 발음 듣고 단어+전치사 입력</div>
+        <div class="question-kicker">Unit ${item.unitNumber} · 전치사 학습 · 발음 듣고 단어+전치사 입력</div>
         <div class="question-prompt">🔊 발음을 듣고 단어와 뒤에 오는 전치사를 함께 써보세요</div>
         <div class="question-ko">${escapeText(item.definitionKo || item.definition)}</div>
         <div style="text-align:center;margin-top:18px"><button class="button primary test-start" id="prep-play-btn">🔊 다시 듣기</button></div>
