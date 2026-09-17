@@ -624,9 +624,7 @@ function normalizePrepAnswer(value) {
     .replace(/\s+/g, ' ')
     .trim();
 }
-function prepositionAnswerVariants(item) {
-  const filled = item.pattern.replace(/★/g, item.term);
-  const normalized = normalizePrepAnswer(filled);
+function expandSlashVariants(normalized) {
   const tokens = normalized.split(' ').filter(Boolean);
   const segments = [[]];
   tokens.forEach(token => {
@@ -651,8 +649,14 @@ function prepositionAnswerVariants(item) {
   segments.forEach(segment => { if (segment.length) all.push(...expandInlineSlash(segment)); });
   return [...new Set(all)];
 }
+function prepositionAnswerVariants(item) {
+  const filled = item.pattern.replace(/★/g, item.term);
+  return expandSlashVariants(normalizePrepAnswer(filled));
+}
 function gradePrepositionAnswer(item, answer) {
-  return prepositionAnswerVariants(item).includes(normalizePrepAnswer(answer));
+  const correctVariants = new Set(prepositionAnswerVariants(item));
+  const userVariants = expandSlashVariants(normalizePrepAnswer(answer));
+  return userVariants.some(variant => correctVariants.has(variant));
 }
 function prepPatternDisplay(item) {
   return item.pattern.replace(/★/g, item.term).replace(/~/g, '').replace(/\s+/g, ' ').trim();
