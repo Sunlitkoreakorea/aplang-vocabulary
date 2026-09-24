@@ -72,7 +72,7 @@ kbd { padding: 2px 6px; border: 1px solid var(--line); border-bottom-width: 2px;
 .content-head > div:first-child { flex: 1 1 240px; min-width: 0; }
 .set-title { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 4vw, 46px); letter-spacing: -.04em; }
 .set-note { color: var(--muted); font-size: 13px; margin-top: 5px; line-height: 1.5; }
-.tabs { display: flex; flex: 0 0 auto; gap: 6px; padding: 5px; border-radius: 12px; background: #ede4d4; }
+.tabs { display: flex; flex: 0 0 auto; flex-wrap: wrap; max-width: 100%; gap: 6px; padding: 5px; border-radius: 12px; background: #ede4d4; }
 .tab { border: 0; border-radius: 9px; padding: 9px 13px; background: transparent; cursor: pointer; font-weight: 750; font-size: 13px; white-space: nowrap; }
 .tab.active { background: #fff; box-shadow: 0 4px 18px rgba(27,36,54,.08); }
 .panel { display: none; }
@@ -177,7 +177,7 @@ kbd { padding: 2px 6px; border: 1px solid var(--line); border-bottom-width: 2px;
 .course-term { margin: 20px 0 6px; text-align: center; font-family: Georgia, "Times New Roman", serif; font-size: clamp(34px,5.4vw,58px); line-height: 1; letter-spacing: -.04em; overflow-wrap: anywhere; }
 .course-pos { text-align: center; }
 .course-def { margin-top: 14px; text-align: center; font-size: clamp(17px,2.4vw,23px); line-height: 1.45; }
-.course-def-ko { margin-top: 6px; text-align: center; color: var(--muted); font-size: clamp(13px,1.8vw,16px); line-height: 1.45; }
+.course-def-ko, .course-def-alt { margin-top: 6px; text-align: center; color: var(--muted); font-size: clamp(13px,1.8vw,16px); line-height: 1.45; }
 .course-example { max-width: 620px; margin: 16px auto 0; padding-top: 15px; border-top: 1px dashed var(--line); text-align: center; color: var(--muted); font-size: clamp(13px,1.7vw,16px); line-height: 1.55; }
 .course-card-actions { display: flex; justify-content: center; gap: 9px; }
 .hint-text { margin: 0 0 14px; text-align: center; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 20px; letter-spacing: .2em; }
@@ -1355,6 +1355,21 @@ const COURSE_STEPS = [
 const REVIEW_SPEC = { key: 'review', kind: 'write', badge: '↻', label: '누적 복습', kicker: '지금까지 배운 단어', direction: 'definition-to-word', hint: true };
 const FINAL_SPEC  = { key: 'final',  kind: 'write', badge: '★', label: '최종 점검', kicker: '힌트 없이 떠올리기', direction: 'definition-to-word', hint: false };
 
+function courseDefLangKey() { return 'aplang-course-def-lang'; }
+function loadCourseDefLang() { return localStorage.getItem(courseDefLangKey()) === 'ko' ? 'ko' : 'en'; }
+function setCourseDefLang(lang) {
+  state.courseDefLang = lang === 'ko' ? 'ko' : 'en';
+  localStorage.setItem(courseDefLangKey(), state.courseDefLang);
+  renderCourse();
+}
+function courseDefLabel(item) {
+  return state.courseDefLang === 'ko' && item.definitionKo ? `(${item.pos}) ${item.definitionKo}` : defLabel(item);
+}
+function courseAltDef(item) {
+  return state.courseDefLang === 'ko' ? item.definition : (item.definitionKo || '');
+}
+function coursePromptFor(item, direction) { return direction === 'definition-to-word' ? courseDefLabel(item) : promptFor(item, direction); }
+function courseAnswerFor(item, direction) { return direction === 'word-to-definition' ? courseDefLabel(item) : answerFor(item, direction); }
 function courseKey() { return `aplang-course-v1-${state.unit}`; }
 function loadCourseSave() {
   try {
@@ -1394,11 +1409,11 @@ function buildCourseOptions() {
   const spec = courseSpec(), node = courseNode(), term = state.course.queue[0];
   if (!spec || !node || !term || spec.kind !== 'choice') { state.course.options = []; return; }
   const item = courseItem(term);
-  const correct = answerFor(item, spec.direction);
+  const correct = courseAnswerFor(item, spec.direction);
   const source = spec.pool === 'batch'
     ? node.terms.filter(other => other !== term).map(courseItem).filter(Boolean)
     : selectedItems().filter(other => other.term !== term);
-  const possible = [...new Set(source.map(other => answerFor(other, spec.direction)))].filter(option => option !== correct);
+  const possible = [...new Set(source.map(other => courseAnswerFor(other, spec.direction)))].filter(option => option !== correct);
   state.course.options = shuffleArray([correct, ...shuffleArray(possible).slice(0, 3)]);
 }
 function enterCourseNode() {
@@ -1434,7 +1449,7 @@ function gradeCourse(answer) {
   const spec = courseSpec(), term = state.course.queue[0];
   if (!spec || !term) return;
   const item = courseItem(term);
-  const correct = normalizeAnswer(answer) === normalizeAnswer(answerFor(item, spec.direction));
+  const correct = normalizeAnswer(answer) === normalizeAnswer(courseAnswerFor(item, spec.direction));
   state.course.answered = true;
   state.course.selected = answer;
   state.course.correct = correct;
@@ -1491,11 +1506,14 @@ function renderCourseIntro() {
       <p>단어를 하나도 몰라도 괜찮습니다. 먼저 보여주고 그 다음에 물어봅니다. ${selectedItems().length}개를 ${COURSE_BATCH}개씩 ${batches}묶음으로 나눠, 아래 다섯 단계를 묶음마다 반복하며 따라가기만 하면 됩니다.</p>
       <div class="course-ladder">${COURSE_STEPS.map(step => `<div class="ladder-row"><span class="ladder-badge">${step.badge}</span><div><strong>${step.label}</strong><small>${step.kicker}</small></div></div>`).join('')}</div>
       <div class="review-preview"><span>묶음이 끝날 때마다 누적 복습, 마지막에 전체 점검</span><strong>${plan.length}단계</strong></div>
+      <div class="mastery-toggle-row" style="margin-bottom:14px"><span>정의를 볼 언어 · 정의 보기, 퀴즈, 피드백에 적용됩니다</span><div style="display:flex;gap:6px"><button class="button ${state.courseDefLang === 'en' ? 'primary' : ''}" id="course-lang-en">영어</button><button class="button ${state.courseDefLang === 'ko' ? 'primary' : ''}" id="course-lang-ko">한국어</button></div></div>
       ${finished ? '<div class="learn-feedback good"><div><strong>이미 완주한 유닛입니다.</strong>학습하기 탭에서 복습하거나 코스를 다시 돌 수 있습니다.</div></div>' : ''}
       <button class="button primary test-start" id="course-start">${resumable ? `${Math.round(saved.planIndex / plan.length * 100)}%부터 이어하기` : '코스 시작하기'}</button>
       ${(resumable || finished) ? '<button class="button course-restart" id="course-restart">처음부터 다시</button>' : ''}
     </div>`;
   byId('course-start').onclick = () => startCourse(finished);
+  byId('course-lang-en').onclick = () => setCourseDefLang('en');
+  byId('course-lang-ko').onclick = () => setCourseDefLang('ko');
   if (byId('course-restart')) byId('course-restart').onclick = () => { if (confirm(`Unit ${state.unit} 코스를 처음부터 다시 시작할까요?`)) startCourse(true); };
 }
 function renderCourseStage() {
@@ -1522,8 +1540,8 @@ function renderCourseStage() {
           <div class="question-kicker">${spec.badge} ${spec.label} · ${spec.kicker}</div>
           <div class="course-term">${escapeText(item.term)}</div>
           <div class="course-pos"><span class="pos-tag">${escapeText(item.pos)}</span></div>
-          <div class="course-def">${escapeText(defLabel(item))}</div>
-          ${item.definitionKo ? `<div class="course-def-ko">${escapeText(item.definitionKo)}</div>` : ''}
+          <div class="course-def">${escapeText(courseDefLabel(item))}</div>
+          ${courseAltDef(item) ? `<div class="course-def-alt">${escapeText(courseAltDef(item))}</div>` : ''}
           <div class="course-example">${escapeText(revealedExample(item))} — ${escapeText(exampleKo(item))}</div>
         </div>
         <div class="course-card-actions"><button class="button" id="course-speak">◖) 발음 듣기</button><button class="button primary" id="course-next">봤어요 →</button></div>
@@ -1535,7 +1553,7 @@ function renderCourseStage() {
     return;
   }
 
-  const correctAnswer = answerFor(item, spec.direction);
+  const correctAnswer = courseAnswerFor(item, spec.direction);
   const showHint = spec.hint || state.course.hintShown;
   const body = spec.kind === 'choice'
     ? `<div class="choices">${state.course.options.map((option, i) => {
@@ -1544,14 +1562,14 @@ function renderCourseStage() {
       }).join('')}</div>`
     : `${showHint ? `<div class="hint-text">${escapeText(wordHint(correctAnswer))}</div>` : ''}<form class="answer-form" id="course-form"><input class="answer-input" id="course-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="영단어를 입력하세요" value="${escapeText(state.course.selected)}" ${state.course.answered?'disabled':''}><button class="button primary" type="submit" ${state.course.answered?'disabled':''}>확인</button></form>`;
   const feedback = state.course.answered
-    ? `<div class="learn-feedback ${state.course.correct?'good':'bad'}"><div><strong>${state.course.correct ? '정답입니다!' : '괜찮아요. 이 단어는 뒤에서 다시 나옵니다.'}</strong>${escapeText(item.term)} · ${escapeText(defLabel(item))}</div><button class="button primary" id="course-next">다음 →</button></div>`
+    ? `<div class="learn-feedback ${state.course.correct?'good':'bad'}"><div><strong>${state.course.correct ? '정답입니다!' : '괜찮아요. 이 단어는 뒤에서 다시 나옵니다.'}</strong>${escapeText(item.term)} · ${escapeText(courseDefLabel(item))}</div><button class="button primary" id="course-next">다음 →</button></div>`
     : '';
   const utility = state.course.answered
     ? `<div class="learn-utility"><button class="button" id="course-exit">코스 처음 화면</button><button class="button" id="course-speak">◖) ${escapeText(item.term)} 발음</button></div>`
     : `<div class="learn-utility"><button class="button" id="course-dont-know">잘 모르겠어요</button>${spec.kind === 'write' && !showHint ? '<button class="button" id="course-hint">힌트 보기</button>' : '<span></span>'}</div>`;
   byId('course-stage').innerHTML = head + `
     <div class="learn-card">
-      <div><div class="question-kicker">${spec.badge} ${spec.label} · ${spec.kicker}</div><div class="question-prompt">${escapeText(promptFor(item, spec.direction))}</div>${spec.direction === 'example-word-write' ? `<div class="question-ko">${escapeText(exampleKo(item))}</div>` : ''}</div>
+      <div><div class="question-kicker">${spec.badge} ${spec.label} · ${spec.kicker}</div><div class="question-prompt">${escapeText(coursePromptFor(item, spec.direction))}</div>${spec.direction === 'example-word-write' ? `<div class="question-ko">${escapeText(exampleKo(item))}</div>` : ''}</div>
       <div>${body}${feedback}</div>
     </div>${utility}`;
   if (state.course.answered) {
@@ -1577,7 +1595,7 @@ function renderCourseComplete() {
       <div class="results-title"><h3>Unit ${state.unit} 코스 완주</h3><p>${selectedItems().length}개 단어를 모두 통과했습니다. 학습하기의 세 방향 모두 <b>학습 중</b> 단계로 기록해 두었습니다.</p></div>
       <div class="result-actions"><button class="button primary" id="course-to-learn">학습하기로 이동</button>${missed.length ? '<button class="button" id="course-to-review">오답학습 하기</button>' : ''}<button class="button" id="course-to-test">테스트 보기</button><button class="button" id="course-again">코스 다시 하기</button></div>
       ${missed.length
-        ? `<div class="wrong-list"><div class="label">코스 중 헷갈린 단어 ${missed.length}개 · 누적 오답에 기록되었습니다</div>${missed.slice(0, 12).map(([term, count]) => `<article class="wrong-row"><div class="prompt">${count}번 헷갈림</div><div class="answer"><strong>${escapeText(term)}</strong> · ${escapeText(courseItem(term) ? defLabel(courseItem(term)) : '')}</div></article>`).join('')}</div>`
+        ? `<div class="wrong-list"><div class="label">코스 중 헷갈린 단어 ${missed.length}개 · 누적 오답에 기록되었습니다</div>${missed.slice(0, 12).map(([term, count]) => `<article class="wrong-row"><div class="prompt">${count}번 헷갈림</div><div class="answer"><strong>${escapeText(term)}</strong> · ${escapeText(courseItem(term) ? courseDefLabel(courseItem(term)) : '')}</div></article>`).join('')}</div>`
         : '<div class="empty">한 번도 틀리지 않았습니다!</div>'}
     </div>`;
   byId('course-to-learn').onclick = () => setTab('learn');
@@ -2074,6 +2092,7 @@ document.addEventListener('keydown', event => {
 });
 byId('mastery-toggle').onclick = toggleMasteryEnabled;
 state.learn.masteryEnabled = loadMasteryEnabled();
+state.courseDefLang = loadCourseDefLang();
 setOrder(); setSentenceCardOrder(); renderAll();
 </script>
 </body>
