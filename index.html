@@ -410,7 +410,14 @@ const PREP_PARTICLES = new Set(['to', 'for', 'with', 'from', 'into', 'in', 'on',
 function unitHasPhrases(unit) { return ((DATA[unit] || {}).words || []).some(word => word.head); }
 function prepBlankRanges(item, exIndex = 0) {
   const ex = item.examples[exIndex];
-  return (ex.bold || []).filter(([s, e]) => PREP_PARTICLES.has(ex.en.slice(s, e).toLowerCase()));
+  const ranges = (ex.bold || []).filter(([s, e]) => PREP_PARTICLES.has(ex.en.slice(s, e).toLowerCase()));
+  // Adjacent particles (e.g. "up to", "out against") become one blank.
+  return ranges.reduce((merged, [s, e]) => {
+    const last = merged[merged.length - 1];
+    if (last && /^\s+$/.test(ex.en.slice(last[1], s))) last[1] = e;
+    else merged.push([s, e]);
+    return merged;
+  }, []);
 }
 function prepClozeText(item, exIndex = 0) {
   const ex = item.examples[exIndex];
@@ -1027,7 +1034,7 @@ function renderLearn() {
         ` : (isChoice ? `<div class="choices">${state.learn.options.map((option, optionIndex) => {
           const className = state.learn.answered ? (option === correctAnswer ? 'correct' : (option === state.learn.chosen ? 'wrong' : '')) : '';
           return `<button class="choice ${className}" data-answer="${escapeText(option)}" ${state.learn.answered?'disabled':''}><span class="choice-number">${optionIndex + 1}</span>${escapeText(option)}</button>`;
-        }).join('')}</div>` : `<form class="answer-form" id="answer-form"><input class="answer-input" id="answer-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="${direction === 'example-sentence-write' ? '예문 전체를 영어로 입력하세요' : (direction === 'prep-blank' ? '빈칸의 전치사 (여러 개면 순서대로 띄어 쓰기)' : '영단어를 입력하세요')}" value="${escapeText(state.learn.chosen)}" ${state.learn.answered?'disabled':''}><button class="button primary" type="submit" ${state.learn.answered?'disabled':''}>확인</button></form>`)}
+        }).join('')}</div>` : `<form class="answer-form" id="answer-form"><input class="answer-input" id="answer-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="${direction === 'example-sentence-write' ? '예문 전체를 영어로 입력하세요' : (direction === 'prep-blank' ? '빈칸에 들어갈 전치사 (두 단어면 띄어 쓰기)' : '영단어를 입력하세요')}" value="${escapeText(state.learn.chosen)}" ${state.learn.answered?'disabled':''}><button class="button primary" type="submit" ${state.learn.answered?'disabled':''}>확인</button></form>`)}
         ${state.learn.answered ? `<div class="learn-feedback ${state.learn.correct?'good':'bad'}"><div><strong>${state.learn.correct?'정답입니다!':'다시 기억해 보세요.'}</strong>${state.learn.correct ? `${escapeText(item.term)} · ${escapeText(defLabel(item))}` : `${direction === 'example-sentence-write' ? wordDiffHtml(state.learn.chosen, correctAnswer) : ''}정답은 <b>${escapeText(correctAnswer)}</b>입니다.`}${feedbackExtra ? `<span class="feedback-extra">${escapeText(feedbackExtra)}</span>` : ''}</div><button class="button primary" id="next-question">다음 문제 →</button></div>` : ''}
       </div>
     </div>
