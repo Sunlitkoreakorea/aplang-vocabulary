@@ -131,6 +131,7 @@ kbd { padding: 2px 6px; border: 1px solid var(--line); border-bottom-width: 2px;
 .question-kicker { color: var(--secondary); font-size: 11px; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
 .question-prompt { max-width: 720px; margin: 20px auto 0; text-align: center; font-family: Georgia, "Times New Roman", serif; font-size: clamp(22px,3.6vw,34px); line-height: 1.4; letter-spacing: -.02em; }
 .question-ko { max-width: 640px; margin: 12px auto 28px; text-align: center; color: var(--muted); font-size: clamp(13px,1.8vw,16px); line-height: 1.5; }
+.question-ko.prep-meaning { margin: 4px auto 14px; color: var(--ink); font-size: clamp(16px,2.2vw,20px); font-weight: 600; }
 .question-prompt-ko { max-width: 720px; margin: 20px auto 0; text-align: center; font-family: Inter, Pretendard, "Noto Sans KR", system-ui, sans-serif; font-weight: 800; font-size: clamp(21px,3.2vw,30px); line-height: 1.5; letter-spacing: -.01em; }
 .definition-ko { margin-top: 8px; color: var(--muted); font-size: clamp(14px,2vw,17px); line-height: 1.5; }
 .flip-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
@@ -315,7 +316,7 @@ kbd { padding: 2px 6px; border: 1px solid var(--line); border-bottom-width: 2px;
             <button class="learn-mode" data-direction="example-recall">예문 암기</button>
             <button class="learn-mode" data-direction="example-scramble">문장 조합</button>
             <button class="learn-mode" data-direction="audio-to-word">듣고 쓰기</button>
-            <button class="learn-mode" data-direction="prep-blank">전치사 빈칸</button>
+            <button class="learn-mode" data-direction="prep-phrase">전치사 빈칸</button>
           </div>
           <div class="mastery-toggle-row" id="mastery-toggle-row">
             <span id="mastery-toggle-label">숙달 단계 사용: 완전히 익힐 때까지(숙달) 반복 출제됩니다.</span>
@@ -404,35 +405,23 @@ const DIRECTIONS = {
   'example-recall': { promptKey: 'exampleKo', answerKey: 'sentence', short: '예문 암기', title: '한글 뜻만 보고 예문 떠올리기', hint: '한글 번역만 보고 영어 예문 전체를 마음속으로 떠올린 뒤 눌러서 확인합니다.', forceFlip: true, testable: false },
   'example-scramble': { promptKey: 'exampleKo', answerKey: 'sentence', short: '문장 조합', title: '뒤섞인 단어로 예문 완성하기', hint: '뒤섞인 단어를 순서대로 클릭해 예문을 완성합니다.', forceScramble: true, testable: false },
   'audio-to-word': { promptKey: 'audioPrompt', answerKey: 'term', short: '듣고 쓰기', title: '발음만 듣고 단어 쓰기', hint: '단어의 발음만 듣고 알맞은 영단어를 입력합니다.', forceWrite: true, testable: false },
-  'prep-blank': { promptKey: 'prepCloze', answerKey: 'prepAnswer', short: '전치사 빈칸', title: '예문의 전치사 빈칸 채우기', hint: '예문에서 비어 있는 전치사를 직접 입력합니다.', forceWrite: true, testable: false }
+  'prep-phrase': { promptKey: 'prepCloze', answerKey: 'prepAnswer', short: '전치사 빈칸', title: '구문의 전치사 빈칸 채우기', hint: '한국어 뜻을 보고 구문에서 빠진 전치사를 입력합니다.', forceWrite: true, testable: false }
 };
 const PREP_PARTICLES = new Set(['to', 'for', 'with', 'from', 'into', 'in', 'on', 'about', 'at', 'up', 'out', 'against', 'of']);
 function unitHasPhrases(unit) { return ((DATA[unit] || {}).words || []).some(word => word.head); }
-function prepBlankRanges(item, exIndex = 0) {
-  const ex = item.examples[exIndex];
-  const ranges = (ex.bold || []).filter(([s, e]) => PREP_PARTICLES.has(ex.en.slice(s, e).toLowerCase()));
-  // Adjacent particles (e.g. "up to", "out against") become one blank.
-  return ranges.reduce((merged, [s, e]) => {
-    const last = merged[merged.length - 1];
-    if (last && /^\s+$/.test(ex.en.slice(last[1], s))) last[1] = e;
-    else merged.push([s, e]);
-    return merged;
-  }, []);
+function isPrepWord(word) { return word.split('/').every(part => PREP_PARTICLES.has(part.toLowerCase())); }
+// The phrase with its preposition blanked: "substitute A _____ B". Adjacent ones ("add up to") share one blank.
+function prepClozeText(item) {
+  const words = item.term.split(' ');
+  return words
+    .filter((word, i) => !(i > 0 && isPrepWord(word) && isPrepWord(words[i - 1])))
+    .map(word => isPrepWord(word) ? '_____' : word)
+    .join(' ');
 }
-function prepClozeText(item, exIndex = 0) {
-  const ex = item.examples[exIndex];
-  let text = '', pos = 0;
-  prepBlankRanges(item, exIndex).forEach(([s, e]) => { text += `${ex.en.slice(pos, s)}_____`; pos = e; });
-  return text + ex.en.slice(pos);
-}
-function prepBlankAnswer(item, exIndex = 0) {
-  const ex = item.examples[exIndex];
-  return prepBlankRanges(item, exIndex).map(([s, e]) => ex.en.slice(s, e).toLowerCase()).join(' ');
-}
-function prepBlankMatches(item, answer, exIndex = 0) {
+function prepBlankAnswer(item) { return item.term.split(' ').filter(isPrepWord).join(' '); }
+function prepBlankMatches(item, answer) {
   const norm = value => String(value).toLowerCase().replace(/[.,!?;:'"()]/g, ' ').replace(/\s*\/\s*/g, '/').replace(/\s+/g, ' ').trim();
-  const termParticles = item.term.split(' ').filter(word => word.split('/').every(part => PREP_PARTICLES.has(part.toLowerCase()))).join(' ');
-  const accepted = new Set([...expandSlashVariants(norm(prepBlankAnswer(item, exIndex))), ...expandSlashVariants(norm(termParticles))]);
+  const accepted = new Set(expandSlashVariants(norm(prepBlankAnswer(item))));
   return expandSlashVariants(norm(answer)).some(variant => accepted.has(variant));
 }
 const DEFAULT_DIRECTION = 'definition-to-word';
@@ -475,7 +464,7 @@ function directionOptionsHtml(name, selected) {
 const EXAMPLE_DIRECTIONS = ['example-to-word', 'example-word-write', 'example-sentence-write', 'example-recall', 'example-scramble'];
 function feedbackExtraFor(item, direction, exIndex = 0) {
   if (EXAMPLE_DIRECTIONS.includes(direction)) return item.pattern ? `패턴: ${item.pattern}` : '';
-  if (direction === 'prep-blank') return `${item.term} · ${item.definitionKo || item.definition} · ${revealedExample(item, exIndex)}`;
+  if (direction === 'prep-phrase') return `${item.term} · ${item.definitionKo || item.definition} · ${revealedExample(item, exIndex)}`;
   return `${item.definitionKo ? item.definitionKo + ' · ' : ''}${revealedExample(item, exIndex)} — ${exampleKo(item, exIndex)}`;
 }
 function sentenceStarKey(term, exIndex) { return `${term}::${exIndex}`; }
@@ -515,7 +504,7 @@ function sentenceItems() {
   return items;
 }
 function learnPool(direction) {
-  if (direction === 'prep-blank') return selectedItems().filter(item => item.head);
+  if (direction === 'prep-phrase') return selectedItems().filter(item => item.head);
   return EXAMPLE_DIRECTIONS.includes(direction) ? sentenceItems() : selectedItems();
 }
 function learnItemKey(item, direction) { return EXAMPLE_DIRECTIONS.includes(direction) ? item.sentenceKey : item.term; }
@@ -879,7 +868,7 @@ function renderHeader() {
 
 function setLearnDirection(direction) {
   if (!DIRECTIONS[direction]) return;
-  if (direction === 'prep-blank' && !unitHasPhrases(state.unit)) return;
+  if (direction === 'prep-phrase' && !unitHasPhrases(state.unit)) return;
   state.learn.direction = direction;
   state.learn.current = null;
   state.learn.lastTerm = '';
@@ -985,7 +974,7 @@ function renderLearnStatus() {
 function renderLearn() {
   document.querySelectorAll('.learn-mode').forEach(button => {
     button.classList.toggle('active', button.dataset.direction === state.learn.direction);
-    button.hidden = button.dataset.direction === 'prep-blank' && !unitHasPhrases(state.unit);
+    button.hidden = button.dataset.direction === 'prep-phrase' && !unitHasPhrases(state.unit);
   });
   byId('mastery-toggle').textContent = state.learn.masteryEnabled ? '사용 함' : '사용 안 함 (빠른 진행)';
   byId('mastery-toggle').classList.toggle('primary', state.learn.masteryEnabled);
@@ -1018,8 +1007,9 @@ function renderLearn() {
     <div class="learn-card">
       <div>
         <div class="question-kicker">${directionInfo(direction).short} · ${isChoice ? '객관식 · 1–4 키로 선택' : (isFlip ? '암기 카드 · 눌러서 확인' : (isScramble ? '단어를 순서대로 클릭' : (direction === 'audio-to-word' ? '듣기 · 소리만 듣고 받아쓰기' : '직접 입력 · 기억에서 꺼내기')))}</div>
+        ${direction === 'prep-phrase' ? `<div class="question-ko prep-meaning">${escapeText(item.definitionKo || item.definition)}</div>` : ''}
         <div class="${(direction === 'example-recall' || direction === 'example-scramble') ? 'question-prompt-ko' : 'question-prompt'}">${escapeText(prompt)}</div>
-        ${(direction === 'example-to-word' || direction === 'example-word-write' || direction === 'prep-blank') ? `<div class="question-ko">${escapeText(exampleKo(item, exIdx))}</div>` : ''}
+        ${(direction === 'example-to-word' || direction === 'example-word-write') ? `<div class="question-ko">${escapeText(exampleKo(item, exIdx))}</div>` : ''}
         ${direction === 'example-sentence-write' ? `<div class="question-ko">${escapeText(exampleKo(item, exIdx))} · 위 뜻이 담긴 예문을 영어로 써보세요</div>` : ''}
         ${(direction === 'audio-to-word' || direction === 'example-sentence-write') ? `<div style="text-align:center;margin-top:18px"><button class="button primary test-start" id="audio-play-btn">🔊 다시 듣기</button></div>` : ''}
       </div>
@@ -1034,7 +1024,7 @@ function renderLearn() {
         ` : (isChoice ? `<div class="choices">${state.learn.options.map((option, optionIndex) => {
           const className = state.learn.answered ? (option === correctAnswer ? 'correct' : (option === state.learn.chosen ? 'wrong' : '')) : '';
           return `<button class="choice ${className}" data-answer="${escapeText(option)}" ${state.learn.answered?'disabled':''}><span class="choice-number">${optionIndex + 1}</span>${escapeText(option)}</button>`;
-        }).join('')}</div>` : `<form class="answer-form" id="answer-form"><input class="answer-input" id="answer-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="${direction === 'example-sentence-write' ? '예문 전체를 영어로 입력하세요' : (direction === 'prep-blank' ? '빈칸에 들어갈 전치사 (두 단어면 띄어 쓰기)' : '영단어를 입력하세요')}" value="${escapeText(state.learn.chosen)}" ${state.learn.answered?'disabled':''}><button class="button primary" type="submit" ${state.learn.answered?'disabled':''}>확인</button></form>`)}
+        }).join('')}</div>` : `<form class="answer-form" id="answer-form"><input class="answer-input" id="answer-input" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="${direction === 'example-sentence-write' ? '예문 전체를 영어로 입력하세요' : (direction === 'prep-phrase' ? '빈칸에 들어갈 전치사 (두 단어면 띄어 쓰기)' : '영단어를 입력하세요')}" value="${escapeText(state.learn.chosen)}" ${state.learn.answered?'disabled':''}><button class="button primary" type="submit" ${state.learn.answered?'disabled':''}>확인</button></form>`)}
         ${state.learn.answered ? `<div class="learn-feedback ${state.learn.correct?'good':'bad'}"><div><strong>${state.learn.correct?'정답입니다!':'다시 기억해 보세요.'}</strong>${state.learn.correct ? `${escapeText(item.term)} · ${escapeText(defLabel(item))}` : `${direction === 'example-sentence-write' ? wordDiffHtml(state.learn.chosen, correctAnswer) : ''}정답은 <b>${escapeText(correctAnswer)}</b>입니다.`}${feedbackExtra ? `<span class="feedback-extra">${escapeText(feedbackExtra)}</span>` : ''}</div><button class="button primary" id="next-question">다음 문제 →</button></div>` : ''}
       </div>
     </div>
@@ -1119,7 +1109,7 @@ function gradeLearn(answer) {
   const item = state.learn.current;
   const direction = state.learn.direction;
   const correctAnswer = answerFor(item, direction, state.learn.currentExampleIndex || 0);
-  const correct = direction === 'prep-blank'
+  const correct = direction === 'prep-phrase'
     ? prepBlankMatches(item, answer, state.learn.currentExampleIndex || 0)
     : (direction === 'example-sentence-write' || direction === 'example-scramble')
       ? normalizeSentence(answer) === normalizeSentence(correctAnswer)
@@ -1989,7 +1979,7 @@ function renderList() {
 function chooseUnit(number) {
   if (!DATA[number]) return;
   state.unit = number;
-  const direction = (state.learn.direction === 'prep-blank' && !unitHasPhrases(number)) ? DEFAULT_DIRECTION : state.learn.direction;
+  const direction = (state.learn.direction === 'prep-phrase' && !unitHasPhrases(number)) ? DEFAULT_DIRECTION : state.learn.direction;
   const masteryEnabled = state.learn.masteryEnabled;
   state.learn = { direction, current: null, type: 'choice', options: [], answered: false, chosen: '', correct: false, lastTerm: '', streak: 0, attempts: 0, revealed: false, scrambleTokens: [], scramblePool: [], scrambleBuilt: [], masteryEnabled, currentExampleIndex: 0, audioAutoPlayed: false };
   state.course = { status: 'setup', planIndex: 0, queue: [], options: [], answered: false, selected: '', correct: false, hintShown: false, missed: {} };
