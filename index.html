@@ -419,6 +419,11 @@ function prepClozeText(item) {
     .join(' ');
 }
 function prepBlankAnswer(item) { return item.term.split(' ').filter(isPrepWord).join(' '); }
+// Meaning shown in prep-phrase mode, with the answer prepositions hidden (e.g. "주로 be grounded in").
+function prepMeaningText(item) {
+  const answers = prepBlankAnswer(item).split(/[\s\/]+/).filter(Boolean);
+  return answers.reduce((text, word) => text.replace(new RegExp(`\\b${word}\\b`, 'gi'), '_____'), item.definitionKo || item.definition);
+}
 function prepBlankMatches(item, answer) {
   const norm = value => String(value).toLowerCase().replace(/[.,!?;:'"()]/g, ' ').replace(/\s*\/\s*/g, '/').replace(/\s+/g, ' ').trim();
   const accepted = new Set(expandSlashVariants(norm(prepBlankAnswer(item))));
@@ -1007,7 +1012,7 @@ function renderLearn() {
     <div class="learn-card">
       <div>
         <div class="question-kicker">${directionInfo(direction).short} · ${isChoice ? '객관식 · 1–4 키로 선택' : (isFlip ? '암기 카드 · 눌러서 확인' : (isScramble ? '단어를 순서대로 클릭' : (direction === 'audio-to-word' ? '듣기 · 소리만 듣고 받아쓰기' : '직접 입력 · 기억에서 꺼내기')))}</div>
-        ${direction === 'prep-phrase' ? `<div class="question-ko prep-meaning">${escapeText(item.definitionKo || item.definition)}</div>` : ''}
+        ${direction === 'prep-phrase' ? `<div class="question-ko prep-meaning">${escapeText(prepMeaningText(item))}</div>` : ''}
         <div class="${(direction === 'example-recall' || direction === 'example-scramble') ? 'question-prompt-ko' : 'question-prompt'}">${escapeText(prompt)}</div>
         ${(direction === 'example-to-word' || direction === 'example-word-write') ? `<div class="question-ko">${escapeText(exampleKo(item, exIdx))}</div>` : ''}
         ${direction === 'example-sentence-write' ? `<div class="question-ko">${escapeText(exampleKo(item, exIdx))} · 위 뜻이 담긴 예문을 영어로 써보세요</div>` : ''}
